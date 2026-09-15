@@ -25,6 +25,20 @@ export const advisoryContent = {
       de: "Wir arbeiten in kurzen, klar abgegrenzten Mandaten. Das erste Gespräch dauert eine Stunde und ist unverbindlich.",
     } as L,
     cta: { bs: "Dogovorite razgovor", de: "Gespräch vereinbaren" } as L,
+    meta: [
+      {
+        label: { bs: "Prvi razgovor", de: "Erstes Gespräch" } as L,
+        value: { bs: "60 minuta, bez obaveze", de: "60 Minuten, unverbindlich" } as L,
+      },
+      {
+        label: { bs: "Angažman", de: "Mandat" } as L,
+        value: { bs: "Omeđen, s dogovorenim krajem", de: "Abgegrenzt, mit vereinbartem Ende" } as L,
+      },
+      {
+        label: { bs: "Radimo s", de: "Wir arbeiten mit" } as L,
+        value: { bs: "Malim i srednjim firmama", de: "Kleinen und mittleren Unternehmen" } as L,
+      },
+    ],
   },
   areas: {
     title: { bs: "Područja rada", de: "Arbeitsfelder" } as L,

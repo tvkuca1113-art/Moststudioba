@@ -41,9 +41,9 @@ export function buildMetadata({
         "x-default": paths.bs,
       },
     },
-    robots: blocked
-      ? { index: false, follow: !noindex, nocache: true }
-      : { index: true, follow: true },
+    // "noindex, follow" rather than nofollow: the page stays out of results
+    // while crawlers can still reach the MOST pages it links to.
+    robots: blocked ? { index: false, follow: true, nocache: true } : { index: true, follow: true },
     openGraph: {
       type: "website",
       siteName: site.name,

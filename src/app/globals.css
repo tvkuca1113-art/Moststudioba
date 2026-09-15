@@ -7,7 +7,7 @@
  * ------------------------------------------------------------------ */
 @theme {
   --font-display: var(--font-archivo), "Helvetica Neue", Arial, sans-serif;
-  --font-sans: var(--font-inter), "Helvetica Neue", Arial, sans-serif;
+  --font-sans: var(--font-body), "Helvetica Neue", Arial, sans-serif;
 
   --color-ink: #091c18;
   --color-forest: #103c35;
@@ -129,7 +129,7 @@
 
   .scene-stage {
     transform-style: preserve-3d;
-    transform: rotateX(var(--stage-rx, 9deg)) rotateY(var(--stage-ry, -17deg))
+    transform: rotateX(var(--stage-rx, 7deg)) rotateY(var(--stage-ry, -14deg))
       rotateZ(var(--stage-rz, 2deg));
     transition: transform 0.9s var(--ease-out-soft);
   }

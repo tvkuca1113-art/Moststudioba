@@ -59,7 +59,7 @@ export function ProjectView({ locale, slug }: { locale: Locale; slug: string }) 
             </div>
             <div>
               <dt className="text-[0.8125rem] font-semibold tracking-[0.16em] text-slate uppercase">
-                {dict.projects.goalPrefix}
+                {dict.projects.goalLabel}
               </dt>
               <dd className="mt-3 text-[1.0625rem] leading-relaxed">
                 {dict.projects.goalPrefix} {t(project.goal)}

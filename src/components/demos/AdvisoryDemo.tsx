@@ -8,6 +8,7 @@ import type { Locale } from "@/lib/i18n/config";
 import type { Dictionary } from "@/lib/i18n/dictionary";
 import { translator } from "@/lib/i18n/localized";
 import { AdvisoryScene } from "./art";
+import { DemoActionButton } from "./DemoActionButton";
 import { AnnotationMarker, DemoSection } from "./shared";
 
 type Answers = Record<string, AdvisoryArea | undefined>;
@@ -32,6 +33,8 @@ export function AdvisoryDemo({
 }) {
   const uid = useId().replace(/[:]/g, "");
   const t = translator(locale);
+  // Ids are derived per instance: a case page renders this demo twice.
+  const at = (name: string) => `${uid}-${name}`;
   const [answers, setAnswers] = useState<Answers>({});
 
   const given = c.orientation.questions.map((question) => answers[question.id]).filter(Boolean) as AdvisoryArea[];
@@ -54,15 +57,27 @@ export function AdvisoryDemo({
       <div className="flex items-center justify-between gap-4 border-b border-[#23211c]/15 px-5 py-5 @3xl:px-14">
         <span className="font-display text-sm font-medium tracking-[0.34em] uppercase">{c.brand}</span>
         <nav aria-label={c.brand} className="hidden items-center gap-8 text-[0.8125rem] @3xl:flex">
-          <span className="text-[#23211c]/65">{t(c.nav.areas)}</span>
-          <span className="text-[#23211c]/65">{t(c.nav.orientation)}</span>
-          <span className="text-[#23211c]/65">{t(c.nav.contact)}</span>
+          <a href={`#${at("podrucja")}`} className="text-[#23211c]/65 hover:text-[#23211c]">
+            {t(c.nav.areas)}
+          </a>
+          <a href={`#${at("orijentacija")}`} className="text-[#23211c]/65 hover:text-[#23211c]">
+            {t(c.nav.orientation)}
+          </a>
+          <a href={`#${at("kontakt")}`} className="text-[#23211c]/65 hover:text-[#23211c]">
+            {t(c.nav.contact)}
+          </a>
         </nav>
-        <span className="border-b border-[#23211c] pb-0.5 text-[0.8125rem] font-medium">{t(c.nav.cta)}</span>
+        <a
+          href={`#${at("kontakt")}`}
+          className="inline-flex min-h-11 items-center border-b border-[#23211c] pb-0.5 text-[0.8125rem] font-medium"
+        >
+          {t(c.nav.cta)}
+        </a>
       </div>
 
-      {/* Hero — one column, generous measure, no cards */}
+      {/* Hero — editorial measure on the left, quiet facts on the right */}
       <DemoSection className="@3xl:px-14">
+        <div className="grid gap-10 @3xl:grid-cols-[minmax(0,1.5fr)_minmax(0,0.5fr)] @3xl:gap-16">
         <div className="relative max-w-3xl">
           {annotate && (
             <AnnotationMarker id="offer" label={dict.showcase.annotationLabel} className="absolute -top-2 -left-9" />
@@ -78,9 +93,24 @@ export function AdvisoryDemo({
             {t(c.hero.lead)}
           </p>
           <p className="mt-4 max-w-2xl text-[0.9375rem] leading-[1.75] text-[#23211c]/60">{t(c.hero.note)}</p>
-          <span className="mt-7 inline-flex min-h-12 items-center border-b-2 border-[#7a6a52] pb-1 text-[0.9375rem] font-medium">
+          <a
+            href={`#${at("orijentacija")}`}
+            className="mt-7 inline-flex min-h-12 items-center border-b-2 border-[#7a6a52] pb-1 text-[0.9375rem] font-medium"
+          >
             {t(c.hero.cta)}
-          </span>
+          </a>
+        </div>
+
+        <dl className="flex flex-col gap-6 border-t border-[#23211c]/20 pt-6 @3xl:border-t-0 @3xl:border-l @3xl:border-[#23211c]/20 @3xl:pt-2 @3xl:pl-8">
+          {c.hero.meta.map((item) => (
+            <div key={t(item.label)}>
+              <dt className="font-display text-[0.8125rem] font-medium tracking-[0.2em] text-[#7a6a52] uppercase">
+                {t(item.label)}
+              </dt>
+              <dd className="mt-2 text-[0.9375rem] leading-relaxed">{t(item.value)}</dd>
+            </div>
+          ))}
+        </dl>
         </div>
         <div className="mt-10 overflow-hidden border border-[#23211c]/12">
           <div className="aspect-[13/6]">
@@ -90,7 +120,7 @@ export function AdvisoryDemo({
       </DemoSection>
 
       {/* Areas — editorial list, hairlines instead of cards */}
-      <DemoSection className="border-t border-[#23211c]/15 @3xl:px-14">
+      <DemoSection id={at("podrucja")} className="border-t border-[#23211c]/15 @3xl:px-14">
         <div className="relative">
           {annotate && (
             <AnnotationMarker id="services" label={dict.showcase.annotationLabel} className="absolute -top-1 -left-9" />
@@ -117,7 +147,7 @@ export function AdvisoryDemo({
       </DemoSection>
 
       {/* Orientation */}
-      <DemoSection className="bg-[#23211c] text-[#efece4] @3xl:px-14">
+      <DemoSection id={at("orijentacija")} className="bg-[#23211c] text-[#efece4] @3xl:px-14">
         <div className="max-w-2xl">
           <p className="font-display text-[0.8125rem] font-medium tracking-[0.34em] text-[#c3b49a] uppercase">
             {t(c.orientation.eyebrow)}
@@ -206,9 +236,12 @@ export function AdvisoryDemo({
                     ))}
                   </ul>
                   <div className="mt-6 flex flex-wrap items-center gap-4">
-                    <span className="inline-flex min-h-12 items-center bg-[#efece4] px-5 text-[0.9375rem] font-semibold text-[#23211c]">
+                    <a
+                      href={`#${at("kontakt")}`}
+                      className="inline-flex min-h-12 items-center bg-[#efece4] px-5 text-[0.9375rem] font-semibold text-[#23211c]"
+                    >
                       {t(c.contact.cta)}
-                    </span>
+                    </a>
                     <button
                       type="button"
                       onClick={() => setAnswers({})}
@@ -248,7 +281,7 @@ export function AdvisoryDemo({
       </DemoSection>
 
       {/* Contact */}
-      <DemoSection className="border-t border-[#23211c]/15 @3xl:px-14">
+      <DemoSection id={at("kontakt")} className="border-t border-[#23211c]/15 @3xl:px-14">
         <div className="relative max-w-2xl">
           {annotate && (
             <AnnotationMarker id="contact" label={dict.showcase.annotationLabel} className="absolute -top-1 -left-9" />
@@ -257,9 +290,16 @@ export function AdvisoryDemo({
             {t(c.contact.title)}
           </h2>
           <p className="mt-4 text-[1.0625rem] leading-[1.75] text-[#23211c]/75">{t(c.contact.lead)}</p>
-          <span className="mt-6 inline-flex min-h-12 items-center bg-[#23211c] px-6 text-[0.9375rem] font-semibold text-[#efece4]">
-            {t(c.contact.cta)}
-          </span>
+          <div className="mt-6">
+            <DemoActionButton
+              id={at("notice")}
+              label={t(c.contact.cta)}
+              noticeTitle={dict.demoChrome.formNoticeTitle}
+              noticeBody={dict.demoChrome.formNoticeBody}
+              className="bg-[#23211c] text-[#efece4]"
+              noticeClassName="border-[#23211c]/25 bg-[#e6e1d6]"
+            />
+          </div>
           <p className="mt-4 font-display text-[0.8125rem] font-medium tracking-[0.2em] text-[#23211c]/55 uppercase">
             {dict.demoChrome.formNote}
           </p>

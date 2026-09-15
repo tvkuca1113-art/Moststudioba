@@ -98,6 +98,7 @@ export const bs = {
     tryDemo: "Isprobajte demo",
     backToProjects: "Nazad na demo projekte",
     nextProject: "Sljedeći demo koncept",
+    goalLabel: "Cilj koncepta",
     goalPrefix: "Cilj ovog koncepta je",
     showPrefix: "U ovom primjeru prikazujemo",
   },

@@ -29,7 +29,9 @@ export function HeroComposition({ dict }: { dict: Dictionary }) {
     if (!node) return;
     const measure = () => {
       const width = node.clientWidth;
-      setScale(Math.max(0.4, Math.min(1.1, width / STAGE_W)));
+      // The scene overhangs its box once rotated, so fit to a slightly
+      // wider budget than the stage itself.
+      setScale(Math.max(0.38, Math.min(1.05, width / (STAGE_W + 70))));
     };
     measure();
     if (typeof ResizeObserver === "undefined") {
@@ -57,8 +59,8 @@ export function HeroComposition({ dict }: { dict: Dictionary }) {
         const rect = wrap.getBoundingClientRect();
         const x = (event.clientX - rect.left) / rect.width - 0.5;
         const y = (event.clientY - rect.top) / rect.height - 0.5;
-        stage.style.setProperty("--stage-ry", `${-17 + x * 9}deg`);
-        stage.style.setProperty("--stage-rx", `${9 - y * 6}deg`);
+        stage.style.setProperty("--stage-ry", `${-14 + x * 8}deg`);
+        stage.style.setProperty("--stage-rx", `${7 - y * 5}deg`);
       });
     };
     const onLeave = () => {
@@ -89,25 +91,27 @@ export function HeroComposition({ dict }: { dict: Dictionary }) {
         }}
       >
         <div ref={stageRef} className="scene-stage relative size-full" aria-hidden="true">
-          {/* Deck — the lime span line between the piers */}
+          {/* The deck: one lime span passing behind the window and in front
+              of both piers. */}
           <Plate
             className="rounded-full bg-lime/90"
-            style={{ left: 54, top: 404, width: 574, height: 12, "--pz": "-70px", "--delay": "90ms" } as Vars}
+            style={{ left: -6, top: 392, width: 692, height: 10, "--pz": "-30px", "--delay": "90ms" } as Vars}
           />
-          {/* Cable stays: two diagonals that read as the middle of an M */}
+          {/* Truss under the deck. With the two piers it draws an M — the
+              studio's name, stated once and quietly. */}
           <Plate
-            className="origin-left rounded-full bg-lime/35"
-            style={{ left: 196, top: 408, width: 190, height: 3, "--pz": "-68px", "--delay": "150ms", rotate: "-46deg" } as Vars}
+            className="origin-left rounded-full bg-lime/40"
+            style={{ left: 150, top: 398, width: 208, height: 3, "--pz": "-28px", "--delay": "150ms", rotate: "21deg" } as Vars}
           />
           <Plate
-            className="origin-left rounded-full bg-lime/35"
-            style={{ left: 342, top: 272, width: 190, height: 3, "--pz": "-68px", "--delay": "170ms", rotate: "46deg" } as Vars}
+            className="origin-left rounded-full bg-lime/40"
+            style={{ left: 342, top: 472, width: 208, height: 3, "--pz": "-28px", "--delay": "170ms", rotate: "-21deg" } as Vars}
           />
 
           {/* Left pier — a phone screen */}
           <Plate
-            className="overflow-hidden rounded-[22px] border border-white/12 bg-[#0f2c27] shadow-[0_40px_70px_-40px_rgba(0,0,0,0.9)]"
-            style={{ left: 30, top: 128, width: 168, height: 300, "--pz": "-150px", "--pry": "17deg", "--delay": "200ms" } as Vars}
+            className="overflow-hidden rounded-[22px] border border-white/20 bg-[#143b33] shadow-[0_40px_70px_-40px_rgba(0,0,0,0.9)]"
+            style={{ left: -34, top: 180, width: 150, height: 268, "--pz": "-120px", "--pry": "20deg", "--delay": "200ms" } as Vars}
           >
             <div className="flex items-center justify-between px-4 pt-3 text-[8px] text-mist">
               <span>9:41</span>
@@ -134,7 +138,7 @@ export function HeroComposition({ dict }: { dict: Dictionary }) {
           {/* Right pier — a contact card */}
           <Plate
             className="overflow-hidden rounded-2xl border border-line-light bg-paper shadow-[0_40px_70px_-40px_rgba(0,0,0,0.85)]"
-            style={{ left: 484, top: 168, width: 170, height: 262, "--pz": "-150px", "--pry": "-17deg", "--delay": "250ms" } as Vars}
+            style={{ left: 556, top: 214, width: 152, height: 250, "--pz": "-120px", "--pry": "-20deg", "--delay": "250ms" } as Vars}
           >
             <div className="p-4">
               <p className="text-[8px] font-semibold tracking-[0.18em] text-slate uppercase">{f.formTitle}</p>
@@ -154,7 +158,7 @@ export function HeroComposition({ dict }: { dict: Dictionary }) {
           {/* The span — main browser window */}
           <Plate
             className="overflow-hidden rounded-2xl border border-line-light bg-paper shadow-[0_60px_90px_-45px_rgba(0,0,0,0.9)]"
-            style={{ left: 92, top: 42, width: 496, height: 340, "--pz": "40px", "--delay": "0ms" } as Vars}
+            style={{ left: 148, top: 46, width: 408, height: 300, "--pz": "70px", "--delay": "0ms" } as Vars}
           >
             <div className="flex items-center gap-2 border-b border-line-light bg-white px-3 py-2">
               <span className="flex gap-1">
@@ -213,23 +217,6 @@ export function HeroComposition({ dict }: { dict: Dictionary }) {
             </div>
           </Plate>
 
-          {/* Front card floating above the span */}
-          <Plate
-            className="overflow-hidden rounded-xl border border-line-dark bg-ink shadow-[0_40px_60px_-35px_rgba(0,0,0,0.95)]"
-            style={{ left: 392, top: 322, width: 224, height: 128, "--pz": "140px", "--pry": "-9deg", "--delay": "320ms" } as Vars}
-          >
-            <div className="p-3.5">
-              <p className="text-[7px] font-semibold tracking-[0.2em] text-lime uppercase">{dict.showcase.eyebrow}</p>
-              <div className="mt-2.5 space-y-2">
-                {[f.cardOne, f.cardTwo, f.cardThree].map((label, index) => (
-                  <div key={label} className="flex items-center justify-between border-b border-line-dark pb-1.5">
-                    <span className="text-[9px] font-semibold text-paper">{label}</span>
-                    <span className="text-[8px] text-mist">0{index + 1}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </Plate>
         </div>
       </div>
     </div>

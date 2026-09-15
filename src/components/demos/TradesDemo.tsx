@@ -8,6 +8,7 @@ import type { Locale } from "@/lib/i18n/config";
 import type { Dictionary } from "@/lib/i18n/dictionary";
 import { translator } from "@/lib/i18n/localized";
 import { JoineryScene, type RoomVariant, type WoodFinish } from "./art";
+import { DemoActionButton } from "./DemoActionButton";
 import { AnnotationMarker, DemoSection } from "./shared";
 
 /**
@@ -29,6 +30,8 @@ export function TradesDemo({
 }) {
   const uid = useId().replace(/[:]/g, "");
   const t = translator(locale);
+  // Ids are derived per instance: a case page renders this demo twice.
+  const at = (name: string) => `${uid}-${name}`;
   const [room, setRoom] = useState<RoomVariant>("kitchen");
   const [finish, setFinish] = useState<WoodFinish>("oak");
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
@@ -56,13 +59,22 @@ export function TradesDemo({
           {c.brand}
         </span>
         <nav aria-label={c.brand} className="hidden items-center gap-7 text-[0.8125rem] tracking-[0.14em] uppercase @3xl:flex">
-          <span className="text-white/60">{t(c.nav.work)}</span>
-          <span className="text-white/60">{t(c.nav.materials)}</span>
-          <span className="text-white/60">{t(c.nav.measuring)}</span>
+          <a href={`#${at("konfigurator")}`} className="text-white/60 hover:text-white">
+            {t(c.nav.work)}
+          </a>
+          <a href={`#${at("konfigurator")}`} className="text-white/60 hover:text-white">
+            {t(c.nav.materials)}
+          </a>
+          <a href={`#${at("mjerenje")}`} className="text-white/60 hover:text-white">
+            {t(c.nav.measuring)}
+          </a>
         </nav>
-        <span className="rounded-none border border-[#c8864a] px-4 py-2 text-[0.8125rem] font-bold tracking-[0.12em] text-[#c8864a] uppercase @3xl:text-[0.8125rem]">
+        <a
+          href={`#${at("kontakt")}`}
+          className="inline-flex min-h-11 items-center border border-[#c8864a] px-4 py-2 text-[0.8125rem] font-bold tracking-[0.12em] text-[#c8864a] uppercase"
+        >
           {t(c.nav.cta)}
-        </span>
+        </a>
       </div>
 
       {/* Hero */}
@@ -86,19 +98,25 @@ export function TradesDemo({
           <div>
             <p className="max-w-md text-[1.0625rem] leading-relaxed text-white/75">{t(c.hero.lead)}</p>
             <div className="mt-6 flex flex-wrap gap-3">
-              <span className="inline-flex min-h-12 items-center bg-[#c8864a] px-6 text-[0.9375rem] font-bold tracking-[0.04em] text-[#141312] uppercase">
+              <a
+                href={`#${at("kontakt")}`}
+                className="inline-flex min-h-12 items-center bg-[#c8864a] px-6 text-[0.9375rem] font-bold tracking-[0.04em] text-[#141312] uppercase"
+              >
                 {t(c.hero.cta)}
-              </span>
-              <span className="inline-flex min-h-12 items-center border border-white/25 px-6 text-[0.9375rem] font-semibold">
+              </a>
+              <a
+                href={`#${at("konfigurator")}`}
+                className="inline-flex min-h-12 items-center border border-white/25 px-6 text-[0.9375rem] font-semibold"
+              >
                 {t(c.hero.secondary)}
-              </span>
+              </a>
             </div>
           </div>
         </div>
       </DemoSection>
 
       {/* Configurator */}
-      <DemoSection className="border-t border-white/10 bg-[#1b1a18]">
+      <DemoSection id={at("konfigurator")} className="border-t border-white/10 bg-[#1b1a18]">
         <div className="relative max-w-2xl">
           {annotate && (
             <AnnotationMarker id="services" label={dict.showcase.annotationLabel} className="absolute -top-1 -left-9" />
@@ -232,7 +250,7 @@ export function TradesDemo({
       </DemoSection>
 
       {/* Measuring */}
-      <DemoSection className="border-t border-white/10">
+      <DemoSection id={at("mjerenje")} className="border-t border-white/10">
         <div className="max-w-2xl">
           <h2 className="font-display text-3xl leading-[0.95] font-black tracking-[-0.02em] uppercase @3xl:text-4xl">
             {t(c.measuring.title)}
@@ -251,7 +269,7 @@ export function TradesDemo({
       </DemoSection>
 
       {/* Contact */}
-      <DemoSection className="border-t border-white/10 bg-[#c8864a] text-[#141312]">
+      <DemoSection id={at("kontakt")} className="border-t border-white/10 bg-[#c8864a] text-[#141312]">
         <div className="relative grid gap-8 @3xl:grid-cols-[1.1fr_0.9fr] @3xl:items-start">
           <div className="relative">
             {annotate && (
@@ -261,9 +279,16 @@ export function TradesDemo({
               {t(c.contact.title)}
             </h2>
             <p className="mt-4 max-w-md text-[1.0625rem] leading-relaxed text-[#141312]/80">{t(c.contact.lead)}</p>
-            <span className="mt-6 inline-flex min-h-12 items-center bg-[#141312] px-6 text-[0.9375rem] font-bold tracking-[0.04em] text-[#f2ece2] uppercase">
-              {t(c.contact.cta)}
-            </span>
+            <div className="mt-6">
+              <DemoActionButton
+                id={at("notice")}
+                label={t(c.contact.cta)}
+                noticeTitle={dict.demoChrome.formNoticeTitle}
+                noticeBody={dict.demoChrome.formNoticeBody}
+                className="bg-[#141312] font-bold tracking-[0.04em] text-[#f2ece2] uppercase"
+                noticeClassName="border-[#141312]/30 bg-[#141312]/5"
+              />
+            </div>
             <p className="mt-4 text-[0.8125rem] font-semibold tracking-[0.12em] text-[#141312]/70 uppercase">
               {dict.demoChrome.formNote}
             </p>

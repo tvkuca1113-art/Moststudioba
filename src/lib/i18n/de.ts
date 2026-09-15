@@ -96,6 +96,7 @@ export const de: Dictionary = {
     tryDemo: "Demo ausprobieren",
     backToProjects: "Zurück zu den Demo-Projekten",
     nextProject: "Nächstes Demo-Konzept",
+    goalLabel: "Ziel des Konzepts",
     goalPrefix: "Ziel dieses Konzepts ist",
     showPrefix: "In diesem Beispiel zeigen wir",
   },

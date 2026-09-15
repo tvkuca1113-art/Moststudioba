@@ -118,13 +118,13 @@ export function Header({
               tone={dark ? "dark" : "light"}
               className="hidden sm:flex"
             />
-            <ButtonLink
-              href={contactHref}
-              tone={dark ? "dark" : "light"}
-              className="hidden px-5 py-2.5 text-sm sm:inline-flex"
-            >
-              {dict.nav.cta}
-            </ButtonLink>
+            {/* Wrapped: a `hidden` utility on the button itself would compete
+                with the button's own `inline-flex` and lose. */}
+            <span className="hidden sm:block">
+              <ButtonLink href={contactHref} tone={dark ? "dark" : "light"} className="px-5 py-2.5 text-sm">
+                {dict.nav.cta}
+              </ButtonLink>
+            </span>
             <button
               ref={toggleRef}
               type="button"

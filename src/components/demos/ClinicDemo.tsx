@@ -8,6 +8,7 @@ import type { Dictionary } from "@/lib/i18n/dictionary";
 import { translator } from "@/lib/i18n/localized";
 import { cn } from "@/lib/cn";
 import { ClinicScene } from "./art";
+import { DemoActionButton } from "./DemoActionButton";
 import { AnnotationMarker, DemoSection } from "./shared";
 
 /**
@@ -31,6 +32,8 @@ export function ClinicDemo({
   const [selected, setSelected] = useState<string>(c.triage.options[0].id);
   const active = c.triage.options.find((option) => option.id === selected) ?? c.triage.options[0];
   const t = translator(locale);
+  // Ids are derived per instance: a case page renders this demo twice.
+  const at = (name: string) => `${uid}-${name}`;
 
   return (
     <div className="bg-[#f7fafa] font-sans text-[#12303a] [--ring:#3f7f8c]">
@@ -38,13 +41,22 @@ export function ClinicDemo({
       <div className="flex items-center justify-between gap-4 border-b border-[#12303a]/10 bg-white/80 px-5 py-4 @3xl:px-12">
         <span className="text-[0.9375rem] font-bold tracking-tight @3xl:text-lg">{c.brand}</span>
         <nav aria-label={c.brand} className="hidden items-center gap-7 text-sm @3xl:flex">
-          <span className="text-[#12303a]/70">{t(c.nav.services)}</span>
-          <span className="text-[#12303a]/70">{t(c.nav.visit)}</span>
-          <span className="text-[#12303a]/70">{t(c.nav.contact)}</span>
+          <a href={`#${at("usluge")}`} className="text-[#12303a]/70 hover:text-[#12303a]">
+            {t(c.nav.services)}
+          </a>
+          <a href={`#${at("dolazak")}`} className="text-[#12303a]/70 hover:text-[#12303a]">
+            {t(c.nav.visit)}
+          </a>
+          <a href={`#${at("kontakt")}`} className="text-[#12303a]/70 hover:text-[#12303a]">
+            {t(c.nav.contact)}
+          </a>
         </nav>
-        <span className="rounded-full bg-[#12303a] px-4 py-2 text-[0.8125rem] font-semibold text-white @3xl:text-sm">
+        <a
+          href={`#${at("kontakt")}`}
+          className="inline-flex min-h-11 items-center rounded-full bg-[#12303a] px-4 py-2 text-[0.8125rem] font-semibold text-white @3xl:text-sm"
+        >
           {t(c.nav.book)}
-        </span>
+        </a>
       </div>
 
       {/* Hero */}
@@ -68,12 +80,18 @@ export function ClinicDemo({
               {t(c.hero.lead)}
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
-              <span className="inline-flex min-h-12 items-center rounded-full bg-[#12303a] px-6 text-[0.9375rem] font-semibold text-white">
+              <a
+                href={`#${at("kontakt")}`}
+                className="inline-flex min-h-12 items-center rounded-full bg-[#12303a] px-6 text-[0.9375rem] font-semibold text-white"
+              >
                 {t(c.hero.ctaPrimary)}
-              </span>
-              <span className="inline-flex min-h-12 items-center rounded-full border border-[#12303a]/25 px-6 text-[0.9375rem] font-semibold">
+              </a>
+              <a
+                href={`#${at("usluge")}`}
+                className="inline-flex min-h-12 items-center rounded-full border border-[#12303a]/25 px-6 text-[0.9375rem] font-semibold"
+              >
                 {t(c.hero.ctaSecondary)}
-              </span>
+              </a>
             </div>
             <dl className="mt-8 grid gap-4 border-t border-[#12303a]/10 pt-6 @lg:grid-cols-3">
               {c.hero.facts.map((fact) => (
@@ -162,7 +180,7 @@ export function ClinicDemo({
       </DemoSection>
 
       {/* Services */}
-      <DemoSection>
+      <DemoSection id={at("usluge")}>
         <div className="relative max-w-2xl">
           {annotate && (
             <AnnotationMarker
@@ -190,7 +208,7 @@ export function ClinicDemo({
       </DemoSection>
 
       {/* First visit */}
-      <DemoSection className="bg-[#12303a] text-white">
+      <DemoSection id={at("dolazak")} className="bg-[#12303a] text-white">
         <h2 className="max-w-2xl text-2xl leading-tight font-bold tracking-tight @3xl:text-3xl">{t(c.visit.title)}</h2>
         <ol className="mt-8 grid gap-6 @2xl:grid-cols-3">
           {c.visit.steps.map((step, index) => (
@@ -204,7 +222,7 @@ export function ClinicDemo({
       </DemoSection>
 
       {/* Contact */}
-      <DemoSection className="bg-white">
+      <DemoSection id={at("kontakt")} className="bg-white">
         <div className="relative grid gap-8 @3xl:grid-cols-[1.1fr_0.9fr] @3xl:items-start">
           <div className="relative">
             {annotate && (
@@ -216,9 +234,16 @@ export function ClinicDemo({
             )}
             <h2 className="text-2xl leading-tight font-bold tracking-tight @3xl:text-3xl">{t(c.contact.title)}</h2>
             <p className="mt-3 max-w-xl text-[1.0625rem] leading-relaxed text-[#12303a]/75">{t(c.contact.lead)}</p>
-            <span className="mt-6 inline-flex min-h-12 items-center rounded-full bg-[#12303a] px-6 text-[0.9375rem] font-semibold text-white">
-              {t(c.contact.cta)}
-            </span>
+            <div className="mt-6">
+              <DemoActionButton
+                id={at("notice")}
+                label={t(c.contact.cta)}
+                noticeTitle={dict.demoChrome.formNoticeTitle}
+                noticeBody={dict.demoChrome.formNoticeBody}
+                className="rounded-full bg-[#12303a] text-white"
+                noticeClassName="rounded-2xl border-[#12303a]/20 bg-[#eef4f5]"
+              />
+            </div>
             <p className="mt-4 text-[0.8125rem] tracking-[0.12em] text-[#12303a]/55 uppercase">
               {dict.demoChrome.formNote}
             </p>
@@ -238,9 +263,12 @@ export function ClinicDemo({
 
       {/* Mobile-only booking bar: the same call to action, kept in reach */}
       <div className="sticky bottom-0 z-10 border-t border-[#12303a]/10 bg-white/95 px-5 py-3 backdrop-blur @3xl:hidden">
-        <span className="flex min-h-12 items-center justify-center rounded-full bg-[#12303a] px-6 text-[0.9375rem] font-semibold text-white">
+        <a
+          href={`#${at("kontakt")}`}
+          className="flex min-h-12 items-center justify-center rounded-full bg-[#12303a] px-6 text-[0.9375rem] font-semibold text-white"
+        >
           {t(c.nav.book)}
-        </span>
+        </a>
       </div>
 
       <footer className="border-t border-[#12303a]/10 px-5 py-6 text-[0.8125rem] text-[#12303a]/60 @3xl:px-12">
