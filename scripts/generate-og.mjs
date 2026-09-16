@@ -61,7 +61,11 @@ const outDir = path.join(process.cwd(), "public", "og");
 await mkdir(outDir, { recursive: true });
 
 for (const variant of variants) {
-  const png = await sharp(Buffer.from(svg(variant))).png({ compressionLevel: 9 }).toBuffer();
+  // Flat colour and type: a 32-colour palette is visually identical here and
+  // roughly halves the file.
+  const png = await sharp(Buffer.from(svg(variant)))
+    .png({ palette: true, colors: 32, compressionLevel: 9, effort: 10 })
+    .toBuffer();
   await writeFile(path.join(outDir, variant.file), png);
   console.log(`${variant.file} — ${(png.length / 1024).toFixed(0)} kB`);
 }
