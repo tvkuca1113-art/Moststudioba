@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { Analytics } from "@vercel/analytics/next";
 
 import { fontClassName } from "@/lib/fonts";
 import { htmlLang, type Locale } from "@/lib/i18n/config";
@@ -17,7 +18,10 @@ export function RootDocument({
 }) {
   return (
     <html lang={htmlLang[locale]} className={fontClassName}>
-      <body className="bg-paper text-ink antialiased">{children}</body>
+      <body className="bg-paper text-ink antialiased">
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
