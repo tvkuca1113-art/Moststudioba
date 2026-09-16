@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { Analytics } from "@vercel/analytics/next";
 
+import { site } from "@/content/site";
 import { fontClassName } from "@/lib/fonts";
 import { htmlLang, type Locale } from "@/lib/i18n/config";
 
@@ -20,7 +21,10 @@ export function RootDocument({
     <html lang={htmlLang[locale]} className={fontClassName}>
       <body className="bg-paper text-ink antialiased">
         {children}
-        <Analytics />
+        {/* Vercel Web Analytics is wired up but stays off until the studio
+            decides to turn it on, like every other measurement on this site.
+            Set NEXT_PUBLIC_ANALYTICS_ENABLED=true to start collecting. */}
+        {site.analyticsEnabled && <Analytics />}
       </body>
     </html>
   );

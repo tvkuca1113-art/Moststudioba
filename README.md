@@ -33,7 +33,7 @@ Kopiraj `.env.example` u `.env.local`. Nema tajnih ključeva — sve je `NEXT_PU
 | --- | --- |
 | `NEXT_PUBLIC_SITE_URL` | Kanonski URL. Na Vercelu nije obavezan — bez njega se koristi produkcijski hostname projekta. Postavi ga kada dobiješ vlastitu domenu. |
 | `NEXT_PUBLIC_ALLOW_INDEXING` | Dok nije `true`, cijeli sajt je `noindex` i `robots.txt` je `Disallow: /`. Preview deployi ostaju `noindex` i kada jeste `true`. |
-| `NEXT_PUBLIC_ANALYTICS_ENABLED` | Dok nije `true`, ne emituje se nijedan događaj. Nema pixela ni skripti trećih strana. |
+| `NEXT_PUBLIC_ANALYTICS_ENABLED` | Dok nije `true`, ne učitava se Vercel Web Analytics i ne emituje se nijedan događaj. Nema pixela ni skripti trećih strana. |
 
 ## Deployment na Vercel
 
