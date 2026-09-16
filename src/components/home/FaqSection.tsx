@@ -1,17 +1,34 @@
+import Link from "next/link";
+
 import { Container } from "@/components/ui/Container";
 import { Section, SectionHeading } from "@/components/ui/Section";
-import { PlusIcon } from "@/components/ui/icons";
+import { ArrowUpRight, PlusIcon } from "@/components/ui/icons";
 import { faqItems } from "@/content/faq";
-import type { Locale } from "@/lib/i18n/config";
+import { path, type Locale } from "@/lib/i18n/config";
 import type { Dictionary } from "@/lib/i18n/dictionary";
 import { translator } from "@/lib/i18n/localized";
 
 /**
  * Native <details>: it opens with the keyboard, is announced correctly, is
  * findable by in-page search, and still works if JavaScript never runs.
+ *
+ * The homepage shows the four questions people actually arrive with and links
+ * to the rest. The contact page carries the full list — it is the page someone
+ * is on when the remaining questions occur to them.
  */
-export function FaqSection({ locale, dict }: { locale: Locale; dict: Dictionary }) {
+export function FaqSection({
+  locale,
+  dict,
+  limit,
+}: {
+  locale: Locale;
+  dict: Dictionary;
+  /** Show only the first N, with a link to the full list. */
+  limit?: number;
+}) {
   const t = translator(locale);
+  const items = limit ? faqItems.slice(0, limit) : faqItems;
+  const truncated = items.length < faqItems.length;
 
   return (
     <Section id="faq" tone="paperDim" size="tight" labelledBy="faq-title">
@@ -20,13 +37,13 @@ export function FaqSection({ locale, dict }: { locale: Locale; dict: Dictionary 
           <SectionHeading id="faq-title" eyebrow={dict.faq.eyebrow} title={dict.faq.title} lead={dict.faq.lead} />
 
           <div className="border-t border-line-light">
-            {faqItems.map((item) => (
+            {items.map((item) => (
               <details key={item.id} className="group border-b border-line-light">
                 <summary className="flex cursor-pointer list-none items-start justify-between gap-6 py-5 text-left text-lg leading-snug font-semibold [&::-webkit-details-marker]:hidden">
                   {t(item.question)}
                   <PlusIcon className="mt-1 size-5 shrink-0 text-forest transition-transform duration-200 group-open:rotate-45 motion-reduce:transition-none" />
                 </summary>
-                <div className="pb-6 text-[0.9375rem] leading-relaxed text-slate sm:text-base">
+                <div className="pb-6 text-body leading-relaxed text-slate">
                   {t(item.answer).map((paragraph) => (
                     <p key={paragraph} className="mt-2 first:mt-0">
                       {paragraph}
@@ -35,6 +52,16 @@ export function FaqSection({ locale, dict }: { locale: Locale; dict: Dictionary 
                 </div>
               </details>
             ))}
+
+            {truncated && (
+              <Link
+                href={`${path("contact", locale)}#faq`}
+                className="group mt-5 inline-flex min-h-11 items-center gap-2 text-[0.9375rem] font-semibold text-forest underline decoration-forest/30 underline-offset-4 hover:decoration-forest"
+              >
+                {dict.faq.all}
+                <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:group-hover:transform-none" />
+              </Link>
+            )}
           </div>
         </div>
       </Container>

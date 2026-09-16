@@ -86,7 +86,7 @@ export function Header({
         <div className="flex h-16 items-center justify-between gap-4 sm:h-20">
           <Link
             href={path("home", locale)}
-            className="shrink-0 py-2"
+            className="inline-flex min-h-11 shrink-0 items-center"
             aria-label={`${site.name} — ${dict.nav.ariaLabel}`}
           >
             <Wordmark />

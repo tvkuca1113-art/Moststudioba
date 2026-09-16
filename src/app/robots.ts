@@ -4,9 +4,17 @@ import { absoluteUrl } from "@/lib/seo";
 import { indexingAllowed, siteUrl } from "@/lib/site-url";
 
 /**
- * Indexing is opt-in. Previews and any environment without
- * NEXT_PUBLIC_ALLOW_INDEXING=true stay closed to crawlers, and the functional
- * demo routes stay closed everywhere.
+ * Indexing is opt-in: previews and any environment without
+ * NEXT_PUBLIC_ALLOW_INDEXING=true stay closed to crawlers entirely.
+ *
+ * Once it is open, everything is crawlable — including `/demo/`. Those pages
+ * carry `noindex, follow` in their own metadata, which is what keeps them out
+ * of results. Disallowing them here would be the wrong tool and would work
+ * against itself: a page a crawler is forbidden to fetch is a page whose
+ * `noindex` is never read, and it can still end up listed from inbound links.
+ * They are left crawlable so the instruction is actually seen, and so the
+ * links from a demo back to the concept pages are followed. They stay out of
+ * the sitemap, which only ever lists what we do want indexed.
  */
 export default function robots(): MetadataRoute.Robots {
   if (!indexingAllowed) {
@@ -14,11 +22,7 @@ export default function robots(): MetadataRoute.Robots {
   }
 
   return {
-    rules: {
-      userAgent: "*",
-      allow: "/",
-      disallow: ["/demo/", "/de/demo/"],
-    },
+    rules: { userAgent: "*", allow: "/" },
     sitemap: absoluteUrl("/sitemap.xml"),
     host: siteUrl,
   };

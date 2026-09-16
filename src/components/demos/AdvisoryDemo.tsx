@@ -49,7 +49,7 @@ export function AdvisoryDemo({ locale, dict }: { locale: Locale; dict: Dictionar
     <div className="bg-[#f4f1ea] font-sans text-[#1b2130]">
       <div className="flex items-center justify-between gap-4 border-b border-[#1b2130]/15 px-5 py-5 @3xl:px-14">
         <span className="font-display text-sm font-medium tracking-[0.34em] uppercase">{c.brand}</span>
-        <nav aria-label={c.brand} className="hidden items-center gap-8 text-[0.8125rem] @3xl:flex">
+        <nav aria-label={c.brand} className="hidden items-center gap-8 text-[0.8125rem] @3xl:flex [&_a]:inline-flex [&_a]:min-h-11 [&_a]:items-center">
           <a href={`#${at("podrucja")}`} className="text-[#1b2130]/65 hover:text-[#1b2130]">
             {t(c.nav.areas)}
           </a>

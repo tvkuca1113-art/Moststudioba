@@ -31,7 +31,7 @@ export function ClinicDemo({ locale, dict }: { locale: Locale; dict: Dictionary 
       {/* Header */}
       <div className="flex items-center justify-between gap-4 border-b border-[#123a42]/10 px-5 py-4 @3xl:px-14 @3xl:py-5">
         <span className="text-[1.0625rem] font-semibold tracking-[-0.01em] @3xl:text-xl">{c.brand}</span>
-        <nav aria-label={c.brand} className="hidden items-center gap-8 text-[0.9375rem] @3xl:flex">
+        <nav aria-label={c.brand} className="hidden items-center gap-8 text-[0.9375rem] @3xl:flex [&_a]:inline-flex [&_a]:min-h-11 [&_a]:items-center">
           <a href={`#${at("usluge")}`} className="text-[#123a42]/70 hover:text-[#123a42]">
             {t(c.nav.services)}
           </a>

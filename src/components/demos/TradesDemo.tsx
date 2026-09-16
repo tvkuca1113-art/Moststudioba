@@ -51,7 +51,7 @@ export function TradesDemo({ locale, dict }: { locale: Locale; dict: Dictionary 
         <span className="font-display text-[0.9375rem] font-extrabold tracking-[0.14em] uppercase @3xl:text-base">
           {c.brand}
         </span>
-        <nav aria-label={c.brand} className="hidden items-center gap-8 text-[0.8125rem] tracking-[0.14em] uppercase @3xl:flex">
+        <nav aria-label={c.brand} className="hidden items-center gap-8 text-[0.8125rem] tracking-[0.14em] uppercase @3xl:flex [&_a]:inline-flex [&_a]:min-h-11 [&_a]:items-center">
           <a href={`#${at("projekti")}`} className="text-[#efeae0]/60 hover:text-[#efeae0]">
             {t(c.nav.work)}
           </a>

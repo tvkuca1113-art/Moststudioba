@@ -44,7 +44,7 @@ export function LanguageSwitcher({
             aria-current={isCurrent ? "true" : undefined}
             aria-label={localeName[candidate]}
             className={cn(
-              "flex min-h-9 min-w-11 items-center justify-center rounded-full px-2.5 text-[0.8125rem] font-semibold tracking-[0.08em] transition-colors",
+              "flex min-h-11 min-w-11 items-center justify-center rounded-full px-3 text-[0.8125rem] font-semibold tracking-[0.08em] transition-colors",
               isCurrent
                 ? tone === "light"
                   ? "bg-forest text-paper"

@@ -37,7 +37,7 @@ export function DemoView({ locale, slug }: { locale: Locale; slug: string }) {
       <header data-most-chrome className="bg-ink text-paper on-dark">
         <div className="mx-auto flex w-full max-w-[110rem] flex-wrap items-center justify-between gap-3 px-4 py-3 sm:px-6">
           <div className="flex items-center gap-4">
-            <Link href={path("home", locale)} className="py-1">
+            <Link href={path("home", locale)} className="inline-flex min-h-11 items-center">
               <Wordmark compact />
               <span className="sr-only">{dict.demoChrome.backToMost}</span>
             </Link>

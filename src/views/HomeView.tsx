@@ -27,7 +27,7 @@ export function HomeView({ locale }: { locale: Locale }) {
       <ServicesSection locale={locale} dict={dict} />
       <ProcessSection locale={locale} dict={dict} />
       <StudioSection locale={locale} dict={dict} />
-      <FaqSection locale={locale} dict={dict} />
+      <FaqSection locale={locale} dict={dict} limit={4} />
       <ContactSection locale={locale} dict={dict} />
     </SiteFrame>
   );

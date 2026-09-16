@@ -32,9 +32,21 @@ Da se uključi indeksiranje poslovnih stranica:
 2. `NEXT_PUBLIC_ALLOW_INDEXING` = `true`
 3. Redeploy, pa provjeriti `/robots.txt` (treba `Allow: /`).
 
-Demo rute (`/demo/*`, `/de/demo/*`) ostaju `noindex` i nakon toga — izmišljena
-ordinacija ili stolarija ne smije se pojaviti u pretrazi kao stvarna firma.
+Demo rute (`/demo/*`, `/de/demo/*`) ostaju `noindex, follow` i nakon toga —
+izmišljena ordinacija ili stolarija ne smije se pojaviti u pretrazi kao stvarna
+firma. Ostaju dostupne za crawlanje i nisu u sitemapu; `robots.txt` ih više ne
+zabranjuje, jer zabrana dohvata znači da `noindex` nikad ne bude pročitan.
 Prezentacije koncepata (`/projekti/*`) imaju vlastiti sadržaj i indeksiraju se.
+
+### Analitika je i dalje isključena
+
+`NEXT_PUBLIC_ANALYTICS_ENABLED` nije postavljen na Vercelu, pa se Vercel Web
+Analytics ne učitava i nijedan događaj se ne emituje. Postavke su spremne —
+treba samo odluka da se uključi prikupljanje podataka o posjetiocima:
+
+1. Vercel → Settings → Environment Variables → **samo `Production`**
+2. `NEXT_PUBLIC_ANALYTICS_ENABLED` = `true`
+3. Redeploy.
 
 ## Nedostaje — ne blokira objavu
 

@@ -12,8 +12,12 @@ const toneClass: Record<Tone, string> = {
 };
 
 /**
- * Section rhythm is deliberately uneven — alternating tones and two padding
+ * Section rhythm is deliberately uneven — alternating tones and three padding
  * scales keep the page from reading as a stack of identical blocks.
+ *
+ * The default was py-36 at desktop: 288px of air per section, and with seven
+ * sections that was over 2,000px of the page spent on nothing. It is tighter
+ * now, and the sections that carry less get `tight`.
  */
 export function Section({
   id,
@@ -36,9 +40,9 @@ export function Section({
       aria-labelledby={labelledBy}
       className={cn(
         toneClass[tone],
-        size === "tight" && "py-14 sm:py-18 lg:py-24",
-        size === "default" && "py-20 sm:py-28 lg:py-36",
-        size === "loose" && "py-24 sm:py-36 lg:py-48",
+        size === "tight" && "py-10 sm:py-11 lg:py-12",
+        size === "default" && "py-12 sm:py-14 lg:py-18",
+        size === "loose" && "py-20 sm:py-24 lg:py-28",
         className,
       )}
     >
@@ -67,12 +71,12 @@ export function SectionHeading({
   return (
     <div
       className={cn(
-        "flex flex-col gap-6",
+        "flex flex-col gap-5",
         align === "center" && "items-center text-center",
         action && "lg:flex-row lg:items-end lg:justify-between lg:gap-12",
       )}
     >
-      <div className={cn("flex flex-col gap-4", action && "lg:max-w-3xl")}>
+      <div className={cn("flex flex-col gap-3", action && "lg:max-w-3xl")}>
         {eyebrow && (
           <p
             className={cn(
@@ -89,7 +93,7 @@ export function SectionHeading({
         {lead && (
           <p
             className={cn(
-              "max-w-2xl text-lead leading-relaxed",
+              "max-w-[64ch] text-lead leading-[1.5]",
               tone === "light" ? "text-slate" : "text-mist",
             )}
           >

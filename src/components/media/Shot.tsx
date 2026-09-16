@@ -8,6 +8,11 @@ import type { Locale } from "@/lib/i18n/config";
  * A screenshot of an implemented demo page, framed as the device it was
  * captured on. One pair per language, so the headline in the picture is in the
  * language the visitor is reading.
+ *
+ * `crop` shows the top of the capture inside a shallower window. A card wants
+ * to say "this is a designed page", which the first screen already does; the
+ * whole 16:10 capture belongs on the concept page, where it is the subject
+ * rather than a thumbnail.
  */
 export function Shot({
   slug,
@@ -18,6 +23,7 @@ export function Shot({
   sizes,
   priority = false,
   frame = true,
+  crop,
 }: {
   slug: string;
   locale: Locale;
@@ -27,6 +33,12 @@ export function Shot({
   sizes: string;
   priority?: boolean;
   frame?: boolean;
+  /**
+   * Which window of the capture to show. "pano" is the hero gallery, "card"
+   * the portfolio — two different framings of the same page, so the two
+   * sections do not read as the same picture printed twice.
+   */
+  crop?: "pano" | "card";
 }) {
   const shot = shots[`${slug}-${locale}-${device}` as keyof typeof shots];
   if (!shot) return null;
@@ -47,7 +59,11 @@ export function Shot({
           height={shot.height}
           sizes={sizes}
           priority={priority}
-          className={cn("h-full w-full object-cover object-top", frame && "rounded-[1.05rem]")}
+          className={cn(
+            "w-full object-cover object-top",
+            crop ? "aspect-9/16" : "h-full",
+            frame && "rounded-[1.05rem]",
+          )}
         />
       </div>
     );
@@ -69,7 +85,7 @@ export function Shot({
         height={shot.height}
         sizes={sizes}
         priority={priority}
-        className="h-auto w-full"
+        className={cn("w-full", crop === "pano" ? "aspect-3/1 object-cover object-top" : crop === "card" ? "aspect-13/5 object-cover object-top" : "h-auto")}
       />
     </div>
   );

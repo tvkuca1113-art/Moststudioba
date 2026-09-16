@@ -2,34 +2,49 @@
 
 /* ------------------------------------------------------------------ *
  * MOST Studio — design tokens
- * Palette is deliberately small. The lime accent is reserved for
- * active states, single highlighted words and small details.
+ *
+ * Every pair below was measured, not eyeballed. Ratios are against the
+ * surface the colour is actually used on:
+ *
+ *   ink      #071f1a   paper on ink 15.2:1   lime on ink 13.9:1
+ *   forest   #123d34   paper on forest 10.7:1   lime on forest 9.7:1
+ *   paper    #f3f1e8   ink text on paper 14.5:1
+ *   slate    #4a5a54   6.4:1 on paper, 5.7:1 on paper-dim
+ *   mist     #b3c6bd   6.7:1 on forest, 9.6:1 on ink
+ *
+ * The lime accent measures 1.09:1 on paper — invisible as text. It is
+ * therefore only ever used ON a dark surface, never as text on a light
+ * one, and only for active states, one highlighted word and small marks.
  * ------------------------------------------------------------------ */
 @theme {
   --font-display: var(--font-archivo), "Helvetica Neue", Arial, sans-serif;
   --font-sans: var(--font-body), "Helvetica Neue", Arial, sans-serif;
 
-  --color-ink: #091c18;
-  --color-forest: #103c35;
-  --color-forest-soft: #16544a;
-  --color-paper: #f3f2e9;
-  --color-paper-dim: #e6e4d5;
-  --color-lime: #d9f56b;
-  --color-lime-deep: #b7d93f;
+  --color-ink: #071f1a;
+  --color-forest: #123d34;
+  --color-forest-soft: #1b5449;
+  --color-paper: #f3f1e8;
+  --color-paper-dim: #e7e4d6;
+  --color-lime: #d7f45b;
+  --color-lime-deep: #b4d53c;
 
-  /* muted text: 5.8:1 on paper, 6.2:1 on forest */
-  --color-slate: #55605b;
-  --color-mist: #a9bdb4;
+  --color-slate: #4a5a54;
+  --color-mist: #b3c6bd;
 
-  --color-line-dark: #24463f;
-  --color-line-light: #d6d4c3;
+  --color-line-dark: #24534a;
+  --color-line-light: #d4d1bf;
 
-  --text-hero: clamp(2.6rem, 1.1rem + 5.1vw, 5.6rem);
-  --text-display: clamp(2.25rem, 1.2rem + 4.4vw, 4.75rem);
-  --text-title: clamp(1.65rem, 1.1rem + 2.1vw, 2.75rem);
-  --text-lead: clamp(1.0625rem, 1rem + 0.45vw, 1.3125rem);
+  /* H1 lands at 44px on a 390px phone and 92px at 1440px — inside the
+     40–52 / 72–104 window the brief asks for, at every width between. */
+  --text-hero: clamp(2.75rem, 1.35rem + 4.9vw, 6.25rem);
+  --text-display: clamp(2rem, 1.1rem + 3.7vw, 3.75rem);
+  --text-title: clamp(1.5rem, 1.05rem + 1.75vw, 2.375rem);
+  /* Body copy floor is 17px; it never drops below that anywhere. */
+  --text-body: clamp(1.0625rem, 1.03rem + 0.16vw, 1.1875rem);
+  --text-lead: clamp(1.1875rem, 1.06rem + 0.55vw, 1.4375rem);
 
   --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-gallery: cubic-bezier(0.32, 0.72, 0, 1);
 }
 
 @layer base {
@@ -68,13 +83,15 @@
     text-wrap: pretty;
   }
 
+  /* Forest, not lime: the lime ring measures 1.5:1 against paper, which is
+     below the 3:1 a focus indicator needs to be seen at all. */
   :focus-visible {
-    outline: 3px solid var(--color-lime-deep);
+    outline: 3px solid var(--color-forest);
     outline-offset: 3px;
     border-radius: 2px;
   }
 
-  /* On dark surfaces the lime outline reads better at full strength. */
+  /* On dark surfaces the relationship inverts — lime reads at 9.7:1 there. */
   .on-dark :focus-visible {
     outline-color: var(--color-lime);
   }
@@ -120,62 +137,55 @@
   }
 
   /* ---------------------------------------------------------------- *
-   * Hero composition: real DOM elements placed in a 3-D scene.
+   * The gallery: every panel is stacked in the same grid cell, so the
+   * section keeps one height and switching work never moves the page.
    * ---------------------------------------------------------------- */
-  .scene-3d {
-    perspective: 1600px;
-    perspective-origin: 50% 42%;
+  .gallery-stack > * {
+    grid-area: 1 / 1;
   }
 
-  .scene-stage {
-    transform-style: preserve-3d;
-    transform: rotateX(var(--stage-rx, 7deg)) rotateY(var(--stage-ry, -14deg))
-      rotateZ(var(--stage-rz, 2deg));
-    transition: transform 0.9s var(--ease-out-soft);
+  .gallery-panel {
+    opacity: 0;
+    transform: scale(0.985);
+    visibility: hidden;
+    transition:
+      opacity 0.38s var(--ease-gallery),
+      transform 0.38s var(--ease-gallery),
+      visibility 0s linear 0.38s;
   }
 
-  .scene-plate {
-    transform-style: preserve-3d;
-    transform: translate3d(var(--px, 0), var(--py, 0), var(--pz, 0))
-      rotateY(var(--pry, 0deg)) scale(var(--ps, 1));
+  .gallery-panel[data-active="true"] {
+    opacity: 1;
+    transform: none;
+    visibility: visible;
+    transition:
+      opacity 0.38s var(--ease-gallery),
+      transform 0.38s var(--ease-gallery),
+      visibility 0s;
   }
 
-  .plate-enter {
-    animation: plate-assemble 1.1s var(--ease-out-soft) both;
+  /* ---------------------------------------------------------------- *
+   * The arch. The studio is named after a bridge, so the span is the
+   * signature mark — drawn once on entry, then still.
+   * ---------------------------------------------------------------- */
+  .arch-draw path,
+  .arch-draw line {
+    stroke-dasharray: var(--len, 300);
+    stroke-dashoffset: var(--len, 300);
+    animation: arch-draw 1.5s var(--ease-out-soft) forwards;
     animation-delay: var(--delay, 0ms);
   }
 
-  @keyframes plate-assemble {
-    from {
-      opacity: 0;
-      transform: translate3d(var(--px, 0), calc(var(--py, 0px) + 46px), -220px)
-        rotateY(var(--pry, 0deg)) scale(calc(var(--ps, 1) * 0.94));
-    }
+  @keyframes arch-draw {
     to {
-      opacity: 1;
-      transform: translate3d(var(--px, 0), var(--py, 0), var(--pz, 0))
-        rotateY(var(--pry, 0deg)) scale(var(--ps, 1));
-    }
-  }
-
-  .marker-pulse {
-    animation: marker-pulse 2.4s var(--ease-out-soft) infinite;
-  }
-
-  @keyframes marker-pulse {
-    0%,
-    100% {
-      box-shadow: 0 0 0 0 rgb(217 245 107 / 0.55);
-    }
-    50% {
-      box-shadow: 0 0 0 9px rgb(217 245 107 / 0);
+      stroke-dashoffset: 0;
     }
   }
 
   .grid-lines {
     background-image:
-      linear-gradient(to right, var(--grid-color, #24463f) 1px, transparent 1px),
-      linear-gradient(to bottom, var(--grid-color, #24463f) 1px, transparent 1px);
+      linear-gradient(to right, var(--grid-color, #24534a) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid-color, #24534a) 1px, transparent 1px);
     background-size: var(--grid-size, 88px) var(--grid-size, 88px);
   }
 }
@@ -215,7 +225,8 @@
     transform: none !important;
   }
 
-  .scene-stage {
-    transition: none;
+  .arch-draw path,
+  .arch-draw line {
+    stroke-dashoffset: 0;
   }
 }

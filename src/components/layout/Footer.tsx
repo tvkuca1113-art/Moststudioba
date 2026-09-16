@@ -35,13 +35,13 @@ export function Footer({
 
   return (
     <footer className="bg-ink text-paper on-dark">
-      <Container className="py-14 sm:py-16">
-        <div className="grid gap-10 lg:grid-cols-[1.4fr_1fr_1fr_1fr] lg:gap-12">
+      <Container className="py-11 sm:py-12">
+        <div className="grid gap-9 lg:grid-cols-[1.4fr_1fr_1fr_1fr] lg:gap-12">
           <div>
-            <Link href={home} className="inline-block py-1">
+            <Link href={home} className="inline-flex min-h-11 items-center">
               <Wordmark />
             </Link>
-            <p className="mt-5 max-w-sm text-[0.9375rem] leading-relaxed text-mist">{dict.footer.blurb}</p>
+            <p className="mt-4 max-w-[52ch] text-[0.9375rem] leading-relaxed text-mist">{dict.footer.blurb}</p>
           </div>
 
           <nav aria-label={dict.footer.navTitle}>
@@ -51,7 +51,7 @@ export function Footer({
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="inline-flex min-h-10 items-center text-[0.9375rem] text-mist hover:text-paper"
+                    className="inline-flex min-h-11 items-center text-[0.9375rem] text-mist hover:text-paper"
                   >
                     {item.label}
                   </Link>
@@ -67,7 +67,7 @@ export function Footer({
                 <li key={project.slug}>
                   <Link
                     href={path("project", locale, project.slug)}
-                    className="inline-flex min-h-10 items-center text-[0.9375rem] text-mist hover:text-paper"
+                    className="inline-flex min-h-11 items-center text-[0.9375rem] text-mist hover:text-paper"
                   >
                     {project.brand}
                     <span className="sr-only"> — {t(project.sector)}</span>
@@ -94,7 +94,7 @@ export function Footer({
           </div>
         </div>
 
-        <p className="mt-12 max-w-3xl border-t border-line-dark pt-6 text-sm leading-relaxed text-mist">
+        <p className="mt-10 max-w-[72ch] border-t border-line-dark pt-6 text-[0.9375rem] leading-relaxed text-mist">
           {dict.footer.disclaimer}
         </p>
 

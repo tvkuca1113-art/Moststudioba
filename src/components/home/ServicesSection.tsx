@@ -9,6 +9,17 @@ import type { Dictionary } from "@/lib/i18n/dictionary";
 import { translator } from "@/lib/i18n/localized";
 import { sectionIds } from "@/lib/nav";
 
+/**
+ * Three services, one row each.
+ *
+ * Rows rather than columns because the three are read in order — design, then
+ * build, then redesign — and because a row lets the name sit at title size on
+ * the left with its detail beside it, instead of three narrow columns whose
+ * height is set by whichever text happens to be longest.
+ *
+ * The homepage shows the shape of each service, not its contract: the summary
+ * and three items. The full scope lives on the services page, one click away.
+ */
 export function ServicesSection({ locale, dict }: { locale: Locale; dict: Dictionary }) {
   const t = translator(locale);
 
@@ -27,30 +38,30 @@ export function ServicesSection({ locale, dict }: { locale: Locale; dict: Dictio
           }
         />
 
-        <div className="mt-12 grid gap-px overflow-hidden rounded-3xl bg-line-light lg:mt-16 lg:grid-cols-3">
+        <div className="mt-8 border-t border-line-light lg:mt-10">
           {services.map((service, index) => (
-            <Reveal key={service.id} delay={index * 90} className="flex flex-col bg-paper p-6 sm:p-8">
-              <span className="font-display text-sm font-bold tracking-[0.2em] text-forest/45">{service.number}</span>
-              <h3 className="mt-4 text-title leading-[1.05]">{t(service.title)}</h3>
-              <p className="mt-4 text-[0.9375rem] leading-relaxed text-slate sm:text-base">{t(service.summary)}</p>
+            <Reveal
+              key={service.id}
+              delay={index * 80}
+              className="grid gap-x-10 gap-y-4 border-b border-line-light py-6 lg:grid-cols-[3.5rem_minmax(0,1.05fr)_minmax(0,0.95fr)] lg:py-7"
+            >
+              <span className="font-display text-sm font-bold tracking-[0.2em] text-forest/45">
+                {service.number}
+              </span>
 
-              <p className="mt-7 text-[0.8125rem] font-semibold tracking-[0.16em] text-slate uppercase">
-                {dict.services.includes}
-              </p>
-              <ul className="mt-3 space-y-2.5">
-                {t(service.includes)
-                  .slice(0, 2)
-                  .map((item) => (
-                    <li key={item} className="flex gap-3 text-[0.9375rem] leading-relaxed">
-                      <CheckIcon className="mt-1 size-4 shrink-0 text-forest" />
-                      {item}
-                    </li>
-                  ))}
+              <div>
+                <h3 className="text-title leading-[1.05]">{t(service.title)}</h3>
+                <p className="mt-3 max-w-[58ch] text-body leading-relaxed text-slate">{t(service.summary)}</p>
+              </div>
+
+              <ul className="grid gap-2.5 self-center sm:grid-cols-3 lg:gap-3">
+                {t(service.highlights).map((item) => (
+                  <li key={item} className="flex gap-2.5 text-[0.9375rem] leading-snug hyphens-auto">
+                    <CheckIcon className="mt-0.5 size-4 shrink-0 text-forest" />
+                    {item}
+                  </li>
+                ))}
               </ul>
-
-              <p className="mt-auto pt-7 text-[0.9375rem] leading-relaxed font-medium text-forest">
-                {t(service.outcome)}
-              </p>
             </Reveal>
           ))}
         </div>

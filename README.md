@@ -35,6 +35,10 @@ Kopiraj `.env.example` u `.env.local`. Nema tajnih ključeva — sve je `NEXT_PU
 | `NEXT_PUBLIC_ALLOW_INDEXING` | Dok nije `true`, cijeli sajt je `noindex` i `robots.txt` je `Disallow: /`. Preview deployi ostaju `noindex` i kada jeste `true`. |
 | `NEXT_PUBLIC_ANALYTICS_ENABLED` | Dok nije `true`, ne učitava se Vercel Web Analytics i ne emituje se nijedan događaj. Nema pixela ni skripti trećih strana. |
 
+> **Analitika je trenutno isključena na produkciji.** Vercel Web Analytics je
+> ugrađen i spreman, ali dok `NEXT_PUBLIC_ANALYTICS_ENABLED` nije `true` u
+> Vercel postavkama, ne prikuplja se ništa.
+
 ## Deployment na Vercel
 
 1. Poveži repozitorij na [vercel.com/new](https://vercel.com/new). Vercel sam
@@ -102,8 +106,11 @@ Početna **ne ugrađuje** živi demo: tri interfejsa na jednoj stranici značila
 drugi `<h1>`, mnogo JavaScripta i zarobljen skrol u malom okviru. Umjesto toga
 portfolio pokazuje snimke, a demo je jedan klik dalje.
 
-`/demo/*` rute su `noindex` da se demo ordinacija ne pojavi u pretrazi kao
-stvarna. Njihove prezentacije na `/projekti/*` su indeksabilne.
+`/demo/*` rute su `noindex, follow` da se demo ordinacija ne pojavi u pretrazi
+kao stvarna. Ostaju **dostupne za crawlanje** — `robots.txt` ih ne zabranjuje,
+jer stranica koju crawler ne smije dohvatiti je stranica čiji `noindex` niko
+ne pročita. Nisu u sitemapu. Njihove prezentacije na `/projekti/*` su
+indeksabilne.
 
 ### Slike i snimci
 
@@ -122,10 +129,38 @@ Detalji i porijeklo: [`docs/SLIKE.md`](./docs/SLIKE.md).
 
 ## Kontaktni tok
 
-Nema backenda, email servisa ni tajnih ključeva. „Pripremite upit" sastavi
-poruku, korisnik je uredi, kopira i sam pošalje na Instagram. Kopiranje nije
-slanje i to je jasno napisano na stranici. Ako clipboard API ne uspije, nudi
-se ručno označavanje teksta.
+Nema backenda, email servisa ni tajnih ključeva. Instagram je jedini potvrđen
+kanal, pa je tok napisan kao tri vidljiva koraka — **Pripremite → Kopirajte →
+Otvorite Instagram**. Poruku sastavlja stranica, korisnik je uredi, kopira i
+sam pošalje. Kopiranje nije slanje i to piše i u koracima i ispod dugmadi;
+nigdje se ne pojavljuje „upit je poslan". Ako clipboard API ne uspije, nudi se
+ručno označavanje teksta.
+
+## Analitika
+
+`src/lib/analytics.ts` definiše šest događaja: `view_project`, `open_demo`,
+`contact_start`, `copy_message`, `outbound_instagram`, `lead_submit`.
+
+Dva pravila su ugrađena u tipove, ne samo u dokumentaciju:
+
+- **Sadržaj poruke nikada ne izlazi iz browsera.** `copy_message` šalje samo
+  dva odabrana odgovora i grubu dužinu teksta.
+- **`lead_submit` znači stvarno pristigao upit.** Kopiranje u clipboard i
+  odlazak na Instagram nisu to — oni su `copy_message` i `outbound_instagram`.
+  Dok nema backenda, `lead_submit` se ne emituje nigdje.
+
+Sve zajedno je isključeno dok `NEXT_PUBLIC_ANALYTICS_ENABLED` nije `true`.
+
+## Tipografija i kontrast
+
+Sve vrijednosti u `src/app/globals.css` su izmjerene, ne procijenjene. Naslov
+H1 ide od 44 px na telefonu do 92 px na 1440 px, tekst za čitanje nikada nije
+ispod 17 px, a mjere reda su u rasponu 55–70 znakova.
+
+Akcentna lime boja ima kontrast **1,09:1** na svijetloj podlozi — nevidljiva
+kao tekst. Zato se koristi isključivo na tamnoj podlozi (9,7:1 na forest,
+13,9:1 na ink). Iz istog razloga fokusni prsten na svijetloj podlozi nije lime
+nego forest (10,7:1); lime ostaje samo unutar `.on-dark`.
 
 ## Prije objave
 

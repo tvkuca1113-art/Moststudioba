@@ -4,9 +4,10 @@ import { notFound } from "next/navigation";
 import { Photo } from "@/components/media/Photo";
 import { Shot } from "@/components/media/Shot";
 import { SiteFrame } from "@/components/layout/SiteFrame";
-import { ButtonLink } from "@/components/ui/Button";
+import { ButtonLink, buttonClass } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
+import { TrackedLink } from "@/components/ui/TrackedLink";
 import { ArrowRight, CheckIcon } from "@/components/ui/icons";
 import { getProject, nextProject } from "@/content/projects";
 import { path, type Locale } from "@/lib/i18n/config";
@@ -54,25 +55,33 @@ export function ProjectView({ locale, slug }: { locale: Locale; slug: string }) 
                 </span>
               </div>
               <h1 className="mt-5 text-display leading-[0.92]">{project.brand}</h1>
-              <p className="mt-4 max-w-[52ch] text-lead leading-relaxed text-slate">
+              <p className="mt-4 max-w-[62ch] text-lead leading-[1.5] text-slate">
                 {dict.projects.goalPrefix} {t(project.goal)}
               </p>
             </div>
             <div className="flex flex-wrap gap-3">
-              <ButtonLink href={demoHref}>{dict.projects.tryDemo}</ButtonLink>
+              <TrackedLink
+                href={demoHref}
+                track={["open_demo", { project: project.slug, locale, from: "project" }]}
+                className={buttonClass()}
+              >
+                {dict.projects.tryDemo}
+              </TrackedLink>
             </div>
           </div>
 
-          <Link href={demoHref} tabIndex={-1} aria-hidden="true" className="mt-10 block lg:mt-12">
+          {/* Not a link: the button above already goes to the demo, and a
+              second link over the picture had nothing to announce it. */}
+          <div className="mt-8 lg:mt-10">
             <Shot
               slug={project.slug}
               locale={locale}
               device="desktop"
-              alt=""
+              alt={`${dict.projects.shotAlt} — ${project.brand}`}
               priority
               sizes="(max-width: 1024px) 100vw, 88vw"
             />
-          </Link>
+          </div>
         </Container>
       </Section>
 
@@ -98,7 +107,7 @@ export function ProjectView({ locale, slug }: { locale: Locale; slug: string }) 
                     <h3 className="mt-3 text-[1.5rem] leading-snug font-bold sm:text-[1.8rem]">
                       {t(decision.title)}
                     </h3>
-                    <p className="mt-4 max-w-[54ch] text-[1.0625rem] leading-relaxed text-slate">
+                    <p className="mt-4 max-w-[62ch] text-body leading-relaxed text-slate">
                       {t(decision.body)}
                     </p>
                   </div>
@@ -163,12 +172,16 @@ export function ProjectView({ locale, slug }: { locale: Locale; slug: string }) 
               <h2 id="try-title" className="mt-4 text-title leading-[1.05]">
                 {t(project.tryIt.title)}
               </h2>
-              <p className="mt-4 max-w-[52ch] text-[1.0625rem] leading-relaxed text-slate">
+              <p className="mt-4 max-w-[62ch] text-body leading-relaxed text-slate">
                 {t(project.tryIt.body)}
               </p>
-              <ButtonLink href={demoHref} className="mt-7">
+              <TrackedLink
+                href={demoHref}
+                track={["open_demo", { project: project.slug, locale, from: "project" }]}
+                className={buttonClass("primary", "light", "mt-7")}
+              >
                 {dict.projects.tryDemo}
-              </ButtonLink>
+              </TrackedLink>
             </div>
 
             <div>
@@ -180,8 +193,8 @@ export function ProjectView({ locale, slug }: { locale: Locale; slug: string }) 
                   <li key={annotation.id} className="flex gap-4">
                     <CheckIcon className="mt-1.5 size-5 shrink-0 text-forest" />
                     <div>
-                      <p className="text-[1.0625rem] font-semibold">{t(annotation.title)}</p>
-                      <p className="mt-1.5 max-w-[56ch] text-[0.9375rem] leading-relaxed text-slate">
+                      <p className="text-body font-semibold">{t(annotation.title)}</p>
+                      <p className="mt-1.5 max-w-[62ch] text-body leading-relaxed text-slate">
                         {t(annotation.body)}
                       </p>
                     </div>
@@ -199,7 +212,7 @@ export function ProjectView({ locale, slug }: { locale: Locale; slug: string }) 
           <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:gap-16">
             <div>
               <h2 className="text-title leading-[1.05]">{dict.projects.wantThis}</h2>
-              <p className="mt-4 max-w-[52ch] text-[1.0625rem] leading-relaxed text-mist">
+              <p className="mt-4 max-w-[62ch] text-body leading-relaxed text-mist">
                 {dict.projects.wantThisBody}
               </p>
               <ButtonLink href={path("contact", locale)} tone="dark" className="mt-7">

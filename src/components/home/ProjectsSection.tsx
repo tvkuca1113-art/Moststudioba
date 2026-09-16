@@ -1,9 +1,8 @@
-import Link from "next/link";
-
 import { Shot } from "@/components/media/Shot";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { Section, SectionHeading } from "@/components/ui/Section";
+import { TrackedLink } from "@/components/ui/TrackedLink";
 import { ArrowUpRight } from "@/components/ui/icons";
 import { demoProjects, type DemoProject } from "@/content/projects";
 import { cn } from "@/lib/cn";
@@ -13,12 +12,11 @@ import { translator } from "@/lib/i18n/localized";
 import { sectionIds } from "@/lib/nav";
 
 /**
- * The portfolio, and the only place the homepage shows the work.
+ * The portfolio, hung like a small exhibition: the opening work takes the
+ * wall, the other two share a frame beside each other.
  *
- * Each card is a capture of the implemented demo page, so what you see is what
- * opens. The homepage deliberately does not embed a running demo: three live
- * interfaces on one page cost a second <h1>, a lot of JavaScript and a scroll
- * trap inside a small frame. The running demo is one click away instead.
+ * Each card is a capture of the implemented demo page, so what you see is
+ * what opens.
  */
 export function ProjectsSection({ locale, dict }: { locale: Locale; dict: Dictionary }) {
   const [lead, ...rest] = demoProjects;
@@ -33,12 +31,12 @@ export function ProjectsSection({ locale, dict }: { locale: Locale; dict: Dictio
           lead={dict.projects.lead}
         />
 
-        <div className="mt-12 lg:mt-16">
+        <div className="mt-8 lg:mt-10">
           <Reveal>
             <ProjectCard project={lead} locale={locale} dict={dict} featured />
           </Reveal>
 
-          <div className="mt-12 grid gap-12 lg:mt-16 lg:grid-cols-2 lg:gap-10">
+          <div className="mt-8 grid gap-9 lg:mt-9 lg:grid-cols-2 lg:gap-8">
             {rest.map((project, index) => (
               <Reveal key={project.slug} delay={index * 90}>
                 <ProjectCard project={project} locale={locale} dict={dict} />
@@ -65,26 +63,34 @@ export function ProjectCard({
   const t = translator(locale);
   const caseHref = path("project", locale, project.slug);
   const demoHref = path("demo", locale, project.slug);
+  const titleId = `project-${project.slug}`;
+  const ctaId = `project-${project.slug}-cta`;
 
   return (
-    <article className={cn(featured && "grid gap-8 lg:grid-cols-[1.35fr_0.65fr] lg:items-end lg:gap-12")}>
-      <Link
-        href={caseHref}
-        tabIndex={-1}
-        aria-hidden="true"
-        className="group block overflow-hidden rounded-2xl"
-      >
+    <article
+      aria-labelledby={titleId}
+      className={cn(
+        "group/card relative",
+        featured && "grid gap-8 lg:grid-cols-[1.25fr_0.75fr] lg:items-end lg:gap-12",
+      )}
+    >
+      {/* The picture is not a link. It used to be a second link to the same
+          page with nothing to announce it; now the one link below is stretched
+          across the whole card, so the picture is still clickable while the
+          accessibility tree holds a single, named target. */}
+      <div className="overflow-hidden rounded-2xl">
         <Shot
           slug={project.slug}
           locale={locale}
           device="desktop"
-          alt=""
-          sizes={featured ? "(max-width: 1024px) 100vw, 62vw" : "(max-width: 1024px) 100vw, 46vw"}
-          className="transition-transform duration-500 group-hover:scale-[1.015] motion-reduce:transition-none motion-reduce:group-hover:transform-none"
+          crop="card"
+          alt={`${dict.projects.shotAlt} — ${project.brand}`}
+          sizes={featured ? "(max-width: 1024px) 100vw, 56vw" : "(max-width: 1024px) 100vw, 46vw"}
+          className="transition-transform duration-500 group-hover/card:scale-[1.015] motion-reduce:transition-none motion-reduce:group-hover/card:transform-none"
         />
-      </Link>
+      </div>
 
-      <div className={cn(!featured && "mt-6")}>
+      <div className={cn(!featured && "mt-5")}>
         <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
           <span className="rounded-full border border-forest/30 px-2.5 py-1 text-[0.8125rem] font-semibold tracking-[0.1em] text-forest uppercase">
             {dict.common.demoBadge}
@@ -95,32 +101,46 @@ export function ProjectCard({
         </div>
 
         <h3
+          id={titleId}
           className={cn(
             "mt-4 font-display leading-[0.98] font-extrabold tracking-[-0.03em]",
             featured ? "text-display" : "text-title",
           )}
         >
-          <Link href={caseHref} className="hover:text-forest">
-            {project.brand}
-          </Link>
+          {project.brand}
         </h3>
 
-        <p className="mt-3 max-w-[46ch] text-[1.0625rem] leading-relaxed text-slate">{t(project.tagline)}</p>
+        <p className="mt-3.5 max-w-[62ch] text-body leading-relaxed text-slate">
+          {t(project.visitorProblem)}
+        </p>
 
-        <div className="mt-6 flex flex-wrap items-center gap-x-7 gap-y-3">
-          <Link
+        <p className="mt-4 max-w-[62ch] text-body leading-snug">
+          <span className="text-[0.8125rem] font-semibold tracking-[0.14em] text-slate uppercase">
+            {dict.projects.functionLabel}:
+          </span>{" "}
+          <span className="font-semibold text-forest">{t(project.tryIt.title)}</span>
+        </p>
+
+        <div className="relative z-10 mt-5 flex flex-wrap items-center gap-x-7 gap-y-3">
+          <TrackedLink
             href={caseHref}
-            className="group inline-flex min-h-11 items-center gap-2 text-[0.9375rem] font-semibold text-forest underline decoration-forest/30 underline-offset-4 hover:decoration-forest"
+            id={ctaId}
+            // Announced as "Stolarija Hrast, Pogledajte projekt" — the card's
+            // subject and its action, from one link rather than two.
+            aria-labelledby={`${titleId} ${ctaId}`}
+            track={["view_project", { project: project.slug, locale }]}
+            className="inline-flex min-h-11 items-center gap-2 text-[0.9375rem] font-semibold text-forest underline decoration-forest/30 underline-offset-4 after:absolute after:inset-0 after:content-[''] hover:decoration-forest"
           >
             {dict.projects.cardCta}
-            <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:group-hover:transform-none" />
-          </Link>
-          <Link
+            <ArrowUpRight className="size-4 transition-transform group-hover/card:translate-x-0.5 group-hover/card:-translate-y-0.5 motion-reduce:group-hover/card:transform-none" />
+          </TrackedLink>
+          <TrackedLink
             href={demoHref}
-            className="inline-flex min-h-11 items-center gap-2 text-[0.9375rem] font-medium text-slate underline decoration-slate/30 underline-offset-4 hover:text-forest"
+            track={["open_demo", { project: project.slug, locale, from: "portfolio" }]}
+            className="relative inline-flex min-h-11 items-center gap-2 text-[0.9375rem] font-medium text-slate underline decoration-slate/30 underline-offset-4 hover:text-forest"
           >
-            {dict.projects.openDemo}
-          </Link>
+            {dict.projects.tryDemo}
+          </TrackedLink>
         </div>
       </div>
     </article>

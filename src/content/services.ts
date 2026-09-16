@@ -6,6 +6,8 @@ export type Service = {
   title: L;
   summary: L;
   includes: L<string[]>;
+  /** Three words for the homepage row. `includes` is the full scope. */
+  highlights: L<string[]>;
   outcome: L;
 };
 
@@ -33,6 +35,10 @@ export const services: Service[] = [
         "Layout für Computer und Mobilgerät — nicht eine Version, die nur verkleinert wird.",
         "Übergabefertiges Design: Button-Zustände, leere Zustände, Textlängen und Verhalten bei verschiedenen Breiten.",
       ],
+    },
+    highlights: {
+      bs: ["Struktura sadržaja", "Korisničko iskustvo", "Vizuelni identitet"],
+      de: ["Inhaltsstruktur", "Nutzerführung", "Visuelle Gestaltung"],
     },
     outcome: {
       bs: "Dizajn koji možete pregledati i razumjeti prije izrade, i na osnovu kojeg znate kako će stranica izgledati i raditi.",
@@ -67,6 +73,10 @@ export const services: Service[] = [
         "Tests auf realen Bildschirmbreiten und Vorbereitung der Veröffentlichung.",
       ],
     },
+    highlights: {
+      bs: ["Izvedba dio po dio", "Responsive izvedba", "Brzina učitavanja"],
+      de: ["Umsetzung in Etappen", "Responsive Umsetzung", "Kurze Ladezeit"],
+    },
     outcome: {
       bs: "Objavljena stranica koja se brzo učitava, ispravno izgleda na mobitelu i vodi posjetioca do kontakta.",
       de: "Eine veröffentlichte Website, die schnell lädt, auf dem Handy korrekt aussieht und Besucher zum Kontakt führt.",
@@ -95,6 +105,10 @@ export const services: Service[] = [
         "Verbesserung der mobilen Ansicht — bei älteren Seiten meist die schwächste Stelle.",
         "Plan zum Erhalt wichtiger URLs bei der Migration, damit bestehende Links und Platzierungen nicht verloren gehen.",
       ],
+    },
+    highlights: {
+      bs: ["Pregled postojećeg", "Bolja preglednost", "Obnovljen izgled"],
+      de: ["Bestandsaufnahme", "Bessere Übersicht", "Neue Gestaltung"],
     },
     outcome: {
       bs: "Stranica koja izgleda kao vaš posao danas, bez gubitka sadržaja i linkova koje ste gradili godinama.",

@@ -19,10 +19,14 @@ export type DemoProject = {
   key: DemoKey;
   /** Invented business name — a demo concept, not a real company. */
   brand: string;
+  /** One word for the gallery controls, where the full name is too long. */
+  shortName: string;
   sector: L;
   tagline: L;
   goal: L;
   shows: L;
+  /** The visitor's problem, in one sentence, told from the visitor's side. */
+  visitorProblem: L;
   needs: L<string[]>;
   decisions: Decision[];
   annotations: Annotation[];
@@ -36,105 +40,10 @@ export type DemoProject = {
 
 export const demoProjects: DemoProject[] = [
   {
-    slug: "ordinacija-lipa",
-    key: "clinic",
-    brand: "Ordinacija Lipa",
-    sector: { bs: "Stomatološka ordinacija", de: "Zahnarztpraxis" },
-    tagline: {
-      bs: "Ordinacija koja objasni prvi dolazak prije nego što pacijent nazove.",
-      de: "Eine Praxis, die den ersten Besuch erklärt, bevor jemand anruft.",
-    },
-    goal: {
-      bs: "da pacijent koji prvi put traži zubara u nekoliko sekundi vidi šta ordinacija radi, koliko traje prvi pregled i kako da zakaže termin.",
-      de: "dass jemand, der zum ersten Mal eine Zahnarztpraxis sucht, in wenigen Sekunden sieht, was die Praxis macht, wie lange die erste Untersuchung dauert und wie ein Termin zustande kommt.",
-    },
-    shows: {
-      bs: "kako se popis usluga može pregledati bez traženja i kako kontakt ostaje nadohvat ruke dok pacijent čita.",
-      de: "wie sich die Leistungen ohne Suchen überblicken lassen und wie der Kontakt in Reichweite bleibt, während gelesen wird.",
-    },
-    needs: {
-      bs: [
-        "Pacijent najčešće traži tri stvari: mogu li doći, kada i koliko to traje.",
-        "Popisi usluga na stranicama ordinacija često su napisani stručnim jezikom koji pacijent ne koristi.",
-        "Broj za zakazivanje obično stoji samo u podnožju, daleko od trenutka u kojem se pacijent odluči.",
-      ],
-      de: [
-        "Patientinnen und Patienten suchen meist drei Dinge: ob sie kommen können, wann und wie lange es dauert.",
-        "Leistungslisten auf Praxisseiten sind oft in Fachsprache geschrieben, die Patienten selbst nicht verwenden.",
-        "Die Nummer für die Terminvergabe steht meist nur im Fußbereich — weit weg vom Moment der Entscheidung.",
-      ],
-    },
-    decisions: [
-      {
-        title: { bs: "Mirna podloga i velika veličina teksta", de: "Ruhiger Untergrund und große Schrift" },
-        body: {
-          bs: "Zdravstveni sadržaj se čita u napetom trenutku. Svijetla podloga, širi razmaci i tekst od 17 piksela naviše smanjuju osjećaj gužve i olakšavaju čitanje starijim pacijentima.",
-          de: "Gesundheitsinhalte werden in angespannten Momenten gelesen. Heller Untergrund, größere Abstände und Text ab 17 Pixeln nehmen Druck heraus und erleichtern älteren Patienten das Lesen.",
-        },
-      },
-      {
-        title: { bs: "Odabir po tegobi, ne po stručnom nazivu", de: "Auswahl nach Beschwerde, nicht nach Fachbegriff" },
-        body: {
-          bs: "Pacijent bira ono što osjeća — „boli me zub“, „krvare desni“ — a stranica to prevodi u uslugu, trajanje i objašnjenje prvog dolaska.",
-          de: "Man wählt, was man spürt — „Zahnschmerzen“, „Zahnfleischbluten“ — und die Seite übersetzt das in Leistung, Dauer und Ablauf des ersten Besuchs.",
-        },
-      },
-      {
-        title: { bs: "Usluge s trajanjem, ne samo s nazivom", de: "Leistungen mit Dauer, nicht nur mit Namen" },
-        body: {
-          bs: "Uz svaku uslugu stoji koliko traje i šta obuhvata. To je prvo pitanje koje pacijent postavlja na telefon, pa nema razloga da odgovor bude skriven.",
-          de: "Bei jeder Leistung steht, wie lange sie dauert und was dazugehört. Das ist die erste Frage am Telefon — es gibt keinen Grund, die Antwort zu verstecken.",
-        },
-      },
-      {
-        title: { bs: "Traka za zakazivanje koja prati čitanje", de: "Terminleiste, die beim Lesen mitläuft" },
-        body: {
-          bs: "Na mobitelu traka za zakazivanje ostaje na dnu ekrana dok pacijent lista usluge, pa odluka i sljedeći korak nisu razdvojeni.",
-          de: "Auf dem Handy bleibt die Terminleiste am unteren Rand, während die Leistungen durchgesehen werden — Entscheidung und nächster Schritt liegen nicht auseinander.",
-        },
-      },
-    ],
-    annotations: [
-      {
-        id: "offer",
-        title: { bs: "Ponuda je jasna već na prvom ekranu.", de: "Das Angebot steht schon auf dem ersten Bildschirm." },
-        body: {
-          bs: "Naslov kaže vrstu ordinacije i grad, a odmah ispod stoji koliko traje prvi pregled. Pacijent ne mora skrolati da bi znao je li na pravom mjestu.",
-          de: "Die Überschrift nennt Art der Praxis und Ort, direkt darunter steht die Dauer der ersten Untersuchung. Niemand muss scrollen, um zu wissen, ob er richtig ist.",
-        },
-      },
-      {
-        id: "services",
-        title: { bs: "Usluge se mogu pregledati bez traženja.", de: "Die Leistungen lassen sich ohne Suchen überblicken." },
-        body: {
-          bs: "Umjesto padajućeg menija, usluge stoje kao otvoren popis s trajanjem. Odabir tegobe iznad njih vodi pacijenta do prave, bez poznavanja stručnih naziva.",
-          de: "Statt eines Aufklappmenüs stehen die Leistungen als offene Liste mit Dauer. Die Beschwerde-Auswahl darüber führt zur passenden — ohne Fachbegriffe zu kennen.",
-        },
-      },
-      {
-        id: "contact",
-        title: { bs: "Kontakt je dostupan u trenutku odluke.", de: "Der Kontakt ist im Moment der Entscheidung da." },
-        body: {
-          bs: "Zakazivanje se ponavlja tačno tamo gdje pacijent završi čitanje o usluzi, a na mobitelu ostaje u vidljivoj traci pri dnu.",
-          de: "Die Terminvergabe wiederholt sich genau dort, wo das Lesen über eine Leistung endet — auf dem Handy bleibt sie in einer sichtbaren Leiste unten.",
-        },
-      },
-    ],
-    decisionImages: ["lipa-recepcija", "lipa-tehnologija"],
-    tryIt: {
-      title: { bs: "Odabir razloga dolaska", de: "Auswahl des Besuchsgrunds" },
-      body: {
-        bs: "Kliknite razlog dolaska i sadržaj ispod se mijenja: koja usluga ga pokriva, koliko traje i šta obuhvata. Pacijent ne mora znati stručni naziv da bi našao pravo mjesto.",
-        de: "Klicken Sie auf einen Besuchsgrund und der Inhalt darunter wechselt: welche Leistung ihn abdeckt, wie lange sie dauert und was dazugehört. Man muss keinen Fachbegriff kennen, um die richtige Stelle zu finden.",
-      },
-    },
-    swatch: { bg: "#eef3f4", fg: "#12303a", accent: "#3f7f8c" },
-  },
-
-  {
     slug: "stolarija-hrast",
     key: "trades",
     brand: "Stolarija Hrast",
+    shortName: "Hrast",
     sector: { bs: "Stolarija i montaža po mjeri", de: "Tischlerei und Montage nach Maß" },
     tagline: {
       bs: "Zanatska firma koja pokazuje materijal prije nego što se kupac javi.",
@@ -147,6 +56,10 @@ export const demoProjects: DemoProject[] = [
     shows: {
       bs: "kako se ponuda pokazuje materijalom: tri koncepta s fotografijama i tri završne obrade koje kupac može uporediti prije nego što dođe u radionicu.",
       de: "wie ein Angebot über das Material gezeigt wird: drei Konzepte mit Fotos und drei Oberflächen, die sich vergleichen lassen, bevor jemand in die Werkstatt kommt.",
+    },
+    visitorProblem: {
+      bs: "Kupac ne može zamisliti kako izgleda „hrast mat lak“ dok ga ne vidi, pa odgađa poziv.",
+      de: "Man kann sich „Eiche, matt lackiert“ nicht vorstellen, ohne es gesehen zu haben — und schiebt den Anruf auf.",
     },
     needs: {
       bs: [
@@ -228,9 +141,111 @@ export const demoProjects: DemoProject[] = [
   },
 
   {
+    slug: "ordinacija-lipa",
+    key: "clinic",
+    brand: "Ordinacija Lipa",
+    shortName: "Lipa",
+    sector: { bs: "Stomatološka ordinacija", de: "Zahnarztpraxis" },
+    tagline: {
+      bs: "Ordinacija koja objasni prvi dolazak prije nego što pacijent nazove.",
+      de: "Eine Praxis, die den ersten Besuch erklärt, bevor jemand anruft.",
+    },
+    goal: {
+      bs: "da pacijent koji prvi put traži zubara u nekoliko sekundi vidi šta ordinacija radi, koliko traje prvi pregled i kako da zakaže termin.",
+      de: "dass jemand, der zum ersten Mal eine Zahnarztpraxis sucht, in wenigen Sekunden sieht, was die Praxis macht, wie lange die erste Untersuchung dauert und wie ein Termin zustande kommt.",
+    },
+    shows: {
+      bs: "kako se popis usluga može pregledati bez traženja i kako kontakt ostaje nadohvat ruke dok pacijent čita.",
+      de: "wie sich die Leistungen ohne Suchen überblicken lassen und wie der Kontakt in Reichweite bleibt, während gelesen wird.",
+    },
+    visitorProblem: {
+      bs: "Pacijent ne zna kojoj usluzi pripada njegova tegoba ni koliko prvi pregled traje.",
+      de: "Man weiß nicht, zu welcher Leistung die eigene Beschwerde gehört und wie lange der erste Termin dauert.",
+    },
+    needs: {
+      bs: [
+        "Pacijent najčešće traži tri stvari: mogu li doći, kada i koliko to traje.",
+        "Popisi usluga na stranicama ordinacija često su napisani stručnim jezikom koji pacijent ne koristi.",
+        "Broj za zakazivanje obično stoji samo u podnožju, daleko od trenutka u kojem se pacijent odluči.",
+      ],
+      de: [
+        "Patientinnen und Patienten suchen meist drei Dinge: ob sie kommen können, wann und wie lange es dauert.",
+        "Leistungslisten auf Praxisseiten sind oft in Fachsprache geschrieben, die Patienten selbst nicht verwenden.",
+        "Die Nummer für die Terminvergabe steht meist nur im Fußbereich — weit weg vom Moment der Entscheidung.",
+      ],
+    },
+    decisions: [
+      {
+        title: { bs: "Mirna podloga i velika veličina teksta", de: "Ruhiger Untergrund und große Schrift" },
+        body: {
+          bs: "Zdravstveni sadržaj se čita u napetom trenutku. Svijetla podloga, širi razmaci i tekst od 17 piksela naviše smanjuju osjećaj gužve i olakšavaju čitanje starijim pacijentima.",
+          de: "Gesundheitsinhalte werden in angespannten Momenten gelesen. Heller Untergrund, größere Abstände und Text ab 17 Pixeln nehmen Druck heraus und erleichtern älteren Patienten das Lesen.",
+        },
+      },
+      {
+        title: { bs: "Odabir po tegobi, ne po stručnom nazivu", de: "Auswahl nach Beschwerde, nicht nach Fachbegriff" },
+        body: {
+          bs: "Pacijent bira ono što osjeća — „boli me zub“, „krvare desni“ — a stranica to prevodi u uslugu, trajanje i objašnjenje prvog dolaska.",
+          de: "Man wählt, was man spürt — „Zahnschmerzen“, „Zahnfleischbluten“ — und die Seite übersetzt das in Leistung, Dauer und Ablauf des ersten Besuchs.",
+        },
+      },
+      {
+        title: { bs: "Usluge s trajanjem, ne samo s nazivom", de: "Leistungen mit Dauer, nicht nur mit Namen" },
+        body: {
+          bs: "Uz svaku uslugu stoji koliko traje i šta obuhvata. To je prvo pitanje koje pacijent postavlja na telefon, pa nema razloga da odgovor bude skriven.",
+          de: "Bei jeder Leistung steht, wie lange sie dauert und was dazugehört. Das ist die erste Frage am Telefon — es gibt keinen Grund, die Antwort zu verstecken.",
+        },
+      },
+      {
+        title: { bs: "Traka za zakazivanje koja prati čitanje", de: "Terminleiste, die beim Lesen mitläuft" },
+        body: {
+          bs: "Na mobitelu traka za zakazivanje ostaje na dnu ekrana dok pacijent lista usluge, pa odluka i sljedeći korak nisu razdvojeni.",
+          de: "Auf dem Handy bleibt die Terminleiste am unteren Rand, während die Leistungen durchgesehen werden — Entscheidung und nächster Schritt liegen nicht auseinander.",
+        },
+      },
+    ],
+    annotations: [
+      {
+        id: "offer",
+        title: { bs: "Ponuda je jasna već na prvom ekranu.", de: "Das Angebot steht schon auf dem ersten Bildschirm." },
+        body: {
+          bs: "Naslov kaže vrstu ordinacije i grad, a odmah ispod stoji koliko traje prvi pregled. Pacijent ne mora skrolati da bi znao je li na pravom mjestu.",
+          de: "Die Überschrift nennt Art der Praxis und Ort, direkt darunter steht die Dauer der ersten Untersuchung. Niemand muss scrollen, um zu wissen, ob er richtig ist.",
+        },
+      },
+      {
+        id: "services",
+        title: { bs: "Usluge se mogu pregledati bez traženja.", de: "Die Leistungen lassen sich ohne Suchen überblicken." },
+        body: {
+          bs: "Umjesto padajućeg menija, usluge stoje kao otvoren popis s trajanjem. Odabir tegobe iznad njih vodi pacijenta do prave, bez poznavanja stručnih naziva.",
+          de: "Statt eines Aufklappmenüs stehen die Leistungen als offene Liste mit Dauer. Die Beschwerde-Auswahl darüber führt zur passenden — ohne Fachbegriffe zu kennen.",
+        },
+      },
+      {
+        id: "contact",
+        title: { bs: "Kontakt je dostupan u trenutku odluke.", de: "Der Kontakt ist im Moment der Entscheidung da." },
+        body: {
+          bs: "Zakazivanje se ponavlja tačno tamo gdje pacijent završi čitanje o usluzi, a na mobitelu ostaje u vidljivoj traci pri dnu.",
+          de: "Die Terminvergabe wiederholt sich genau dort, wo das Lesen über eine Leistung endet — auf dem Handy bleibt sie in einer sichtbaren Leiste unten.",
+        },
+      },
+    ],
+    decisionImages: ["lipa-recepcija", "lipa-tehnologija"],
+    tryIt: {
+      title: { bs: "Odabir razloga dolaska", de: "Auswahl des Besuchsgrunds" },
+      body: {
+        bs: "Kliknite razlog dolaska i sadržaj ispod se mijenja: koja usluga ga pokriva, koliko traje i šta obuhvata. Pacijent ne mora znati stručni naziv da bi našao pravo mjesto.",
+        de: "Klicken Sie auf einen Besuchsgrund und der Inhalt darunter wechselt: welche Leistung ihn abdeckt, wie lange sie dauert und was dazugehört. Man muss keinen Fachbegriff kennen, um die richtige Stelle zu finden.",
+      },
+    },
+    swatch: { bg: "#eef3f4", fg: "#12303a", accent: "#3f7f8c" },
+  },
+
+  {
     slug: "meridijan-savjetovanje",
     key: "advisory",
     brand: "Meridijan",
+    shortName: "Meridijan",
     sector: { bs: "Poslovno savjetovanje", de: "Unternehmensberatung" },
     tagline: {
       bs: "Savjetovanje koje odmah kaže o čemu se razgovara na prvom sastanku.",
@@ -243,6 +258,10 @@ export const demoProjects: DemoProject[] = [
     shows: {
       bs: "kako se apstraktna usluga može objasniti kroz kratku orijentaciju od tri pitanja, i kako se karakter stranice može promijeniti bez uvođenja novog pisma.",
       de: "wie sich eine abstrakte Leistung über eine kurze Orientierung aus drei Fragen erklären lässt — und wie sich der Charakter einer Seite ohne neue Schriftfamilie ändern kann.",
+    },
+    visitorProblem: {
+      bs: "Vlasnik zna da nešto ne štima, ali ne zna kako to nazvati ni o čemu bi se razgovaralo.",
+      de: "Man merkt, dass etwas klemmt, kann es aber nicht benennen — und weiß nicht, worüber man sprechen würde.",
     },
     needs: {
       bs: [

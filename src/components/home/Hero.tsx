@@ -1,38 +1,49 @@
+import { HeroGallery } from "@/components/home/HeroGallery";
+import { ArchMark } from "@/components/ui/ArchMark";
 import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
-import { Shot } from "@/components/media/Shot";
 import { demoProjects } from "@/content/projects";
 import { path, type Locale } from "@/lib/i18n/config";
 import type { Dictionary } from "@/lib/i18n/dictionary";
 import { sectionIds } from "@/lib/nav";
 
-/** The concept the first screen leads with. */
-const FEATURED = "ordinacija-lipa";
-
+/**
+ * The first screen: a short editorial statement, then the work.
+ *
+ * The statement is set as two columns rather than one centred block so the
+ * title can run at full display size while the sentence that explains it sits
+ * beside it at reading size — the visitor gets the claim and the substance in
+ * one glance instead of scrolling between them.
+ *
+ * The arch is the studio's mark, drawn once on load and then still: the site
+ * gets one animated moment, and this is it.
+ */
 export function Hero({ locale, dict }: { locale: Locale; dict: Dictionary }) {
-  const featured = demoProjects.find((project) => project.slug === FEATURED) ?? demoProjects[0];
-
   return (
-    <section className="relative overflow-hidden bg-ink pt-28 pb-16 text-paper on-dark sm:pt-32 lg:pt-36 lg:pb-24">
+    <section className="relative overflow-hidden bg-ink pt-26 pb-12 text-paper on-dark sm:pt-28 lg:pt-28 lg:pb-14">
       <div
         aria-hidden="true"
-        className="grid-lines pointer-events-none absolute inset-0 opacity-30 [--grid-color:#16332d] [--grid-size:104px]"
+        className="grid-lines pointer-events-none absolute inset-0 opacity-25 [--grid-color:#123d34] [--grid-size:104px]"
       />
 
       <Container className="relative">
-        <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,0.88fr)_minmax(0,1.12fr)] lg:gap-16">
+        <div className="grid gap-x-16 gap-y-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:items-end">
           <div>
-            <p className="text-[0.8125rem] font-semibold tracking-[0.2em] text-lime uppercase sm:tracking-[0.24em]">
+            <p className="flex items-center gap-3 text-[0.8125rem] font-semibold tracking-[0.2em] text-lime uppercase sm:tracking-[0.24em]">
+              <ArchMark draw className="w-9 shrink-0 text-lime/70" strokeWidth={4} />
               {dict.hero.eyebrow}
             </p>
 
-            <h1 className="mt-6 text-hero leading-[0.9] font-extrabold tracking-[-0.035em] text-balance">
-              {dict.hero.titleLine1} {dict.hero.titleLine2}
+            <h1 className="mt-6 text-hero leading-[0.88] font-extrabold tracking-[-0.035em] text-balance">
+              <span className="block">{dict.hero.titleLine1}</span>
+              <span className="block text-mist">{dict.hero.titleLine2}</span>
             </h1>
+          </div>
 
-            <p className="mt-7 max-w-[46ch] text-lead leading-relaxed text-mist">{dict.hero.lead}</p>
+          <div className="lg:pb-3">
+            <p className="max-w-[62ch] text-lead leading-[1.55] text-mist">{dict.hero.lead}</p>
 
-            <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
               <ButtonLink href={path("contact", locale)} tone="dark">
                 {dict.hero.ctaPrimary}
               </ButtonLink>
@@ -40,53 +51,10 @@ export function Hero({ locale, dict }: { locale: Locale; dict: Dictionary }) {
                 {dict.hero.ctaSecondary}
               </ButtonLink>
             </div>
-
-            <p className="mt-9 flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.8125rem] font-semibold tracking-[0.16em] text-mist uppercase">
-              <span aria-hidden="true" className="h-px w-8 bg-lime" />
-              {dict.hero.support}
-              <span aria-hidden="true" className="text-mist/50">
-                /
-              </span>
-              {dict.hero.markets}
-            </p>
           </div>
-
-          {/* The real thing: a capture of an implemented demo page. On a phone
-              the mobile capture reads far better than a shrunken desktop one. */}
-          <figure className="relative">
-            <Shot
-              slug={featured.slug}
-              locale={locale}
-              device="mobile"
-              priority
-              alt={`${dict.projects.shotAlt} — ${featured.brand}`}
-              sizes="(max-width: 640px) 78vw, 1px"
-              className="mx-auto max-w-[17rem] shadow-[0_30px_60px_-30px_rgba(0,0,0,0.95)] sm:hidden"
-            />
-
-            <div className="hidden sm:block">
-              <Shot
-                slug={featured.slug}
-                locale={locale}
-                device="desktop"
-                priority
-                alt={`${dict.projects.shotAlt} — ${featured.brand}`}
-                sizes="(max-width: 1024px) 100vw, 56vw"
-                className="shadow-[0_40px_90px_-45px_rgba(0,0,0,0.95)]"
-              />
-              <Shot
-                slug={featured.slug}
-                locale={locale}
-                device="mobile"
-                alt=""
-                sizes="160px"
-                // Kept clear of the window so the demo's own CTA stays legible.
-                className="absolute -bottom-12 left-2 h-[15.5rem] w-[8.9rem] shadow-[0_30px_60px_-30px_rgba(0,0,0,0.95)] lg:left-0"
-              />
-            </div>
-            <figcaption className="sr-only">{dict.hero.figureLabel}</figcaption>
-          </figure>
         </div>
+
+        <HeroGallery projects={demoProjects} locale={locale} dict={dict} />
       </Container>
     </section>
   );

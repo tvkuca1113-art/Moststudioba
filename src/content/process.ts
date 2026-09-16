@@ -2,6 +2,8 @@ import type { L } from "@/lib/i18n/localized";
 
 export type ProcessStep = {
   number: string;
+  /** Two words for the homepage: Razgovor → Smjer → Dizajn i izrada → … */
+  label: L;
   title: L;
   body: L;
   youGive: L<string[]>;
@@ -11,6 +13,7 @@ export type ProcessStep = {
 export const processSteps: ProcessStep[] = [
   {
     number: "01",
+    label: { bs: "Razgovor", de: "Gespräch" },
     title: { bs: "Razumijemo vaš posao", de: "Wir verstehen Ihr Geschäft" },
     body: {
       bs: "Razgovor o uslugama, publici, postojećoj stranici i cilju projekta. Zanima nas šta prodajete, kome i šta posjetilac treba uraditi.",
@@ -41,6 +44,7 @@ export const processSteps: ProcessStep[] = [
   },
   {
     number: "02",
+    label: { bs: "Smjer", de: "Richtung" },
     title: { bs: "Dogovaramo smjer", de: "Wir legen die Richtung fest" },
     body: {
       bs: "Struktura sadržaja, dizajnerski smjer i dogovoreni obim. Ovdje se dogovaramo šta ulazi u projekat, a šta ostaje za kasnije.",
@@ -73,6 +77,7 @@ export const processSteps: ProcessStep[] = [
   },
   {
     number: "03",
+    label: { bs: "Dizajn i izrada", de: "Design und Umsetzung" },
     title: { bs: "Dizajniramo i izrađujemo", de: "Wir gestalten und entwickeln" },
     body: {
       bs: "Razvoj stranice uz pregled i povratne informacije. Radimo u vidljivim koracima, tako da ne čekate do kraja da vidite rezultat.",
@@ -101,6 +106,7 @@ export const processSteps: ProcessStep[] = [
   },
   {
     number: "04",
+    label: { bs: "Provjera i objava", de: "Prüfung und Start" },
     title: {
       bs: "Provjeravamo i pripremamo objavu",
       de: "Wir prüfen und bereiten die Veröffentlichung vor",

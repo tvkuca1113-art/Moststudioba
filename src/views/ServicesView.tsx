@@ -41,7 +41,7 @@ export function ServicesView({ locale }: { locale: Locale }) {
                   {t(service.title)}
                 </h2>
                 <p className="mt-5 max-w-xl text-lead leading-relaxed text-slate">{t(service.summary)}</p>
-                <p className="mt-8 rounded-2xl bg-forest px-5 py-4 text-[0.9375rem] leading-relaxed font-medium text-paper">
+                <p className="mt-8 rounded-2xl bg-forest px-5 py-4 text-body leading-relaxed font-medium text-paper">
                   <span className="block text-[0.8125rem] font-semibold tracking-[0.14em] text-lime uppercase">
                     {dict.services.outcome}
                   </span>
@@ -67,7 +67,7 @@ export function ServicesView({ locale }: { locale: Locale }) {
         </Section>
       ))}
 
-      <ProcessSection locale={locale} dict={dict} withPhoto={false} />
+      <ProcessSection locale={locale} dict={dict} variant="full" withPhoto={false} />
 
       <Section tone="paper" size="tight">
         <Container>
@@ -85,7 +85,7 @@ export function ServicesView({ locale }: { locale: Locale }) {
                   </li>
                 ))}
               </ul>
-              <p className="mt-8 rounded-2xl bg-paper-dim px-5 py-4 text-[0.9375rem] leading-relaxed text-slate">
+              <p className="mt-8 rounded-2xl bg-paper-dim px-5 py-4 text-body leading-relaxed text-slate">
                 {dict.services.scopeNote}
               </p>
               <div className="mt-8 flex flex-wrap gap-3">

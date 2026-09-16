@@ -23,6 +23,11 @@ const styles: Record<Tone, Record<Variant, string>> = {
   },
 };
 
+/** The button look, for the rare call site that needs its own element. */
+export function buttonClass(variant: Variant = "primary", tone: Tone = "light", className?: string) {
+  return cn(base, styles[tone][variant], className);
+}
+
 type CommonProps = {
   children: ReactNode;
   variant?: Variant;

@@ -5,7 +5,7 @@ import { useEffect, useId, useRef, useState } from "react";
 import { Button, ButtonAnchor } from "@/components/ui/Button";
 import { CopyIcon, InstagramIcon } from "@/components/ui/icons";
 import { site } from "@/content/site";
-import { track } from "@/lib/analytics";
+import { event as analytics } from "@/lib/analytics";
 import { cn } from "@/lib/cn";
 import { format } from "@/lib/i18n/format";
 import type { Locale } from "@/lib/i18n/config";
@@ -20,9 +20,11 @@ const urlPattern = /^(https?:\/\/)?([\w-]+\.)+[a-z]{2,}(\/[^\s]*)?$/i;
  * Prepares a message the visitor sends themselves on Instagram.
  *
  * It never claims to send anything: there is no backend, no email service and
- * no secret key involved. Copying is copying — the note under the buttons says
- * so, and the analytics event records only that a copy happened, never the
- * text that was copied.
+ * no secret key involved. Copying is copying — the step list says so, the note
+ * under the buttons says so, and the event it reports is `copy_message`, never
+ * `lead_submit`. What gets reported is the two fixed choices and a length
+ * bucket; the message itself, and anything the visitor typed into it, stays in
+ * the browser.
  */
 export function BriefBuilder({
   locale,
@@ -44,6 +46,14 @@ export function BriefBuilder({
   const [edited, setEdited] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [copyState, setCopyState] = useState<"idle" | "copied" | "failed">("idle");
+  const startedRef = useRef(false);
+
+  /** One `contact_start` per visit, on the first answer of any kind. */
+  const noteStart = () => {
+    if (startedRef.current) return;
+    startedRef.current = true;
+    analytics("contact_start", { locale });
+  };
 
   const businessRef = useRef<HTMLInputElement>(null);
   const needRef = useRef<HTMLInputElement>(null);
@@ -95,6 +105,16 @@ export function BriefBuilder({
     return Object.keys(next).length === 0;
   };
 
+  /** Two fixed choices and a size bucket. Never the message. */
+  const reportCopy = () => {
+    analytics("copy_message", {
+      locale,
+      need: need ?? "unset",
+      goal: goal ?? "unset",
+      length: shownMessage.length > 400 ? "long" : "short",
+    });
+  };
+
   const handleCopy = async () => {
     if (!validate()) return;
     const text = shownMessage;
@@ -103,7 +123,7 @@ export function BriefBuilder({
       if (navigator.clipboard?.writeText) {
         await navigator.clipboard.writeText(text);
         setCopyState("copied");
-        track("brief_copy", { locale });
+        reportCopy();
         return;
       }
       throw new Error("clipboard unavailable");
@@ -117,7 +137,7 @@ export function BriefBuilder({
           const ok = document.execCommand("copy");
           if (ok) {
             setCopyState("copied");
-            track("brief_copy", { locale });
+            reportCopy();
             return;
           }
         } catch {
@@ -137,6 +157,7 @@ export function BriefBuilder({
     setEdited(false);
     setErrors({});
     setCopyState("idle");
+    startedRef.current = false;
     businessRef.current?.focus();
   };
 
@@ -178,7 +199,51 @@ export function BriefBuilder({
     );
 
   return (
-    <div className={cn("grid gap-8 lg:grid-cols-2 lg:gap-12", dark && "on-dark")}>
+    <div className={cn(dark && "on-dark")}>
+      {/* The route, stated before the form rather than discovered after it.
+          Step 3 is a link out, not a send: nothing on this page can deliver a
+          message, and the list is written so that is obvious from the start. */}
+      <ol
+        aria-label={b.stepsLabel}
+        className={cn(
+          "grid gap-px overflow-hidden rounded-2xl sm:grid-cols-3",
+          dark ? "bg-mist/20" : "bg-line-light",
+        )}
+      >
+        {[
+          { n: 1, title: b.step1, body: b.step1Body, done: complete },
+          { n: 2, title: b.step2, body: b.step2Body, done: copyState === "copied" },
+          { n: 3, title: b.step3, body: b.step3Body, done: false },
+        ].map((step) => (
+          <li key={step.n} className={cn("p-4 sm:p-5", dark ? "bg-ink" : "bg-paper")}>
+            <p className="flex items-center gap-2.5">
+              <span
+                className={cn(
+                  "inline-flex size-6 shrink-0 items-center justify-center rounded-full text-[0.8125rem] font-bold",
+                  step.done
+                    ? dark
+                      ? "bg-lime text-ink"
+                      : "bg-forest text-paper"
+                    : dark
+                      ? "border border-mist/40 text-mist"
+                      : "border border-slate/40 text-slate",
+                )}
+              >
+                {step.n}
+              </span>
+              <span className={cn("font-semibold", dark ? "text-paper" : "text-ink")}>{step.title}</span>
+              {step.done && (
+                <span className={cn("text-[0.8125rem] font-semibold", dark ? "text-lime" : "text-forest")}>
+                  {b.stepDone}
+                </span>
+              )}
+            </p>
+            <p className={cn("mt-2 text-sm leading-relaxed", dark ? "text-mist" : "text-slate")}>{step.body}</p>
+          </li>
+        ))}
+      </ol>
+
+      <div className="mt-8 grid gap-8 lg:grid-cols-2 lg:gap-12">
       <div className="space-y-7">
         {/* 1 — what do you do */}
         <div>
@@ -194,6 +259,7 @@ export function BriefBuilder({
             onChange={(event) => {
               setBusiness(event.target.value);
               setErrors((current) => ({ ...current, business: "" }));
+              noteStart();
             }}
             placeholder={b.q1Placeholder}
             aria-describedby={`${uid}-business-help`}
@@ -226,6 +292,7 @@ export function BriefBuilder({
                     checked={active}
                     onChange={() => {
                       setNeed(key);
+                      noteStart();
                       setErrors((current) => ({ ...current, need: "" }));
                     }}
                     className="peer sr-only"
@@ -261,6 +328,7 @@ export function BriefBuilder({
                     checked={active}
                     onChange={() => {
                       setGoal(key);
+                      noteStart();
                       setErrors((current) => ({ ...current, goal: "" }));
                     }}
                     className="peer sr-only"
@@ -358,7 +426,7 @@ export function BriefBuilder({
             variant="secondary"
             tone={tone}
             withArrow={false}
-            onClick={() => track("contact_click", { channel: "instagram", from: "brief" })}
+            onClick={() => analytics("outbound_instagram", { locale, from: "brief" })}
             className="gap-2"
           >
             <InstagramIcon className="size-5" />
@@ -368,6 +436,12 @@ export function BriefBuilder({
             {b.reset}
           </Button>
         </div>
+
+        {/* Opening Instagram with nothing on the clipboard leaves the visitor
+            in a chat with nothing to paste, so say which order works. */}
+        {complete && copyState !== "copied" && (
+          <p className={cn("mt-3 text-body leading-relaxed", dark ? "text-mist" : "text-slate")}>{b.copyFirst}</p>
+        )}
 
         <p aria-live="polite" className="sr-only">
           {copyState === "copied" ? b.copied : copyState === "failed" ? b.copyFailed : ""}
@@ -395,15 +469,16 @@ export function BriefBuilder({
           </div>
         )}
 
-        <p className={cn("mt-5 text-sm leading-relaxed", dark ? "text-mist" : "text-slate")}>{b.sendNote}</p>
+        <p className={cn("mt-5 text-body leading-relaxed", dark ? "text-mist" : "text-slate")}>{b.sendNote}</p>
         <p
           className={cn(
-            "mt-2 rounded-xl px-4 py-3 text-sm leading-relaxed",
+            "mt-2 rounded-xl px-4 py-3 text-body leading-relaxed",
             dark ? "bg-lime/12 text-paper" : "bg-paper-dim text-ink",
           )}
         >
           {b.notSentWarning}
         </p>
+      </div>
       </div>
     </div>
   );
