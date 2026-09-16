@@ -30,18 +30,17 @@ export const siteUrl: string = (() => {
 })();
 
 /**
- * Indexing is opt-in.
+ * Production is indexed; everything else is not.
  *
  * The gate is Vercel's own `VERCEL_ENV`, not the hostname: a production
  * deployment is production even while it still lives on a `*.vercel.app`
- * address. Preview deployments can never opt in, so a throwaway preview URL
- * cannot compete with the real site in search.
+ * address. Preview deployments can never be indexed whatever is configured,
+ * so a throwaway preview URL cannot compete with the real site in search.
  *
- * So a live production deployment stays `noindex` until
- * NEXT_PUBLIC_ALLOW_INDEXING is set to "true" in the project's Production
- * environment. That is the whole reason the current site reports
- * `noindex, follow, nocache` — nothing else is blocking it.
+ * `NEXT_PUBLIC_ALLOW_INDEXING=false` closes production again without a code
+ * change — useful while a domain is being moved, or if the site has to come
+ * out of search in a hurry.
  */
 export const indexingAllowed: boolean =
-  process.env.NEXT_PUBLIC_ALLOW_INDEXING === "true" &&
+  process.env.NEXT_PUBLIC_ALLOW_INDEXING !== "false" &&
   (process.env.VERCEL_ENV ?? "production") === "production";

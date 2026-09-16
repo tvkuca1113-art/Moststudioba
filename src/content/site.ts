@@ -18,7 +18,17 @@ export const site = {
    * The canonical URL and the indexing switch live in `@/lib/site-url`: they
    * read plain environment variables and so must stay out of client bundles.
    */
-  analyticsEnabled: process.env.NEXT_PUBLIC_ANALYTICS_ENABLED === "true",
+
+  /**
+   * Vercel Web Analytics is on. It is cookieless and stores no personal data,
+   * and what the site sends it is listed in `@/lib/analytics` — six events,
+   * none of which carry anything a visitor typed.
+   *
+   * `NEXT_PUBLIC_ANALYTICS_ENABLED=false` turns collection off again without a
+   * code change. In `next dev` the Vercel script detects development itself
+   * and logs instead of sending, so local work never reaches the dashboard.
+   */
+  analyticsEnabled: process.env.NEXT_PUBLIC_ANALYTICS_ENABLED !== "false",
 } as const;
 
 export const tagline: L = {

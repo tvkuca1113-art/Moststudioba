@@ -29,15 +29,14 @@ Slike su commitane, pa build nikada ne zavisi od te skripte.
 
 Kopiraj `.env.example` u `.env.local`. Nema tajnih ključeva — sve je `NEXT_PUBLIC_`.
 
+Nijedna varijabla nije obavezna. Bez ijedne, produkcija se indeksira i
+analitika radi. Postoje samo da se to može isključiti bez izmjene koda.
+
 | Varijabla | Šta radi |
 | --- | --- |
 | `NEXT_PUBLIC_SITE_URL` | Kanonski URL. Na Vercelu nije obavezan — bez njega se koristi produkcijski hostname projekta. Postavi ga kada dobiješ vlastitu domenu. |
-| `NEXT_PUBLIC_ALLOW_INDEXING` | Dok nije `true`, cijeli sajt je `noindex` i `robots.txt` je `Disallow: /`. Preview deployi ostaju `noindex` i kada jeste `true`. |
-| `NEXT_PUBLIC_ANALYTICS_ENABLED` | Dok nije `true`, ne učitava se Vercel Web Analytics i ne emituje se nijedan događaj. Nema pixela ni skripti trećih strana. |
-
-> **Analitika je trenutno isključena na produkciji.** Vercel Web Analytics je
-> ugrađen i spreman, ali dok `NEXT_PUBLIC_ANALYTICS_ENABLED` nije `true` u
-> Vercel postavkama, ne prikuplja se ništa.
+| `NEXT_PUBLIC_ALLOW_INDEXING` | Produkcija se indeksira. Na `false` cijeli sajt postaje `noindex` i `robots.txt` je `Disallow: /`. Preview deployi su `noindex` uvijek, bez obzira na ovu vrijednost. |
+| `NEXT_PUBLIC_ANALYTICS_ENABLED` | Vercel Web Analytics je uključen (bez kolačića). Na `false` se ne učitava i nijedan događaj se ne emituje. Nema pixela ni skripti trećih strana. |
 
 ## Deployment na Vercel
 
@@ -47,8 +46,9 @@ Kopiraj `.env.example` u `.env.local`. Nema tajnih ključeva — sve je `NEXT_PU
 2. Kada dobiješ domenu: **Settings → Domains** → dodaj je i sačekaj DNS.
 3. **Settings → Environment Variables**, samo za `Production`:
    - `NEXT_PUBLIC_SITE_URL` = `https://tvoja-domena.ba`
-   - `NEXT_PUBLIC_ALLOW_INDEXING` = `true`
 4. Redeploy, pa provjeri `/robots.txt` (treba `Allow: /`) i `/sitemap.xml`.
+
+Indeksiranje i analitika ne traže nikakvu varijablu — uključeni su.
 
 Preview deployi ostaju `noindex` bez obzira na postavke, pa privremene adrese
 ne mogu završiti u pretrazi umjesto pravog sajta.
@@ -149,7 +149,8 @@ Dva pravila su ugrađena u tipove, ne samo u dokumentaciju:
   odlazak na Instagram nisu to — oni su `copy_message` i `outbound_instagram`.
   Dok nema backenda, `lead_submit` se ne emituje nigdje.
 
-Sve zajedno je isključeno dok `NEXT_PUBLIC_ANALYTICS_ENABLED` nije `true`.
+Analitika je uključena. `NEXT_PUBLIC_ANALYTICS_ENABLED=false` je isključuje bez
+izmjene koda; u `next dev` Vercel skripta sama prepozna razvoj i ne šalje ništa.
 
 ## Tipografija i kontrast
 
