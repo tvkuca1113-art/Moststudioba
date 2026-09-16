@@ -15,12 +15,9 @@ export const site = {
   instagramUrl: "https://www.instagram.com/moststudioba/",
   markets: ["BiH", "Njemačka"],
   /**
-   * Set NEXT_PUBLIC_SITE_URL once the domain is confirmed. Until then the
-   * canonical/OG absolute URLs fall back to a placeholder that is never
-   * indexed, because indexing stays off unless NEXT_PUBLIC_ALLOW_INDEXING=true.
+   * The canonical URL and the indexing switch live in `@/lib/site-url`: they
+   * read plain environment variables and so must stay out of client bundles.
    */
-  url: process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ?? "http://localhost:3000",
-  indexingAllowed: process.env.NEXT_PUBLIC_ALLOW_INDEXING === "true",
   analyticsEnabled: process.env.NEXT_PUBLIC_ANALYTICS_ENABLED === "true",
 } as const;
 

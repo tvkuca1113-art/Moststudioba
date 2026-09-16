@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
-import { site } from "@/content/site";
 import { absoluteUrl } from "@/lib/seo";
+import { indexingAllowed, siteUrl } from "@/lib/site-url";
 
 /**
  * Indexing is opt-in. Previews and any environment without
@@ -9,7 +9,7 @@ import { absoluteUrl } from "@/lib/seo";
  * demo routes stay closed everywhere.
  */
 export default function robots(): MetadataRoute.Robots {
-  if (!site.indexingAllowed) {
+  if (!indexingAllowed) {
     return { rules: { userAgent: "*", disallow: "/" } };
   }
 
@@ -20,6 +20,6 @@ export default function robots(): MetadataRoute.Robots {
       disallow: ["/demo/", "/de/demo/"],
     },
     sitemap: absoluteUrl("/sitemap.xml"),
-    host: site.url,
+    host: siteUrl,
   };
 }

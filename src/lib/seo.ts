@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { site } from "@/content/site";
+import { indexingAllowed, siteUrl } from "@/lib/site-url";
 import { allPaths, htmlLang, type Locale, type RouteRef } from "@/lib/i18n/config";
 
 type PageMetaInput = {
@@ -14,7 +15,7 @@ type PageMetaInput = {
 };
 
 export function absoluteUrl(pathname: string): string {
-  return `${site.url}${pathname === "/" ? "" : pathname}` || "/";
+  return `${siteUrl}${pathname === "/" ? "" : pathname}` || "/";
 }
 
 export function buildMetadata({
@@ -27,7 +28,7 @@ export function buildMetadata({
 }: PageMetaInput): Metadata {
   const paths = allPaths(route);
   const canonical = paths[locale];
-  const blocked = noindex || !site.indexingAllowed;
+  const blocked = noindex || !indexingAllowed;
   const image = ogImage ?? `/og/og-${locale}.png`;
 
   return {

@@ -3,7 +3,7 @@ import type { Metadata, Viewport } from "next";
 
 import "@/app/globals.css";
 import { RootDocument } from "@/components/layout/RootDocument";
-import { site } from "@/content/site";
+import { siteUrl } from "@/lib/site-url";
 
 /**
  * One of two root layouts. Bosnian lives at `/`, German at `/de`, and each
@@ -11,7 +11,7 @@ import { site } from "@/content/site";
  * top-level app/layout.tsx.
  */
 export const metadata: Metadata = {
-  metadataBase: new URL(site.url),
+  metadataBase: new URL(siteUrl),
 };
 
 export const viewport: Viewport = {

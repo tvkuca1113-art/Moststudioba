@@ -31,21 +31,23 @@ Kopiraj `.env.example` u `.env.local`. Nema tajnih ključeva — sve je `NEXT_PU
 
 | Varijabla | Šta radi |
 | --- | --- |
-| `NEXT_PUBLIC_SITE_URL` | Kanonski URL. Koristi se za canonical, hreflang, sitemap i OG adrese. |
-| `NEXT_PUBLIC_ALLOW_INDEXING` | Dok nije `true`, cijeli sajt je `noindex` i `robots.txt` je `Disallow: /`. |
+| `NEXT_PUBLIC_SITE_URL` | Kanonski URL. Na Vercelu nije obavezan — bez njega se koristi produkcijski hostname projekta. Postavi ga kada dobiješ vlastitu domenu. |
+| `NEXT_PUBLIC_ALLOW_INDEXING` | Dok nije `true`, cijeli sajt je `noindex` i `robots.txt` je `Disallow: /`. Preview deployi ostaju `noindex` i kada jeste `true`. |
 | `NEXT_PUBLIC_ANALYTICS_ENABLED` | Dok nije `true`, ne emituje se nijedan događaj. Nema pixela ni skripti trećih strana. |
 
 ## Deployment na Vercel
 
 1. Poveži repozitorij na [vercel.com/new](https://vercel.com/new). Vercel sam
-   prepoznaje Next.js — build komanda i output se ne mijenjaju.
-2. **Settings → Environment Variables**, za `Production`:
+   prepoznaje Next.js — build komanda i output se ne mijenjaju. Bez ijedne
+   postavke sajt radi odmah i ostaje izvan pretrage.
+2. Kada dobiješ domenu: **Settings → Domains** → dodaj je i sačekaj DNS.
+3. **Settings → Environment Variables**, samo za `Production`:
    - `NEXT_PUBLIC_SITE_URL` = `https://tvoja-domena.ba`
    - `NEXT_PUBLIC_ALLOW_INDEXING` = `true`
-3. Za `Preview` i `Development` ostavi `NEXT_PUBLIC_ALLOW_INDEXING` neposta-
-   vljeno. Tako preview okruženja ostaju izvan pretrage.
-4. **Settings → Domains** → dodaj domenu i sačekaj DNS.
-5. Nakon prvog produkcijskog deploya provjeri `/robots.txt` i `/sitemap.xml`.
+4. Redeploy, pa provjeri `/robots.txt` (treba `Allow: /`) i `/sitemap.xml`.
+
+Preview deployi ostaju `noindex` bez obzira na postavke, pa privremene adrese
+ne mogu završiti u pretrazi umjesto pravog sajta.
 
 Sve rute su statički generisane, pa nema servera koji treba održavati.
 
