@@ -1,41 +1,6 @@
 import type { ReactNode } from "react";
 
 import { cn } from "@/lib/cn";
-import type { AnnotationId } from "@/content/projects";
-
-export const annotationOrder: AnnotationId[] = ["offer", "services", "contact"];
-
-export function annotationNumber(id: AnnotationId): number {
-  return annotationOrder.indexOf(id) + 1;
-}
-
-/**
- * Numbered marker tying a spot in the demo to its explanation. Hidden on
- * narrow containers, where the explanations are listed under the preview
- * instead of crowding the content.
- */
-export function AnnotationMarker({
-  id,
-  label,
-  className,
-}: {
-  id: AnnotationId;
-  label: string;
-  className?: string;
-}) {
-  return (
-    <span
-      data-annotation={id}
-      className={cn(
-        "pointer-events-none z-20 hidden size-7 shrink-0 items-center justify-center rounded-full bg-lime text-[0.8125rem] font-bold text-ink shadow-[0_2px_10px_rgba(9,28,24,0.28)] @2xl:inline-flex",
-        className,
-      )}
-    >
-      <span className="sr-only">{label} {annotationNumber(id)}: </span>
-      <span aria-hidden="true">{annotationNumber(id)}</span>
-    </span>
-  );
-}
 
 /** Persistent "this is a demo" strip shown at the top of every demo concept. */
 export function DemoRibbon({ text, tone = "dark" }: { text: string; tone?: "dark" | "light" }) {

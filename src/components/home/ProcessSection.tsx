@@ -1,3 +1,4 @@
+import { Photo } from "@/components/media/Photo";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { Section, SectionHeading } from "@/components/ui/Section";
@@ -7,7 +8,16 @@ import type { Dictionary } from "@/lib/i18n/dictionary";
 import { translator } from "@/lib/i18n/localized";
 import { sectionIds } from "@/lib/nav";
 
-export function ProcessSection({ locale, dict }: { locale: Locale; dict: Dictionary }) {
+export function ProcessSection({
+  locale,
+  dict,
+  withPhoto = true,
+}: {
+  locale: Locale;
+  dict: Dictionary;
+  /** Each MOST photograph appears once per page, never as a repeated backdrop. */
+  withPhoto?: boolean;
+}) {
   const t = translator(locale);
 
   return (
@@ -21,7 +31,17 @@ export function ProcessSection({ locale, dict }: { locale: Locale; dict: Diction
           lead={dict.process.lead}
         />
 
-        <ol className="mt-12 lg:mt-16">
+        {withPhoto && (
+          <Photo
+            name="most-proces-dizajna"
+            locale={locale}
+            breakpoint="viewport"
+            sizes="(max-width: 1024px) 100vw, 88vw"
+            className="mt-12 aspect-3/2 rounded-2xl sm:aspect-21/9 lg:mt-14"
+          />
+        )}
+
+        <ol className="mt-12 lg:mt-14">
           {processSteps.map((step, index) => (
             <Reveal
               key={step.number}

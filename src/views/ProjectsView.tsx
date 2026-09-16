@@ -21,14 +21,14 @@ export function ProjectsView({ locale }: { locale: Locale }) {
           <h1 className="mt-5 max-w-4xl text-display leading-[0.95]">{dict.projects.overviewTitle}</h1>
           <p className="mt-6 max-w-2xl text-lead leading-relaxed text-slate">{dict.projects.overviewLead}</p>
 
-          <div className="mt-12 grid gap-5 lg:mt-16 lg:grid-cols-12">
+          <div className="mt-12 lg:mt-16">
             {demoProjects.map((project, index) => (
               <Reveal
                 key={project.slug}
-                delay={index * 90}
-                className={index === 2 ? "lg:col-span-12" : index === 0 ? "lg:col-span-5" : "lg:col-span-7"}
+                delay={index * 80}
+                className={index > 0 ? "mt-14 border-t border-line-light pt-14 lg:mt-16 lg:pt-16" : undefined}
               >
-                <ProjectCard project={project} locale={locale} dict={dict} wide={index === 2} />
+                <ProjectCard project={project} locale={locale} dict={dict} featured />
               </Reveal>
             ))}
           </div>

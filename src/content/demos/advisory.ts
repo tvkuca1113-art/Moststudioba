@@ -1,3 +1,4 @@
+import type { ImageKey } from "@/content/images";
 import type { L } from "@/lib/i18n/localized";
 
 export type AdvisoryArea = "finance" | "organisation" | "growth";
@@ -45,6 +46,7 @@ export const advisoryContent = {
     items: [
       {
         id: "finance" as AdvisoryArea,
+        image: "meridijan-analiza" as ImageKey,
         name: { bs: "Finansijski pregled", de: "Finanzieller Überblick" } as L,
         body: {
           bs: "Gdje nastaje trošak, koliko zaista košta svaka usluga i koje cijene ne pokrivaju rad. Radimo s brojevima koje već imate, ne uvodimo novi sistem prije nego što se zna šta nedostaje.",
@@ -65,6 +67,7 @@ export const advisoryContent = {
       },
       {
         id: "organisation" as AdvisoryArea,
+        image: "meridijan-radionica" as ImageKey,
         name: { bs: "Organizacija i odgovornosti", de: "Organisation und Verantwortung" } as L,
         body: {
           bs: "Ko odlučuje, ko izvršava i gdje se posao zaustavlja. Cilj nije organigram nego to da firma može raditi i kada vlasnik nije prisutan.",
@@ -85,6 +88,7 @@ export const advisoryContent = {
       },
       {
         id: "growth" as AdvisoryArea,
+        image: null,
         name: { bs: "Ponuda i novi klijenti", de: "Angebot und neue Kundschaft" } as L,
         body: {
           bs: "Šta prodajete, kome i zašto bi to neko odabrao umjesto konkurencije. Prije nego što se ulaže u oglašavanje, provjeravamo da li je ponuda razumljiva.",
@@ -154,6 +158,7 @@ export const advisoryContent = {
     ],
   },
   cooperation: {
+    eyebrow: { bs: "ŠTA OSTAJE NAKON RAZGOVORA", de: "WAS NACH DEM GESPRÄCH BLEIBT" } as L,
     title: { bs: "Kako izgleda saradnja", de: "So läuft die Zusammenarbeit" } as L,
     steps: [
       {

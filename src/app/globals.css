@@ -24,7 +24,7 @@
   --color-line-dark: #24463f;
   --color-line-light: #d6d4c3;
 
-  --text-hero: clamp(2.75rem, 1.2rem + 7vw, 7.5rem);
+  --text-hero: clamp(2.6rem, 1.1rem + 5.1vw, 5.6rem);
   --text-display: clamp(2.25rem, 1.2rem + 4.4vw, 4.75rem);
   --text-title: clamp(1.65rem, 1.1rem + 2.1vw, 2.75rem);
   --text-lead: clamp(1.0625rem, 1rem + 0.45vw, 1.3125rem);

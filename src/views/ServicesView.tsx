@@ -67,7 +67,7 @@ export function ServicesView({ locale }: { locale: Locale }) {
         </Section>
       ))}
 
-      <ProcessSection locale={locale} dict={dict} />
+      <ProcessSection locale={locale} dict={dict} withPhoto={false} />
 
       <Section tone="paper" size="tight">
         <Container>

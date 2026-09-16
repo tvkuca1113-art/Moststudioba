@@ -1,10 +1,12 @@
 import { chromium } from "@playwright/test";
-const OUT = process.env.SHOT_DIR ?? "qa/shots";
+
 const BASE = process.env.BASE_URL ?? "http://127.0.0.1:3000";
 const fails = [];
-const ok = (cond, msg) => { if (!cond) fails.push(msg); else console.log("  ok:", msg); };
+const ok = (c, m) => { if (!c) fails.push(m); else console.log("  ok:", m); };
 
-const browser = await chromium.launch({ ...(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {}) });
+const browser = await chromium.launch({
+  ...(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {}),
+});
 const ctx = await browser.newContext({
   viewport: { width: 1440, height: 950 },
   permissions: ["clipboard-read", "clipboard-write"],
@@ -12,145 +14,168 @@ const ctx = await browser.newContext({
 const page = await ctx.newPage();
 page.on("pageerror", (e) => fails.push("pageerror: " + e.message));
 
-// ---------- showcase ----------
-console.log("showcase");
-await page.goto(BASE + "/", { waitUntil: "networkidle" });
-await page.evaluate(() => { document.documentElement.style.scrollBehavior = "auto"; });
-await page.locator("#sta-mozemo").scrollIntoViewIfNeeded();
-await page.waitForTimeout(400);
+// ---- document structure ----------------------------------------------------
+console.log("struktura dokumenta");
+for (const route of ["/", "/projekti", "/projekti/ordinacija-lipa", "/usluge", "/kontakt", "/demo/stolarija-hrast"]) {
+  await page.goto(BASE + route, { waitUntil: "load" });
+  const h1s = await page.locator("h1").count();
+  ok(h1s === 1, `${route}: točno jedan <h1> (${h1s})`);
+  const dupes = await page.evaluate(() => {
+    const seen = new Map();
+    for (const el of document.querySelectorAll("[id]")) seen.set(el.id, (seen.get(el.id) ?? 0) + 1);
+    return [...seen.entries()].filter(([, n]) => n > 1).map(([id]) => id);
+  });
+  ok(dupes.length === 0, `${route}: nema dupliranih id-jeva ${JSON.stringify(dupes)}`);
+}
 
-const panel = page.locator('[role="tabpanel"]').first();
-ok(await panel.getByText("Ordinacija Lipa").first().isVisible(), "clinic demo visible by default");
-
-// desktop vs mobile really reflows: the clinic nav is hidden below @3xl
-const deskNav = await panel.getByText("Prvi dolazak").first().isVisible();
-await page.getByRole("button", { name: "Mobitel" }).click();
-await page.waitForTimeout(700);
-const mobNav = await panel.getByText("Prvi dolazak").first().isVisible();
-ok(deskNav && !mobNav, `device toggle reflows layout (desktop nav ${deskNav}, mobile nav ${mobNav})`);
-await page.screenshot({ path: `${OUT}/int-showcase-mobile.png`, clip: { x: 40, y: 0, width: 1360, height: 950 } });
-
-await page.getByRole("button", { name: "Računar" }).click();
-await page.waitForTimeout(500);
-
-// concept switching (lazy-loaded chunks)
-await page.getByRole("tab", { name: "Stolarija i montaža po mjeri" }).click();
-await page.waitForTimeout(1200);
-ok(await panel.getByText("Stolarija Hrast").first().isVisible(), "trades concept loads on demand");
-
-// the configurator actually changes the drawing
-const before = await panel.innerHTML();
-await panel.getByText("Orah, mat lak").click();
-await page.waitForTimeout(400);
-const after = await panel.innerHTML();
-ok(before !== after, "finish change repaints the joinery drawing");
-
-await page.getByRole("tab", { name: "Poslovno savjetovanje" }).click();
-await page.waitForTimeout(1200);
-ok(await panel.getByText("Meridijan").first().isVisible(), "advisory concept loads on demand");
-
-// reasons toggle
-const reasonsBtn = page.getByRole("button", { name: /Zašto je ovako dizajnirano/ });
-await reasonsBtn.click();
-await page.waitForTimeout(500);
-ok(await page.getByRole("heading", { name: "Tri odluke u ovom primjeru" }).isVisible(), "explanations appear");
-ok(
-  await page.getByText("Ponuda je jasna već na prvom ekranu.").first().isVisible(),
-  "explanation 1 present",
+// ---- portfolio -------------------------------------------------------------
+console.log("portfolio");
+await page.goto(BASE + "/", { waitUntil: "load" });
+// next/image rewrites src to /_next/image?url=…, so match the decoded form.
+const shotCount = await page.evaluate(
+  () => Array.from(document.images).filter((i) => decodeURIComponent(i.src).includes("/images/snimci/")).length,
 );
-const markers = await panel.locator("[data-annotation]").count();
-ok(markers >= 3, `annotation markers rendered in the demo (${markers})`);
-await page.screenshot({ path: `${OUT}/int-showcase-reasons.png` });
+ok(shotCount >= 3, `početna prikazuje snimke stvarnih demoa (${shotCount})`);
+ok(
+  (await page.locator('main a[href="/demo/ordinacija-lipa"]').count()) > 0 &&
+    (await page.locator('main a[href="/projekti/ordinacija-lipa"]').count()) > 0,
+  "kartica ima zasebne veze: projekt i demo",
+);
+const embedded = await page.locator("main [data-demo-embed]").count();
+ok(embedded === 0, "početna ne ugrađuje živi demo");
 
-// keyboard: arrow keys move between concepts
-await page.getByRole("tab", { name: "Stomatološka ordinacija" }).first().focus();
+// ---- clinic: reason for visiting -------------------------------------------
+console.log("Lipa — izbor razloga dolaska");
+await page.goto(BASE + "/demo/ordinacija-lipa", { waitUntil: "load" });
+const before = await page.locator('[aria-live="polite"]').first().innerText();
+await page.getByText("Krvare mi desni", { exact: true }).click();
+await page.waitForTimeout(350);
+const after = await page.locator('[aria-live="polite"]').first().innerText();
+ok(before !== after, "izbor mijenja uslugu, trajanje i sadržaj");
+ok(after.includes("Čišćenje") || after.includes("desni"), "prikazana je odgovarajuća usluga");
+
+// ---- trades: material selector ---------------------------------------------
+console.log("Hrast — izbor materijala");
+await page.goto(BASE + "/demo/stolarija-hrast", { waitUntil: "load" });
+const sampleBefore = await page.locator('main img[src*="hrast-materijal"]').first().getAttribute("src");
+const panelBefore = await page.locator('[role="tabpanel"]').first().innerText();
+await page.getByRole("tab", { name: /Orah/ }).click();
+await page.waitForTimeout(500);
+const sampleAfter = await page.locator('main img[src*="hrast-materijal"]').first().getAttribute("src");
+const panelAfter = await page.locator('[role="tabpanel"]').first().innerText();
+ok(sampleBefore !== sampleAfter, "uzorak materijala se stvarno mijenja");
+ok(panelBefore !== panelAfter, "opis prati odabrani materijal");
+ok(
+  (await page.getByRole("tab", { name: /Orah/ }).getAttribute("aria-selected")) === "true",
+  "aktivno stanje je označeno",
+);
+await page.getByRole("tab", { name: /Hrast, uljeni/ }).focus();
 await page.keyboard.press("ArrowRight");
-await page.waitForTimeout(800);
-const selected = await page.locator('[role="tablist"]').first().locator('[role="tab"][aria-selected="true"]').textContent();
-ok(selected?.includes("Stolarija"), `arrow keys move between concepts (now: ${selected})`);
-
-// ---------- brief builder ----------
-console.log("brief builder");
-await page.goto(BASE + "/kontakt", { waitUntil: "networkidle" });
-await page.getByLabel(/Čime se bavite/).fill("stomatološka ordinacija u Sarajevu");
-await page.getByText("Redizajn postojeće", { exact: true }).click();
-await page.getByText("Da zakaže termin", { exact: true }).click();
-await page.getByLabel(/URL postojeće stranice/).fill("www.primjer.ba");
 await page.waitForTimeout(300);
+ok(
+  (await page.getByRole("tab", { name: /Orah/ }).getAttribute("aria-selected")) === "true",
+  "strelice pomjeraju izbor materijala",
+);
 
-const composed = await page.locator("textarea").inputValue();
-ok(composed.includes("stomatološka ordinacija u Sarajevu"), "message includes the business");
-ok(composed.includes("redizajn postojeće stranice"), "message includes the need");
-ok(composed.includes("zakaže termin"), "message includes the goal");
-ok(composed.includes("www.primjer.ba"), "message includes the optional url");
+// ---- advisory: questionnaire + reset ---------------------------------------
+console.log("Meridijan — upitnik");
+await page.goto(BASE + "/demo/meridijan-savjetovanje", { waitUntil: "load" });
+for (const answer of ["Promet raste, ali ne vidim zaradu.", "Jasan mjesečni pregled troškova.", "Računi, ponude i naplata."]) {
+  await page.getByText(answer, { exact: true }).click();
+}
+await page.waitForTimeout(400);
+ok(await page.getByText("Finansijski pregled").first().isVisible(), "tri odgovora daju prijedlog područja");
+await page.getByRole("button", { name: /Počni ispočetka/ }).click();
+await page.waitForTimeout(300);
+ok(
+  await page.getByText(/Odgovorite na sva tri pitanja/).isVisible(),
+  "reset vraća upitnik na početak",
+);
+
+// ---- brief builder ---------------------------------------------------------
+console.log("priprema upita");
+await page.goto(BASE + "/kontakt", { waitUntil: "load" });
+await page.getByLabel(/Čime se bavite/).fill("stolarija u Tuzli");
+await page.getByText("Nova stranica", { exact: true }).click();
+await page.getByText("Da nam se javi", { exact: true }).click();
+await page.waitForTimeout(300);
+let message = await page.locator("textarea").inputValue();
+ok(message.includes("stolarija u Tuzli"), "poruka se sastavlja iz odgovora");
+
+await page.locator("textarea").fill("Moj vlastiti tekst poruke.");
+await page.getByText("Da zakaže termin", { exact: true }).click();
+await page.waitForTimeout(350);
+ok(
+  (await page.locator("textarea").inputValue()) === "Moj vlastiti tekst poruke.",
+  "ručna izmjena poruke se ne gubi pri promjeni izbora",
+);
+ok(
+  await page.getByText(/više ne prati odgovore/).isVisible(),
+  "korisnik je upozoren da poruka više ne prati odgovore",
+);
+await page.getByRole("button", { name: /Sastavi ponovo/ }).click();
+await page.waitForTimeout(300);
+ok((await page.locator("textarea").inputValue()).includes("zakaže termin"), "ponovno sastavljanje radi");
 
 await page.getByRole("button", { name: /Kopiraj poruku/ }).click();
 await page.waitForTimeout(400);
 const clip = await page.evaluate(() => navigator.clipboard.readText());
-ok(clip.trim() === composed.trim(), "copy puts the exact message on the clipboard");
-ok(
-  await page.getByRole("button", { name: "Poruka je kopirana" }).isVisible(),
-  "copy confirmation is shown",
-);
+ok(clip.includes("stolarija u Tuzli"), "kopiranje stavlja poruku na clipboard");
 ok(
   await page.getByText(/Kopiranje poruke nije isto što i poslan upit/).isVisible(),
-  "copying is clearly not sending",
+  "jasno je da kopiranje nije slanje",
 );
-await page.screenshot({ path: `${OUT}/int-brief.png` });
 
-// validation
-await page.getByRole("button", { name: /Počni ispočetka/ }).click();
-await page.waitForTimeout(200);
-await page.getByRole("button", { name: /Kopiraj poruku/ }).click();
-await page.waitForTimeout(300);
-ok(await page.getByText("Upišite čime se bavite.").isVisible(), "validation blocks an empty brief");
-
-await page.getByLabel(/Čime se bavite/).fill("stolarija");
-await page.getByText("Nova stranica", { exact: true }).click();
-await page.getByText("Da nam se javi", { exact: true }).click();
-await page.getByLabel(/URL postojeće stranice/).fill("not a url");
-await page.getByRole("button", { name: /Kopiraj poruku/ }).click();
-await page.waitForTimeout(300);
-ok(await page.getByText(/Provjerite adresu/).isVisible(), "invalid url is rejected");
-
-// ---------- language switch keeps the page ----------
-console.log("language");
-await page.goto(BASE + "/projekti/stolarija-hrast", { waitUntil: "networkidle" });
+// ---- language --------------------------------------------------------------
+console.log("jezici");
+await page.goto(BASE + "/projekti/stolarija-hrast", { waitUntil: "load" });
 await page.getByRole("banner").getByRole("link", { name: "Deutsch" }).click();
 await page.waitForURL("**/de/projekte/stolarija-hrast");
-ok(page.url().endsWith("/de/projekte/stolarija-hrast"), "language switch keeps the same page");
-ok((await page.locator("html").getAttribute("lang")) === "de", "german tree sets lang=de");
+ok(page.url().endsWith("/de/projekte/stolarija-hrast"), "prebacivanje jezika čuva isti projekat");
+ok((await page.locator("html").getAttribute("lang")) === "de", "njemačko stablo ima lang=de");
+ok(
+  await page.evaluate(
+    () => Array.from(document.images).some((i) => decodeURIComponent(i.src).includes("-de-desktop")),
+  ),
+  "njemačka stranica pokazuje njemački snimak",
+);
 
-// ---------- keyboard-only navigation ----------
-console.log("keyboard");
-await page.goto(BASE + "/", { waitUntil: "networkidle" });
+// ---- anchors under the sticky header ---------------------------------------
+console.log("sidra i ljepljivi header");
+await page.goto(BASE + "/demo/ordinacija-lipa", { waitUntil: "load" });
+await page.evaluate(() => { document.documentElement.style.scrollBehavior = "auto"; });
+const target = await page.locator('main a[href^="#"]').first().getAttribute("href");
+await page.locator(`main a[href="${target}"]`).first().click();
+await page.waitForTimeout(600);
+const covered = await page.evaluate((sel) => {
+  const el = document.querySelector(sel);
+  if (!el) return null;
+  const top = el.getBoundingClientRect().top;
+  return top >= -2;
+}, target);
+ok(covered === true, `cilj sidra nije prekriven (${target})`);
+
+// ---- keyboard + reduced motion ---------------------------------------------
+console.log("tastatura i smanjeno kretanje");
+await page.goto(BASE + "/", { waitUntil: "load" });
 await page.keyboard.press("Tab");
-const firstFocus = await page.evaluate(() => document.activeElement?.textContent?.trim());
-ok(/Pređi na sadržaj/.test(firstFocus ?? ""), `skip link is first in tab order (${firstFocus})`);
-const ring = await page.evaluate(() => {
-  const el = document.activeElement;
-  return el ? getComputedStyle(el).outlineWidth : null;
-});
-ok(ring !== "0px", `focus ring is visible (${ring})`);
+const first = await page.evaluate(() => document.activeElement?.textContent?.trim());
+ok(/Pređi na sadržaj/.test(first ?? ""), `skip-link je prvi u redu (${first})`);
+ok(
+  (await page.evaluate(() => getComputedStyle(document.activeElement).outlineWidth)) !== "0px",
+  "fokus je vidljiv",
+);
 
-// ---------- reduced motion ----------
-console.log("reduced motion");
 const rm = await browser.newContext({ viewport: { width: 1440, height: 950 }, reducedMotion: "reduce" });
 const rmPage = await rm.newPage();
-await rmPage.goto(BASE + "/", { waitUntil: "networkidle" });
-await rmPage.waitForTimeout(500);
-const heroOpacity = await rmPage.evaluate(() => {
-  const plate = document.querySelector(".plate-enter");
-  return plate ? getComputedStyle(plate).opacity : null;
-});
-ok(heroOpacity === "1", `hero plates are final immediately under reduced motion (${heroOpacity})`);
-const hidden = await rmPage.evaluate(() => document.querySelectorAll('[data-reveal="pending"]').length);
+await rmPage.goto(BASE + "/", { waitUntil: "load" });
+await rmPage.waitForTimeout(600);
 const hiddenOpacity = await rmPage.evaluate(() => {
   const el = document.querySelector('[data-reveal="pending"]');
-  return el ? getComputedStyle(el).opacity : "n/a";
+  return el ? getComputedStyle(el).opacity : "1";
 });
-ok(hidden === 0 || hiddenOpacity === "1", `no content hidden under reduced motion (${hidden} pending, opacity ${hiddenOpacity})`);
-await rmPage.screenshot({ path: `${OUT}/int-reduced-motion.png` });
+ok(hiddenOpacity === "1", `ništa nije skriveno uz reduced-motion (${hiddenOpacity})`);
+await rm.close();
 
 await browser.close();
-console.log(fails.length ? "\nFAILURES:\n" + fails.join("\n") : "\nALL INTERACTION CHECKS PASSED");
+console.log(fails.length ? "\nGREŠKE:\n" + fails.join("\n") : "\nSVE INTERAKCIJE PROLAZE");

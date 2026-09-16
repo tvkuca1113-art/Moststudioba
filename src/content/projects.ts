@@ -1,3 +1,4 @@
+import type { ImageKey } from "@/content/images";
 import type { L } from "@/lib/i18n/localized";
 
 export type DemoKey = "clinic" | "trades" | "advisory";
@@ -24,8 +25,11 @@ export type DemoProject = {
   shows: L;
   needs: L<string[]>;
   decisions: Decision[];
-  implemented: L<string[]>;
   annotations: Annotation[];
+  /** Two photographs from the demo, shown beside its design decisions. */
+  decisionImages: [ImageKey, ImageKey];
+  /** The one thing a visitor can actually operate in the demo. */
+  tryIt: { title: L; body: L };
   /** Card theming on the MOST site, mirroring each concept's own palette. */
   swatch: { bg: string; fg: string; accent: string };
 };
@@ -90,20 +94,6 @@ export const demoProjects: DemoProject[] = [
         },
       },
     ],
-    implemented: {
-      bs: [
-        "Odabir tegobe koji mijenja prikazanu uslugu, njeno trajanje i sadržaj prvog dolaska.",
-        "Raspored koji se stvarno mijenja: na užem ekranu usluge prelaze u listu, a traka za zakazivanje se spušta na dno.",
-        "Sve kontrole rade dodirom i tastaturom, sa vidljivim fokusom.",
-        "Kontakt je jasno označen kao demonstracijski i ne šalje upite.",
-      ],
-      de: [
-        "Eine Beschwerde-Auswahl, die Leistung, Dauer und Ablauf des ersten Besuchs umschaltet.",
-        "Ein Layout, das sich wirklich ändert: bei schmalem Bildschirm werden die Leistungen zur Liste und die Terminleiste rutscht nach unten.",
-        "Alle Bedienelemente funktionieren per Touch und Tastatur, mit sichtbarem Fokus.",
-        "Der Kontakt ist klar als Demonstration gekennzeichnet und versendet keine Anfragen.",
-      ],
-    },
     annotations: [
       {
         id: "offer",
@@ -130,6 +120,14 @@ export const demoProjects: DemoProject[] = [
         },
       },
     ],
+    decisionImages: ["lipa-recepcija", "lipa-tehnologija"],
+    tryIt: {
+      title: { bs: "Odabir razloga dolaska", de: "Auswahl des Besuchsgrunds" },
+      body: {
+        bs: "Kliknite razlog dolaska i sadržaj ispod se mijenja: koja usluga ga pokriva, koliko traje i šta obuhvata. Pacijent ne mora znati stručni naziv da bi našao pravo mjesto.",
+        de: "Klicken Sie auf einen Besuchsgrund und der Inhalt darunter wechselt: welche Leistung ihn abdeckt, wie lange sie dauert und was dazugehört. Man muss keinen Fachbegriff kennen, um die richtige Stelle zu finden.",
+      },
+    },
     swatch: { bg: "#eef3f4", fg: "#12303a", accent: "#3f7f8c" },
   },
 
@@ -147,8 +145,8 @@ export const demoProjects: DemoProject[] = [
       de: "dass jemand, der über eine Küche oder einen Einbauschrank nach Maß nachdenkt, sieht, was der Betrieb macht, in welchen Oberflächen und wie die Terminvereinbarung für das Aufmaß abläuft.",
     },
     shows: {
-      bs: "kako jedan konfigurator može zamijeniti galeriju od pedeset fotografija: kupac bira prostor i završnu obradu, a prikaz, opis i popis uključenog mijenjaju se zajedno.",
-      de: "wie ein Konfigurator eine Galerie mit fünfzig Fotos ersetzen kann: Raum und Oberfläche werden gewählt, und Darstellung, Beschreibung und Leistungsumfang ändern sich gemeinsam.",
+      bs: "kako se ponuda pokazuje materijalom: tri koncepta s fotografijama i tri završne obrade koje kupac može uporediti prije nego što dođe u radionicu.",
+      de: "wie ein Angebot über das Material gezeigt wird: drei Konzepte mit Fotos und drei Oberflächen, die sich vergleichen lassen, bevor jemand in die Werkstatt kommt.",
     },
     needs: {
       bs: [
@@ -171,17 +169,17 @@ export const demoProjects: DemoProject[] = [
         },
       },
       {
-        title: { bs: "Konfigurator umjesto galerije", de: "Konfigurator statt Galerie" },
+        title: { bs: "Uz svaki komad piše šta ulazi u posao", de: "Bei jedem Stück steht, was zum Auftrag gehört" },
         body: {
-          bs: "Umjesto niza slika bez konteksta, kupac sam bira prostor i obradu. Uz svaki izbor mijenja se i popis onoga što je uključeno, pa kupac vidi obim posla, a ne samo rezultat.",
-          de: "Statt einer Bilderreihe ohne Kontext wählt man Raum und Oberfläche selbst. Mit jeder Auswahl ändert sich auch der Leistungsumfang — sichtbar wird der Arbeitsumfang, nicht nur das Ergebnis.",
+          bs: "Galerija nije niz slika bez konteksta. Uz svaki koncept stoji materijal, dimenzija i popis onoga što ulazi u posao, pa kupac vidi obim, a ne samo rezultat.",
+          de: "Die Galerie ist keine Bilderreihe ohne Kontext. Bei jedem Konzept stehen Material, Maß und der Leistungsumfang — sichtbar wird der Umfang, nicht nur das Ergebnis.",
         },
       },
       {
-        title: { bs: "Materijali su nacrtani, ne fotografisani", de: "Materialien sind gezeichnet, nicht fotografiert" },
+        title: { bs: "Uzorci obrade, jasno nazvani", de: "Oberflächenmuster, klar benannt" },
         body: {
-          bs: "Završne obrade izvedene su kao vektorska tekstura s crtežom drva, pa se mijenjaju odmah i bez učitavanja novih slika. Cijela sekcija teži manje od jedne fotografije.",
-          de: "Die Oberflächen sind als Vektortextur mit Holzzeichnung umgesetzt und wechseln sofort, ohne neue Bilder zu laden. Der ganze Abschnitt wiegt weniger als ein einzelnes Foto.",
+          bs: "Tri obrade stoje kao uzorci, a ne kao fotografije izvedenih radova. Uz svaku piše gdje je koristimo, pa izbor ovisi o prostoru, a ne o tome koja slika bolje izgleda.",
+          de: "Die drei Oberflächen stehen als Muster da, nicht als Fotos ausgeführter Arbeiten. Bei jeder steht, wofür wir sie einsetzen — die Wahl hängt vom Raum ab, nicht davon, welches Bild besser aussieht.",
         },
       },
       {
@@ -192,46 +190,40 @@ export const demoProjects: DemoProject[] = [
         },
       },
     ],
-    implemented: {
-      bs: [
-        "Konfigurator s tri prostora i tri završne obrade; prikaz, opis i popis uključenog mijenjaju se zajedno.",
-        "Završne obrade su generisane u SVG-u, pa promjena obrade ne učitava nijednu novu datoteku.",
-        "Prostori su izvedeni kao tabovi s punom podrškom za tastaturu (strelice, Home, End).",
-        "Na užem ekranu konfigurator prelazi iz dvije kolone u jednu, a izbor obrada u horizontalnu traku.",
-      ],
-      de: [
-        "Ein Konfigurator mit drei Räumen und drei Oberflächen; Darstellung, Beschreibung und Leistungsumfang wechseln gemeinsam.",
-        "Die Oberflächen werden als SVG erzeugt — ein Wechsel lädt keine einzige neue Datei.",
-        "Die Räume sind als Tabs mit vollständiger Tastaturunterstützung umgesetzt (Pfeiltasten, Pos1, Ende).",
-        "Bei schmalem Bildschirm wird aus zwei Spalten eine, und die Oberflächenauswahl wird zur horizontalen Leiste.",
-      ],
-    },
     annotations: [
       {
         id: "offer",
         title: { bs: "Ponuda je jasna već na prvom ekranu.", de: "Das Angebot steht schon auf dem ersten Bildschirm." },
         body: {
-          bs: "Naslov imenuje tri stvari koje firma radi — kuhinje, plakare i namještaj po mjeri — umjesto opšte rečenice o kvalitetu i tradiciji.",
-          de: "Die Überschrift nennt drei Dinge, die der Betrieb macht — Küchen, Schränke und Möbel nach Maß — statt eines allgemeinen Satzes über Qualität und Tradition.",
+          bs: "Ispod naslova odmah stoji prvi koncept s materijalom i dimenzijom, pa kupac u prvom ekranu vidi i šta firma radi i u kojem kvalitetu.",
+          de: "Direkt unter der Überschrift steht das erste Konzept mit Material und Maß — im ersten Bildschirm sieht man also beides: was der Betrieb macht und in welcher Qualität.",
         },
       },
       {
         id: "services",
         title: { bs: "Usluge se mogu pregledati bez traženja.", de: "Die Leistungen lassen sich ohne Suchen überblicken." },
         body: {
-          bs: "Konfigurator je ujedno i popis usluga: prelaskom kroz tri prostora kupac vidi cijelu ponudu, a uz svaki prikaz stoji šta je uključeno.",
-          de: "Der Konfigurator ist zugleich die Leistungsübersicht: Wer die drei Räume durchgeht, sieht das ganze Angebot — mit dem Leistungsumfang direkt daneben.",
+          bs: "Tri koncepta pokrivaju cijelu ponudu — kuhinju, plakar i namještaj po mjeri — a uz svaki stoji šta ulazi u posao.",
+          de: "Drei Konzepte decken das ganze Angebot ab — Küche, Schrank und Möbel nach Maß — und bei jedem steht, was zum Auftrag gehört.",
         },
       },
       {
         id: "contact",
         title: { bs: "Kontakt je dostupan u trenutku odluke.", de: "Der Kontakt ist im Moment der Entscheidung da." },
         body: {
-          bs: "Dogovor za mjerenje stoji odmah ispod konfiguratora — tamo gdje kupac upravo vidi šta bi naručio, a ne na zasebnoj stranici.",
-          de: "Die Terminvereinbarung fürs Aufmaß steht direkt unter dem Konfigurator — dort, wo man gerade sieht, was man bestellen würde, nicht auf einer eigenen Seite.",
+          bs: "Dogovor za mjerenje stoji odmah nakon materijala — tamo gdje kupac upravo vidi šta bi naručio, a ne na zasebnoj stranici.",
+          de: "Die Terminvereinbarung fürs Aufmaß steht direkt nach den Materialien — dort, wo man gerade sieht, was man bestellen würde, nicht auf einer eigenen Seite.",
         },
       },
     ],
+    decisionImages: ["hrast-spoj-detalj", "hrast-plakar"],
+    tryIt: {
+      title: { bs: "Izbor završne obrade", de: "Auswahl der Oberfläche" },
+      body: {
+        bs: "Prebacite između tri obrade: mijenja se uzorak, opis i popis prostora u kojima je koristimo. Kupac vidi razliku prije nego što dođe u radionicu.",
+        de: "Wechseln Sie zwischen drei Oberflächen: Muster, Beschreibung und die Liste der Räume ändern sich mit. Der Unterschied ist sichtbar, bevor jemand in die Werkstatt kommt.",
+      },
+    },
     swatch: { bg: "#1b1a18", fg: "#f2ece2", accent: "#c8864a" },
   },
 
@@ -294,20 +286,6 @@ export const demoProjects: DemoProject[] = [
         },
       },
     ],
-    implemented: {
-      bs: [
-        "Orijentacija od tri pitanja koja vodi do jednog od tri područja rada, s objašnjenjem sadržaja prvog sastanka.",
-        "Rezultat se može promijeniti i poništiti bez ponovnog učitavanja stranice.",
-        "Tekst rezultata se najavljuje čitačima ekrana kada se pojavi.",
-        "Uredničko slaganje ostaje čitljivo na 360 piksela: mjera reda se sužava, a linije se prorjeđuju.",
-      ],
-      de: [
-        "Eine Orientierung aus drei Fragen, die zu einem von drei Arbeitsfeldern führt — mit Erklärung zum Inhalt des ersten Gesprächs.",
-        "Das Ergebnis lässt sich ohne Neuladen der Seite ändern und zurücksetzen.",
-        "Der Ergebnistext wird Screenreadern angekündigt, sobald er erscheint.",
-        "Der redaktionelle Satz bleibt bei 360 Pixeln lesbar: das Satzmaß wird schmaler, die Linien werden sparsamer.",
-      ],
-    },
     annotations: [
       {
         id: "offer",
@@ -334,6 +312,14 @@ export const demoProjects: DemoProject[] = [
         },
       },
     ],
+    decisionImages: ["meridijan-analiza", "meridijan-plan"],
+    tryIt: {
+      title: { bs: "Orijentacija od tri pitanja", de: "Orientierung aus drei Fragen" },
+      body: {
+        bs: "Odgovorite na tri pitanja i dobijete jedno predloženo područje rada sa sadržajem prvog sastanka. Nije ocjena firme nego prijedlog teme razgovora.",
+        de: "Beantworten Sie drei Fragen und Sie erhalten ein vorgeschlagenes Arbeitsfeld mit dem Inhalt des ersten Gesprächs. Keine Bewertung des Unternehmens, sondern ein Themenvorschlag.",
+      },
+    },
     swatch: { bg: "#efece4", fg: "#23211c", accent: "#7a6a52" },
   },
 ];

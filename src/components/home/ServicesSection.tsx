@@ -39,7 +39,7 @@ export function ServicesSection({ locale, dict }: { locale: Locale; dict: Dictio
               </p>
               <ul className="mt-3 space-y-2.5">
                 {t(service.includes)
-                  .slice(0, 3)
+                  .slice(0, 2)
                   .map((item) => (
                     <li key={item} className="flex gap-3 text-[0.9375rem] leading-relaxed">
                       <CheckIcon className="mt-1 size-4 shrink-0 text-forest" />

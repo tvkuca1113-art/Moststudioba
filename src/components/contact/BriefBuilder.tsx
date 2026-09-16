@@ -67,9 +67,12 @@ export function BriefBuilder({
         .join("\n")
     : "";
 
-  // Regenerate while the visitor is still answering; once they edit the text
-  // themselves their wording wins and is never overwritten.
+  // Regenerate while the visitor is still answering. Once they edit the text
+  // themselves their wording wins and is never overwritten — but then the
+  // preview has stopped following the answers, so say so and offer the way
+  // back rather than letting it drift silently.
   const shownMessage = edited ? message : composed;
+  const stale = edited && composed.length > 0 && composed !== message;
 
   useEffect(() => {
     if (copyState === "idle") return;
@@ -318,6 +321,30 @@ export function BriefBuilder({
           placeholder={complete ? undefined : b.lead}
           className={cn(fieldClass, "mt-3 min-h-60 resize-y leading-relaxed")}
         />
+
+        {stale && (
+          <div
+            className={cn(
+              "mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 rounded-xl px-4 py-3 text-[0.9375rem]",
+              dark ? "bg-lime/12 text-paper" : "bg-paper-dim text-ink",
+            )}
+          >
+            <span>{b.editedNotice}</span>
+            <button
+              type="button"
+              onClick={() => {
+                setEdited(false);
+                setMessage(composed);
+              }}
+              className={cn(
+                "min-h-9 font-semibold underline underline-offset-4",
+                dark ? "text-lime" : "text-forest",
+              )}
+            >
+              {b.regenerate}
+            </button>
+          </div>
+        )}
 
         <div className="mt-4 flex flex-wrap gap-3">
           <Button onClick={handleCopy} tone={tone} className="gap-2">

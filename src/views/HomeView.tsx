@@ -1,5 +1,4 @@
 import { SiteFrame } from "@/components/layout/SiteFrame";
-import { CapabilityShowcase } from "@/components/home/CapabilityShowcase";
 import { ContactSection } from "@/components/home/ContactSection";
 import { FaqSection } from "@/components/home/FaqSection";
 import { Hero } from "@/components/home/Hero";
@@ -24,11 +23,10 @@ export function HomeView({ locale }: { locale: Locale }) {
         }}
       />
       <Hero locale={locale} dict={dict} />
-      <CapabilityShowcase locale={locale} dict={dict} />
       <ProjectsSection locale={locale} dict={dict} />
       <ServicesSection locale={locale} dict={dict} />
       <ProcessSection locale={locale} dict={dict} />
-      <StudioSection dict={dict} />
+      <StudioSection locale={locale} dict={dict} />
       <FaqSection locale={locale} dict={dict} />
       <ContactSection locale={locale} dict={dict} />
     </SiteFrame>

@@ -23,7 +23,7 @@ const routes = [
   ["/de/demo/meridijan-savjetovanje", "demo-advisory-de"],
 ];
 
-const widths = Number(process.env.FULL) ? [360, 390, 768, 1440] : [1440, 390];
+const widths = Number(process.env.FULL) ? [360, 390, 768, 1024, 1440] : [1440, 390];
 const problems = [];
 
 const browser = await chromium.launch({ ...(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {}) });

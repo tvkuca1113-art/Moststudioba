@@ -1,11 +1,13 @@
+import { Photo } from "@/components/media/Photo";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { site } from "@/content/site";
+import type { Locale } from "@/lib/i18n/config";
 import type { Dictionary } from "@/lib/i18n/dictionary";
 import { sectionIds } from "@/lib/nav";
 
-export function StudioSection({ dict }: { dict: Dictionary }) {
+export function StudioSection({ locale, dict }: { locale: Locale; dict: Dictionary }) {
   return (
     <Section id={sectionIds.studio} tone="paper" labelledBy="studio-title">
       <Container>
@@ -39,7 +41,16 @@ export function StudioSection({ dict }: { dict: Dictionary }) {
           </div>
 
           <div>
-            <h3 className="text-[0.8125rem] font-semibold tracking-[0.16em] text-slate uppercase">{dict.studio.proofTitle}</h3>
+            <Photo
+              name="most-most-skulptura"
+              locale={locale}
+              breakpoint="viewport"
+              sizes="(max-width: 1024px) 100vw, 46vw"
+              className="aspect-3/2 rounded-2xl"
+            />
+            <h3 className="mt-10 text-[0.8125rem] font-semibold tracking-[0.16em] text-slate uppercase">
+              {dict.studio.proofTitle}
+            </h3>
             <div className="mt-5 grid gap-px overflow-hidden rounded-3xl bg-line-light">
               {dict.studio.proof.map((item, index) => (
                 <Reveal key={item.title} delay={index * 70} className="bg-paper p-6">

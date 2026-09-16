@@ -93,24 +93,32 @@ koristi tip `L<T>` — svaki tekst mora postojati na oba jezika.
 
 ### Demo koncepti
 
-Tri koncepta u `src/components/demos/`. Svaki je pisan s **container queries**,
-ne media queries, pa se isti kod koristi:
+Tri koncepta u `src/components/demos/`, svaki na vlastitoj ruti `/demo/[slug]`
+i s vlastitim vizualnim sistemom (paleta, tipografija, kompozicija i način
+predstavljanja ponude). Pisani su s **container queries**, ne media queries,
+pa rade i kada se prikazuju u užem okviru.
 
-- na vlastitoj ruti `/demo/[slug]` (puna širina),
-- u interaktivnom prikazu na početnoj (`Računar` / `Mobitel` mijenja širinu
-  kontejnera, pa se raspored stvarno mijenja),
-- u prikazima na stranici projekta.
-
-Zato prikaz i demo ne mogu razići — to je isti kod.
+Početna **ne ugrađuje** živi demo: tri interfejsa na jednoj stranici značila su
+drugi `<h1>`, mnogo JavaScripta i zarobljen skrol u malom okviru. Umjesto toga
+portfolio pokazuje snimke, a demo je jedan klik dalje.
 
 `/demo/*` rute su `noindex` da se demo ordinacija ne pojavi u pretrazi kao
 stvarna. Njihove prezentacije na `/projekti/*` su indeksabilne.
 
-### Grafika
+### Slike i snimci
 
-Bez stock fotografija. Sve ilustracije su originalni SVG u
-`src/components/demos/art.tsx`. U konfiguratoru stolarije promjena završne
-obrade **ponovo iscrtava** grafiku — ne učitava se nijedna nova datoteka.
+Dvije odvojene stvari:
+
+- **Fotografije** (`public/images/<grupa>/`) — konceptualni vizuali iz
+  isporučenog paketa. Ugrađuju se skriptom koja provjeri SHA-256, smanji,
+  prekodira i generiše `src/content/images.ts` s BS/DE alt tekstom:
+  `node scripts/prepare-images.mjs <putanja-do-paketa>` (25,3 MB → 1,6 MB).
+- **Snimci demoa** (`public/images/snimci/`) — hero, kartice projekata i
+  studije koncepata koriste **stvarne snimke implementiranih demo stranica**,
+  po jedan par za svaki jezik: `node scripts/capture-demos.mjs`. Zato prikaz na
+  kartici uvijek odgovara onome što se otvori klikom.
+
+Detalji i porijeklo: [`docs/SLIKE.md`](./docs/SLIKE.md).
 
 ## Kontaktni tok
 

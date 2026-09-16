@@ -1,127 +1,157 @@
-import type { RoomVariant, WoodFinish } from "@/components/demos/art";
+import type { ImageKey } from "@/content/images";
 import type { L } from "@/lib/i18n/localized";
+
+export type WoodFinish = "oak" | "walnut" | "white";
 
 export const tradesContent = {
   brand: "Stolarija Hrast",
   nav: {
-    work: { bs: "Radovi", de: "Arbeiten" } as L,
+    work: { bs: "Projekti", de: "Projekte" } as L,
     materials: { bs: "Materijali", de: "Materialien" } as L,
-    measuring: { bs: "Mjerenje", de: "Aufmaß" } as L,
+    detail: {
+    eyebrow: { bs: "DETALJI IZRADE", de: "DETAILS DER AUSFÜHRUNG" } as L,
+    title: { bs: "Spoj se vidi izbliza.", de: "Die Verbindung sieht man aus der Nähe." } as L,
+    body: {
+      bs: "Uglove radimo spojem koji drži bez vidljivog okova. Zato ladica ostaje u liniji i nakon nekoliko godina korištenja.",
+      de: "Die Ecken fertigen wir mit einer Verbindung, die ohne sichtbare Beschläge hält. Deshalb bleibt die Schublade auch nach Jahren in der Flucht.",
+    } as L,
+  },
+
+  measuring: { bs: "Mjerenje", de: "Aufmaß" } as L,
     cta: { bs: "Dogovorite mjerenje", de: "Aufmaß vereinbaren" } as L,
   },
+
   hero: {
     eyebrow: { bs: "STOLARIJA I MONTAŽA PO MJERI", de: "TISCHLEREI UND MONTAGE NACH MASS" } as L,
     titleLines: {
-      bs: ["Kuhinje.", "Plakari.", "Namještaj po mjeri."],
-      de: ["Küchen.", "Schränke.", "Möbel nach Maß."],
+      bs: ["Namještaj koji", "pripada vašem", "prostoru."],
+      de: ["Möbel, die in", "Ihren Raum", "gehören."],
     } as L<string[]>,
     lead: {
-      bs: "Radimo od mjerenja do montaže. Vi birate prostor i završnu obradu, mi izlazimo na teren i dajemo ponudu s tačnim dimenzijama.",
-      de: "Wir arbeiten vom Aufmaß bis zur Montage. Sie wählen Raum und Oberfläche, wir kommen vor Ort und erstellen ein Angebot mit exakten Maßen.",
+      bs: "Radimo od mjerenja do montaže. Izlazimo na teren, snimimo prostor i dajemo ponudu s tačnim dimenzijama i odabranom obradom.",
+      de: "Wir arbeiten vom Aufmaß bis zur Montage. Wir kommen vor Ort, nehmen den Raum auf und erstellen ein Angebot mit exakten Maßen und der gewählten Oberfläche.",
     } as L,
     cta: { bs: "Dogovorite mjerenje", de: "Aufmaß vereinbaren" } as L,
-    secondary: { bs: "Pogledajte obrade", de: "Oberflächen ansehen" } as L,
+    secondary: { bs: "Pogledajte materijale", de: "Materialien ansehen" } as L,
+    conceptLabel: { bs: "Koncept 01", de: "Konzept 01" } as L,
   },
-  configurator: {
-    eyebrow: { bs: "KONFIGURATOR", de: "KONFIGURATOR" } as L,
-    title: { bs: "Odaberite prostor i obradu.", de: "Raum und Oberfläche wählen." } as L,
+
+  /** Concept work, clearly labelled as such — not delivered commissions. */
+  projects: {
+    eyebrow: { bs: "KONCEPTUALNI PROJEKTI", de: "KONZEPTPROJEKTE" } as L,
+    title: { bs: "Tri komada, tri zadatka.", de: "Drei Stücke, drei Aufgaben." } as L,
     lead: {
-      bs: "Prikaz se mijenja zajedno s vašim izborom, kao i popis onoga što ulazi u posao.",
-      de: "Die Darstellung ändert sich mit Ihrer Auswahl — ebenso der Umfang der Arbeiten.",
+      bs: "Osmišljeni primjeri kojima pokazujemo kako pristupamo prostoru. Nisu izvedene narudžbe.",
+      de: "Entworfene Beispiele, die zeigen, wie wir an einen Raum herangehen. Es sind keine ausgeführten Aufträge.",
     } as L,
-    roomLabel: { bs: "Prostor", de: "Raum" } as L,
-    finishLabel: { bs: "Završna obrada", de: "Oberfläche" } as L,
     includesLabel: { bs: "Šta ulazi u posao", de: "Was zum Auftrag gehört" } as L,
-    finishNote: {
-      bs: "Obrade su nacrtane u vektoru — promjena ne učitava nove slike.",
-      de: "Die Oberflächen sind als Vektor gezeichnet — ein Wechsel lädt keine neuen Bilder.",
-    } as L,
-    rooms: [
+    items: [
       {
-        id: "kitchen" as RoomVariant,
-        name: { bs: "Kuhinja", de: "Küche" } as L,
+        id: "kitchen",
+        image: "hrast-kuhinja" as ImageKey,
+        name: { bs: "Kuhinja u nizu", de: "Küchenzeile" } as L,
+        kind: { bs: "Orah, mat lak · 4,2 m", de: "Nuss, matt lackiert · 4,2 m" } as L,
         body: {
-          bs: "Donji i gornji elementi, visoki ormar i radna ploča. Dimenzije se prilagođavaju postojećim instalacijama, a ne obrnuto.",
-          de: "Unter- und Oberschränke, Hochschrank und Arbeitsplatte. Die Maße richten sich nach den vorhandenen Anschlüssen, nicht umgekehrt.",
+          bs: "Donji i gornji elementi s visokim ormarom. Dimenzije se prilagođavaju postojećim instalacijama, a ne obrnuto.",
+          de: "Unter- und Oberschränke mit Hochschrank. Die Maße richten sich nach den vorhandenen Anschlüssen, nicht umgekehrt.",
         } as L,
         includes: {
-          bs: [
-            "Izlazak na teren i mjerenje prostora",
-            "Izrada korpusa, fronti i radne ploče",
-            "Ugradnja okova s mekim zatvaranjem",
-            "Montaža i spajanje s postojećim instalacijama",
-          ],
-          de: [
-            "Termin vor Ort und Aufmaß des Raums",
-            "Fertigung von Korpus, Fronten und Arbeitsplatte",
-            "Einbau von Beschlägen mit Dämpfung",
-            "Montage und Anschluss an die vorhandene Installation",
-          ],
+          bs: ["Mjerenje prostora i provjera instalacija", "Korpusi, fronte i radna ploča", "Okov s mekim zatvaranjem", "Montaža i spajanje"],
+          de: ["Aufmaß und Prüfung der Anschlüsse", "Korpusse, Fronten und Arbeitsplatte", "Beschläge mit Dämpfung", "Montage und Anschluss"],
         } as L<string[]>,
       },
       {
-        id: "wardrobe" as RoomVariant,
-        name: { bs: "Plakar", de: "Einbauschrank" } as L,
+        id: "wardrobe",
+        image: "hrast-plakar" as ImageKey,
+        name: { bs: "Ugradni plakar", de: "Einbauschrank" } as L,
+        kind: { bs: "Hrast, uljeni · od poda do plafona", de: "Eiche, geölt · vom Boden bis zur Decke" } as L,
         body: {
-          bs: "Ugradni plakar od poda do plafona, s kliznim ili klasičnim vratima. Unutrašnja podjela se dogovara prema tome šta se u njemu drži.",
-          de: "Einbauschrank vom Boden bis zur Decke, mit Schiebe- oder Drehtüren. Die Innenaufteilung richtet sich danach, was darin verstaut wird.",
+          bs: "Niša se rijetko mjeri pod pravim uglom. Korpus se pravi prema stvarnim odstupanjima zidova, pa nema maski i zazora.",
+          de: "Eine Nische ist selten rechtwinklig. Der Korpus entsteht nach den tatsächlichen Wandabweichungen — ohne Blenden und Fugen.",
         } as L,
         includes: {
-          bs: [
-            "Mjerenje niše i provjera odstupanja zidova",
-            "Izrada korpusa i vrata po mjeri",
-            "Unutrašnja podjela prema dogovoru",
-            "Montaža i regulacija vrata na licu mjesta",
-          ],
-          de: [
-            "Aufmaß der Nische und Prüfung der Wandabweichungen",
-            "Fertigung von Korpus und Türen nach Maß",
-            "Innenaufteilung nach Absprache",
-            "Montage und Justierung der Türen vor Ort",
-          ],
+          bs: ["Mjerenje niše i odstupanja zidova", "Korpus i vrata po mjeri", "Unutrašnja podjela prema dogovoru", "Montaža i regulacija vrata"],
+          de: ["Aufmaß der Nische und der Wandabweichungen", "Korpus und Türen nach Maß", "Innenaufteilung nach Absprache", "Montage und Justierung der Türen"],
         } as L<string[]>,
       },
       {
-        id: "furniture" as RoomVariant,
-        name: { bs: "Namještaj po mjeri", de: "Möbel nach Maß" } as L,
+        id: "table",
+        image: "hrast-sto" as ImageKey,
+        name: { bs: "Trpezarijski sto", de: "Esstisch" } as L,
+        kind: { bs: "Mat bijela i masiv · 220 × 95 cm", de: "Mattweiß und Massivholz · 220 × 95 cm" } as L,
         body: {
-          bs: "Trpezarijski stolovi, klupe i radni stolovi od masiva. Radimo komad po komad, prema prostoru u koji ulazi.",
-          de: "Esstische, Bänke und Schreibtische aus Massivholz. Wir fertigen Stück für Stück, passend zum Raum.",
+          bs: "Komad koji se radi prema prostoru u koji ulazi: širina prolaza, visina stolica i broj mjesta određuju dimenziju, ne katalog.",
+          de: "Ein Stück, das zum Raum passt: Durchgangsbreite, Stuhlhöhe und Anzahl der Plätze bestimmen das Maß — nicht der Katalog.",
         } as L,
         includes: {
-          bs: [
-            "Dogovor o dimenzijama i namjeni komada",
-            "Odabir masiva i završne obrade",
-            "Izrada i brušenje u radionici",
-            "Dostava i postavljanje",
-          ],
-          de: [
-            "Abstimmung von Maßen und Verwendung",
-            "Auswahl von Massivholz und Oberfläche",
-            "Fertigung und Schliff in der Werkstatt",
-            "Lieferung und Aufstellung",
-          ],
+          bs: ["Dogovor o dimenzijama i namjeni", "Odabir masiva i završne obrade", "Izrada i brušenje u radionici", "Dostava i postavljanje"],
+          de: ["Abstimmung von Maß und Verwendung", "Auswahl von Massivholz und Oberfläche", "Fertigung und Schliff in der Werkstatt", "Lieferung und Aufstellung"],
         } as L<string[]>,
       },
     ],
-    finishes: [
+  },
+
+  materials: {
+    eyebrow: { bs: "MATERIJALI", de: "MATERIALIEN" } as L,
+    title: { bs: "Tri obrade koje najčešće biramo.", de: "Drei Oberflächen, die wir am häufigsten wählen." } as L,
+    lead: {
+      bs: "Uzorci završne obrade. Odaberite jednu da vidite površinu i gdje je najbolje koristiti.",
+      de: "Muster der Oberflächen. Wählen Sie eine, um die Fläche zu sehen und zu erfahren, wofür sie sich eignet.",
+    } as L,
+    sampleLabel: { bs: "Uzorak obrade", de: "Oberflächenmuster" } as L,
+    useForLabel: { bs: "Gdje je koristimo", de: "Wo wir sie einsetzen" } as L,
+    items: [
       {
         id: "oak" as WoodFinish,
+        image: "hrast-materijal-hrast" as ImageKey,
         name: { bs: "Hrast, uljeni", de: "Eiche, geölt" } as L,
-        note: { bs: "Topao ton, vidljiv crtež", de: "Warmer Ton, sichtbare Maserung" } as L,
+        note: {
+          bs: "Topao ton s vidljivim crtežom. Ulje se obnavlja kod kuće, pa se ogrebotine ne vide brzo.",
+          de: "Warmer Ton mit sichtbarer Maserung. Das Öl lässt sich zu Hause auffrischen, kleine Kratzer fallen kaum auf.",
+        } as L,
+        useFor: {
+          bs: ["Plakari i police u dnevnom boravku", "Radne ploče koje se često koriste", "Prostori s malo dnevnog svjetla"],
+          de: ["Schränke und Regale im Wohnbereich", "Häufig genutzte Arbeitsplatten", "Räume mit wenig Tageslicht"],
+        } as L<string[]>,
       },
       {
         id: "walnut" as WoodFinish,
+        image: "hrast-materijal-orah" as ImageKey,
         name: { bs: "Orah, mat lak", de: "Nuss, matt lackiert" } as L,
-        note: { bs: "Tamniji ton, mirna površina", de: "Dunklerer Ton, ruhige Oberfläche" } as L,
+        note: {
+          bs: "Tamniji ton i mirna površina. Mat lak ne sjaji pod reflektorima i lakše se održava od visokog sjaja.",
+          de: "Dunklerer Ton, ruhige Oberfläche. Mattlack spiegelt nicht unter Strahlern und ist pflegeleichter als Hochglanz.",
+        } as L,
+        useFor: {
+          bs: ["Kuhinjske fronte", "Komadi koji trebaju biti fokus prostora", "Prostori s puno svjetla"],
+          de: ["Küchenfronten", "Stücke, die den Raum prägen sollen", "Helle Räume"],
+        } as L<string[]>,
       },
       {
         id: "white" as WoodFinish,
+        image: "hrast-materijal-mat-bijela" as ImageKey,
         name: { bs: "Mat bijela", de: "Mattweiß" } as L,
-        note: { bs: "Bez crteža, za male prostore", de: "Ohne Maserung, für kleine Räume" } as L,
+        note: {
+          bs: "Bez crteža drva. Vizuelno širi uski prostor i lako se kombinuje s postojećim namještajem.",
+          de: "Ohne Holzmaserung. Lässt schmale Räume weiter wirken und kombiniert sich leicht mit vorhandenen Möbeln.",
+        } as L,
+        useFor: {
+          bs: ["Male kuhinje i uski hodnici", "Gornji elementi iznad radne ploče", "Prostori gdje već ima dosta drva"],
+          de: ["Kleine Küchen und schmale Flure", "Oberschränke über der Arbeitsplatte", "Räume mit bereits viel Holz"],
+        } as L<string[]>,
       },
     ],
   },
+
+  detail: {
+    eyebrow: { bs: "DETALJI IZRADE", de: "DETAILS DER AUSFÜHRUNG" } as L,
+    title: { bs: "Spoj se vidi izbliza.", de: "Die Verbindung sieht man aus der Nähe." } as L,
+    body: {
+      bs: "Uglove radimo spojem koji drži bez vidljivog okova. Zato ladica ostaje u liniji i nakon nekoliko godina korištenja.",
+      de: "Die Ecken fertigen wir mit einer Verbindung, die ohne sichtbare Beschläge hält. Deshalb bleibt die Schublade auch nach Jahren in der Flucht.",
+    } as L,
+  },
+
   measuring: {
     title: { bs: "Kako izgleda mjerenje", de: "So läuft das Aufmaß ab" } as L,
     lead: {
@@ -152,6 +182,7 @@ export const tradesContent = {
       },
     ],
   },
+
   contact: {
     title: { bs: "Dogovorite mjerenje", de: "Aufmaß vereinbaren" } as L,
     lead: {

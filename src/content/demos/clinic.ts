@@ -10,7 +10,7 @@ export const clinicContent = {
   },
   hero: {
     eyebrow: { bs: "STOMATOLOŠKA ORDINACIJA", de: "ZAHNARZTPRAXIS" } as L,
-    title: { bs: "Zubar koji vam objasni šta slijedi.", de: "Zahnmedizin, die erklärt, was als Nächstes kommt." } as L,
+    title: { bs: "Jasno objašnjenje. Mirniji prvi dolazak.", de: "Klar erklärt. Ein ruhigerer erster Besuch." } as L,
     lead: {
       bs: "Prvi pregled traje 30 minuta. Pregledamo stanje, objasnimo mogućnosti i zajedno odlučimo šta se radi — bez naplate prije nego što se dogovorimo.",
       de: "Die erste Untersuchung dauert 30 Minuten. Wir sehen uns den Befund an, erklären die Möglichkeiten und entscheiden gemeinsam — ohne Abrechnung, bevor etwas vereinbart ist.",
@@ -26,10 +26,10 @@ export const clinicContent = {
   triage: {
     title: { bs: "Šta vas dovodi kod nas?", de: "Was führt Sie zu uns?" } as L,
     lead: {
-      bs: "Odaberite ono što vas muči. Pokazaćemo koja usluga to rješava i šta se dešava na prvom dolasku.",
-      de: "Wählen Sie, was Sie stört. Wir zeigen, welche Leistung dazu passt und was beim ersten Besuch geschieht.",
+      bs: "Odaberite razlog dolaska da vidite koja ga usluga pokriva, koliko traje i šta obuhvata. Nalaz i plan uvijek donosi pregled u ordinaciji.",
+      de: "Wählen Sie den Grund Ihres Besuchs, um zu sehen, welche Leistung ihn abdeckt, wie lange sie dauert und was dazugehört. Befund und Plan entstehen immer erst bei der Untersuchung in der Praxis.",
     } as L,
-    resultLabel: { bs: "Preporučena usluga", de: "Passende Leistung" } as L,
+    resultLabel: { bs: "Usluga koja to pokriva", de: "Die zuständige Leistung" } as L,
     durationLabel: { bs: "Trajanje", de: "Dauer" } as L,
     includesLabel: { bs: "Šta obuhvata", de: "Was dazugehört" } as L,
     options: [
@@ -138,6 +138,43 @@ export const clinicContent = {
     addressLabel: { bs: "Adresa", de: "Adresse" } as L,
     address: { bs: "Adresa ordinacije (demo podatak)", de: "Adresse der Praxis (Demo-Angabe)" } as L,
   },
+  heroPanel: {
+    label: { bs: "Ordinacija", de: "Praxis" } as L,
+    note: {
+      bs: "Termine dogovaramo telefonom ili porukom. Prvi pregled ne naplaćujemo dok se ne dogovorimo šta se radi.",
+      de: "Termine vereinbaren wir telefonisch oder per Nachricht. Die erste Untersuchung rechnen wir erst ab, wenn das weitere Vorgehen vereinbart ist.",
+    } as L,
+  },
+  approach: {
+    eyebrow: { bs: "PRISTUP I TEHNOLOGIJA", de: "VORGEHEN UND TECHNIK" } as L,
+    title: { bs: "Vidite isto što i mi.", de: "Sie sehen dasselbe wie wir." } as L,
+    body: {
+      bs: "Snimak pokazujemo na ekranu i objasnimo šta se na njemu vidi, prije nego što predložimo bilo kakav zahvat. Ako nešto nije jasno, pitanja su dio pregleda.",
+      de: "Die Aufnahme zeigen wir am Bildschirm und erklären, was darauf zu sehen ist, bevor wir irgendeinen Eingriff vorschlagen. Rückfragen gehören zur Untersuchung.",
+    } as L,
+    points: {
+      bs: [
+        "Nalaz i mogućnosti dobijate u pisanom obliku.",
+        "Prije zahvata dogovaramo redoslijed i okvirno trajanje.",
+        "Ako zahvat nije hitan, to vam kažemo.",
+      ],
+      de: [
+        "Befund und Möglichkeiten erhalten Sie schriftlich.",
+        "Vor einem Eingriff stimmen wir Reihenfolge und ungefähre Dauer ab.",
+        "Wenn ein Eingriff nicht dringend ist, sagen wir das.",
+      ],
+    } as L<string[]>,
+  },
+
+  prevention: {
+    eyebrow: { bs: "PREVENCIJA", de: "VORSORGE" } as L,
+    title: { bs: "Ono što radite kod kuće nosi najveći dio.", de: "Was Sie zu Hause tun, trägt den größten Teil." } as L,
+    body: {
+      bs: "Na pregledu pokažemo tehniku četkanja i čišćenja međuzubnih prostora na vašem slučaju, a ne uopšteno. Upute dobijate napisane, da se ne oslanjate na pamćenje.",
+      de: "Bei der Untersuchung zeigen wir die Putz- und Zahnzwischenraumtechnik an Ihrem Fall, nicht allgemein. Die Anleitung erhalten Sie schriftlich, damit Sie sich nicht aufs Gedächtnis verlassen müssen.",
+    } as L,
+  },
+
   art: {
     alt: {
       bs: "Ilustracija mirne ordinacije: svjetlo kroz prozor, stolica i biljka.",

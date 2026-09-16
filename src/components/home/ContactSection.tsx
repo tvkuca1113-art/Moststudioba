@@ -1,10 +1,9 @@
-import { BriefBuilder } from "@/components/contact/BriefBuilder";
-import { ButtonAnchor } from "@/components/ui/Button";
+import { ButtonAnchor, ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 import { InstagramIcon } from "@/components/ui/icons";
 import { site } from "@/content/site";
-import type { Locale } from "@/lib/i18n/config";
+import { path, type Locale } from "@/lib/i18n/config";
 import type { Dictionary } from "@/lib/i18n/dictionary";
 import { sectionIds } from "@/lib/nav";
 
@@ -44,16 +43,11 @@ export function ContactSection({ locale, dict }: { locale: Locale; dict: Diction
           </div>
         </div>
 
-        <div className="mt-14 border-t border-line-dark pt-12 lg:mt-20 lg:pt-16">
-          <p className="text-[0.8125rem] font-semibold tracking-[0.22em] text-lime uppercase sm:text-sm">
-            {dict.brief.eyebrow}
-          </p>
-          <h3 className="mt-4 max-w-2xl text-title leading-[1.05]">{dict.brief.title}</h3>
-          <p className="mt-4 max-w-2xl text-[1.0625rem] leading-relaxed text-mist">{dict.brief.lead}</p>
-
-          <div className="mt-10">
-            <BriefBuilder locale={locale} dict={dict} tone="dark" />
-          </div>
+        <div className="mt-12 border-t border-line-dark pt-10">
+          <p className="max-w-[54ch] text-[1.0625rem] leading-relaxed text-mist">{dict.brief.lead}</p>
+          <ButtonLink href={path("contact", locale)} variant="secondary" tone="dark" className="mt-6">
+            {dict.brief.title}
+          </ButtonLink>
         </div>
       </Container>
     </Section>

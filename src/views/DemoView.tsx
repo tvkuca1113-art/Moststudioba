@@ -32,7 +32,9 @@ export function DemoView({ locale, slug }: { locale: Locale; slug: string }) {
         {dict.common.skipToContent}
       </a>
 
-      <header className="bg-ink text-paper on-dark">
+      {/* data-most-chrome: the capture script hides this bar so a portfolio
+          screenshot shows the demo site itself, not our wrapper around it. */}
+      <header data-most-chrome className="bg-ink text-paper on-dark">
         <div className="mx-auto flex w-full max-w-[110rem] flex-wrap items-center justify-between gap-3 px-4 py-3 sm:px-6">
           <div className="flex items-center gap-4">
             <Link href={path("home", locale)} className="py-1">
