@@ -5,7 +5,8 @@ import { TrackedAnchor } from "@/components/ui/TrackedLink";
 import { ArrowUpRight, CheckIcon } from "@/components/ui/icons";
 import type { Locale } from "@/lib/i18n/config";
 
-export const webshopDemoUrl = "https://most-menska-kolekcija-demo.eminjasarevic1.chatgpt.site";
+export const webshopDemoUrl = "/moststudiowebshop";
+const webshopAssetsBase = "/webshop-assets";
 
 const copy = {
   bs: {
@@ -93,7 +94,7 @@ export function WebshopDemoCard({ locale }: { locale: Locale }) {
         <div className="grid grid-cols-2 gap-x-4 gap-y-5">
           {selection.map((p, i) => (
             <div key={p.id} className="min-w-0">
-              <Image src={`${webshopDemoUrl}/products/${p.id}.webp`} alt={c.products[i]} width={396} height={396} unoptimized loading="lazy" className="aspect-square w-full bg-[#e8e4db] object-contain" />
+              <Image src={`${webshopAssetsBase}/products/${p.id}.webp`} alt={c.products[i]} width={396} height={396} unoptimized loading="lazy" className="aspect-square w-full bg-[#e8e4db] object-contain" />
               <p className="mt-2 text-sm leading-snug font-medium text-ink">{c.products[i]}</p>
               <p className="mt-1 text-sm text-slate">{p.price}</p>
             </div>

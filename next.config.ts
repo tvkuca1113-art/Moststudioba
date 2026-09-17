@@ -1,6 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  async rewrites() {
+    return [{ source: "/moststudiowebshop", destination: "/webshop-assets/index.html" }];
+  },
   images: {
     /**
      * AVIF first, WebP behind it. Both are generated from the same files in
