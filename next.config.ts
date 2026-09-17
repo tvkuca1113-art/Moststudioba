@@ -2,6 +2,14 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   allowedDevOrigins: ["terminal.local"],
+  async redirects() {
+    return ["moststudioba.vercel.app"].map((host) => ({
+      source: "/:path*",
+      has: [{ type: "host" as const, value: host }],
+      destination: "https://moststudioba.com/:path*",
+      permanent: true,
+    }));
+  },
   async rewrites() {
     return [{ source: "/moststudiowebshop", destination: "/webshop-assets/index.html" }];
   },

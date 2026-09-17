@@ -4,8 +4,8 @@ import { absoluteUrl } from "@/lib/seo";
 import { indexingAllowed, siteUrl } from "@/lib/site-url";
 
 /**
- * Indexing is opt-in: previews and any environment without
- * NEXT_PUBLIC_ALLOW_INDEXING=true stay closed to crawlers entirely.
+ * Production is crawlable unless NEXT_PUBLIC_ALLOW_INDEXING=false.
+ * Preview deployments stay closed to crawlers.
  *
  * Once it is open, everything is crawlable — including `/demo/`. Those pages
  * carry `noindex, follow` in their own metadata, which is what keeps them out
