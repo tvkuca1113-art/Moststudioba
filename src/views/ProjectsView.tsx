@@ -1,5 +1,6 @@
 import { SiteFrame } from "@/components/layout/SiteFrame";
 import { ProjectCard } from "@/components/home/ProjectsSection";
+import { WebshopDemoCard } from "@/components/home/WebshopDemoCard";
 import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
@@ -22,6 +23,9 @@ export function ProjectsView({ locale }: { locale: Locale }) {
           <p className="mt-6 max-w-2xl text-lead leading-relaxed text-slate">{dict.projects.overviewLead}</p>
 
           <div className="mt-12 lg:mt-16">
+            <div className="mb-14 border-b border-line-light pb-14 lg:mb-16 lg:pb-16">
+              <WebshopDemoCard locale={locale} />
+            </div>
             {demoProjects.map((project, index) => (
               <Reveal
                 key={project.slug}
