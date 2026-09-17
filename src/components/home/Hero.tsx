@@ -1,4 +1,5 @@
 import { HeroGallery } from "@/components/home/HeroGallery";
+import { WebshopDemoLink } from "@/components/home/WebshopDemoCard";
 import { ArchMark } from "@/components/ui/ArchMark";
 import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
@@ -51,6 +52,7 @@ export function Hero({ locale, dict }: { locale: Locale; dict: Dictionary }) {
                 {dict.hero.ctaSecondary}
               </ButtonLink>
             </div>
+            <WebshopDemoLink locale={locale} />
           </div>
         </div>
 
