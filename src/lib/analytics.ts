@@ -3,6 +3,7 @@
 import { track } from "@vercel/analytics";
 
 import { site } from "@/content/site";
+import type { Locale } from "@/lib/i18n/config";
 
 /**
  * The only events this site sends.
@@ -15,11 +16,13 @@ import { site } from "@/content/site";
  *    two fixed choices and a length bucket, never the message.
  * 2. `lead_submit` means a real enquiry arrived somewhere we can read it.
  *    Copying text to the clipboard is not that, and neither is opening
- *    Instagram — those are `copy_message` and `outbound_instagram`. There is
+ *    Instagram or email — those have their own outbound events. There is
  *    no backend today, so nothing fires `lead_submit` yet; it is declared so
  *    the day one exists it is not mistakenly conflated with a copy.
  */
 type Events = {
+  outbound_email: { locale: Locale; from: "contact" | "footer" | "brief" };
+  outbound_facebook: { locale: Locale; from: "contact" | "footer" | "brief" };
   /** A concept page was opened. */
   view_project: { project: string; locale: string };
   /** A running demo was opened, and from where. */

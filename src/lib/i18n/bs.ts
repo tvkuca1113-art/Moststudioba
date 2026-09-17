@@ -28,10 +28,10 @@ export const bs = {
   },
 
   hero: {
-    eyebrow: "WEB DIZAJN I IZRADA · BiH + NJEMAČKA",
+    eyebrow: "WEB DIZAJN · MOSTAR I CIJELA BiH",
     titleLine1: "Vaš kvalitet.",
     titleLine2: "Vidljiv na webu.",
-    lead: "Dizajniramo i izrađujemo web stranice koje jasno predstavljaju vaš posao i vode posjetioce do upita.",
+    lead: "Izrađujemo web stranice i webshopove za firme iz Mostara i cijele Bosne i Hercegovine. Jasna ponuda, dobar mobilni doživljaj i jednostavan put do upita. Saradnju vodimo online.",
     ctaPrimary: "Razgovarajmo o projektu",
     ctaSecondary: "Istražite radove",
     support: "Web dizajn · Izrada · Redizajn",
@@ -76,11 +76,11 @@ export const bs = {
   services: {
     eyebrow: "USLUGE",
     title: "Od prve ideje do objave.",
-    lead: "Tri cjeline koje se nadovezuju. Možete uzeti sve ili samo dio.",
+    lead: "Poslovna stranica, webshop ili redizajn. Odaberite ono što odgovara vašem sljedećem koraku.",
     includes: "Šta obuhvata",
     outcome: "Šta vi dobijate",
     cta: "Razgovarajmo o vašem projektu",
-    pageLead: "Radimo dizajn, izradu i redizajn web stranica. Ispod je detaljno šta svaka usluga obuhvata i šta konkretno dobijate.",
+    pageLead: "Web dizajn, izrada poslovnih stranica, webshopovi i redizajn za firme u BiH. Odaberite ono što vam treba i pogledajte obim, primjere i način online saradnje.",
     scopeNote: "Obim, cijenu i rok dogovaramo nakon razgovora o vašem projektu. Ne nudimo pakete s unaprijed određenim cijenama jer se potrebe razlikuju.",
     notOffered: "Šta ne radimo",
     notOfferedLead: "Bolje je da odmah znate. Fokusirani smo na dizajn i izradu stranica i ne preuzimamo poslove koje ne radimo redovno:",
@@ -113,7 +113,7 @@ export const bs = {
     all: "Sva pitanja i odgovori",
     eyebrow: "ČESTA PITANJA",
     title: "Pitanja koja obično dobijemo.",
-    lead: "Ako nešto nije jasno, pitajte nas direktno na Instagramu.",
+    lead: "Ako nešto nije jasno, javite se emailom ili na Instagramu.",
   },
 
   contact: {
@@ -121,11 +121,11 @@ export const bs = {
     titleLine1: "Šta bi vaš web",
     titleLine2: "trebao raditi bolje?",
     lead: "Imate postojeću stranicu ili tek počinjete? Javite nam šta želite predstaviti i kome se obraćate.",
-    primaryLabel: "Pišite nam na Instagramu",
+    primaryLabel: "Pišite nam direktno",
     primaryHint: "Pošaljite nam nekoliko rečenica o projektu.",
     handle: "@moststudioba",
     pageTitle: "Kontakt",
-    pageLead: "Recite nam čime se bavite i šta vaš web treba postići. Pripremite upit ispod i pošaljite ga na Instagramu, ili nam se javite direktno.",
+    pageLead: "Recite nam čime se bavite i šta vaš web treba postići. Javite se na Instagramu ili pripremite projektni upit ispod. Sarađujemo online s firmama širom BiH i u Njemačkoj.",
     responseNote: "Odgovaramo na poruke na bosanskom i njemačkom jeziku.",
   },
 
@@ -221,9 +221,9 @@ export const bs = {
 
   meta: {
     home: {
-      title: "MOST Studio | Web dizajn i izrada web stranica",
+      title: "Izrada web stranica za Mostar i BiH | MOST Studio",
       description:
-        "MOST Studio dizajnira i izrađuje web stranice za firme u Bosni i Hercegovini i Njemačkoj. Pogledajte demo koncepte, isprobajte ih i javite nam se na Instagramu.",
+        "Web dizajn, izrada web stranica i webshopova za firme iz Mostara i cijele BiH. Online saradnja, funkcionalni demo projekti i ponuda prema vašim potrebama.",
     },
     projects: {
       title: "Demo projekti | MOST Studio",
@@ -231,14 +231,14 @@ export const bs = {
         "Isprobajte naše demo projekte: webshop s 50 artikala, stomatološku ordinaciju, stolariju i poslovno savjetovanje. Primjeri dizajna i funkcionalnosti MOST Studija.",
     },
     services: {
-      title: "Usluge: web dizajn, izrada i redizajn | MOST Studio",
+      title: "Web dizajn, izrada stranica i webshopa u BiH | MOST Studio",
       description:
-        "Šta obuhvata web dizajn, izrada web stranice i redizajn postojeće stranice — korak po korak, bez tehničkog žargona.",
+        "Usluge MOST Studija: izrada poslovnih web stranica, webshopova i redizajn. Pogledajte obim, proces, demo primjere i vodič o cijeni za vaš projekt.",
     },
     contact: {
       title: "Kontakt | MOST Studio",
       description:
-        "Pripremite upit u nekoliko klikova i pošaljite nam ga na Instagram. Razgovaramo o vašem projektu na bosanskom ili njemačkom.",
+        "Javite se MOST Studiju na Instagramu @moststudioba za web stranicu, webshop ili redizajn. Pripremite upit; dostupan je i email. Online saradnja za BiH.",
     },
     demo: {
       titleSuffix: "Demo koncept | MOST Studio",

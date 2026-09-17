@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 
 import { site } from "@/content/site";
+import { contentPages, pageLabels, type ContentPageKey } from "@/content/service-pages";
 import { indexingAllowed, siteUrl } from "@/lib/site-url";
-import { allPaths, htmlLang, type Locale, type RouteRef } from "@/lib/i18n/config";
+import { allPaths, htmlLang, path, type Locale, type RouteRef } from "@/lib/i18n/config";
 
 type PageMetaInput = {
   locale: Locale;
@@ -63,19 +64,76 @@ export function buildMetadata({
   };
 }
 
-/**
- * Structured data covers only what we can actually confirm: the studio name,
- * the site it lives on and the one social profile we own. No address, no
- * opening hours, no LocalBusiness — those would be fabricated.
- */
+/** Stable identity for an online studio. No office, ratings or invented proof. */
 export function organizationJsonLd(locale: Locale, description: string) {
   return {
     "@context": "https://schema.org",
-    "@type": "Organization",
-    name: site.name,
-    url: absoluteUrl(locale === "bs" ? "/" : "/de"),
-    description,
-    sameAs: [site.instagramUrl],
-    knowsLanguage: ["bs", "de"],
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": `${siteUrl}/#organization`,
+        name: site.name,
+        url: siteUrl,
+        email: site.email,
+        description,
+        sameAs: [site.instagramUrl, ...(site.facebookUrl ? [site.facebookUrl] : [])],
+        knowsLanguage: ["bs", "de"],
+        areaServed: [{ "@type": "Country", name: "Bosnia and Herzegovina" }, { "@type": "Country", name: "Germany" }],
+        contactPoint: { "@type": "ContactPoint", email: site.email, contactType: "customer service", availableLanguage: ["bs", "de"] },
+      },
+      {
+        "@type": "WebSite",
+        "@id": `${siteUrl}/#website`,
+        url: siteUrl,
+        name: site.name,
+        inLanguage: ["bs", "de"],
+        publisher: { "@id": `${siteUrl}/#organization` },
+      },
+      {
+        "@type": "WebPage",
+        "@id": `${absoluteUrl(path("home", locale))}#webpage`,
+        url: absoluteUrl(path("home", locale)),
+        name: site.name,
+        description,
+        inLanguage: htmlLang[locale],
+        isPartOf: { "@id": `${siteUrl}/#website` },
+        about: { "@id": `${siteUrl}/#organization` },
+      },
+    ],
+  };
+}
+
+export function contentPageJsonLd(key: ContentPageKey, locale: Locale) {
+  const page = contentPages[locale][key];
+  const url = absoluteUrl(path(key, locale));
+  const isService = key === "website" || key === "webshop" || key === "redesign";
+  const crumbs = [
+    { name: locale === "bs" ? "Početna" : "Startseite", item: absoluteUrl(path("home", locale)) },
+    ...(isService ? [{ name: locale === "bs" ? "Usluge" : "Leistungen", item: absoluteUrl(path("services", locale)) }] : []),
+    { name: pageLabels[locale][key], item: url },
+  ];
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage", "@id": `${url}#webpage`, url, name: page.title,
+        description: page.description, inLanguage: htmlLang[locale],
+        isPartOf: { "@id": `${siteUrl}/#website` },
+        publisher: { "@id": `${siteUrl}/#organization` },
+        breadcrumb: { "@id": `${url}#breadcrumb` },
+        ...(isService ? { mainEntity: { "@id": `${url}#service` } } : {}),
+      },
+      {
+        "@type": "BreadcrumbList", "@id": `${url}#breadcrumb`,
+        itemListElement: crumbs.map((crumb, i) => ({ "@type": "ListItem", position: i + 1, ...crumb })),
+      },
+      ...(isService ? [{
+        "@type": "Service", "@id": `${url}#service`, url,
+        name: pageLabels[locale][key], serviceType: pageLabels[locale][key],
+        description: page.lead, provider: { "@id": `${siteUrl}/#organization`, "@type": "Organization", name: site.name, url: siteUrl, email: site.email },
+        areaServed: [{ "@type": "Country", name: "Bosnia and Herzegovina" }],
+        availableChannel: { "@type": "ServiceChannel", serviceUrl: absoluteUrl(path("contact", locale)) },
+      }] : []),
+    ],
   };
 }

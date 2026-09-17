@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 
 import { demoProjects } from "@/content/projects";
+import { contentPageKeys } from "@/content/service-pages";
 import { allPaths, htmlLang, locales, path, type RouteRef } from "@/lib/i18n/config";
 import { absoluteUrl } from "@/lib/seo";
 
@@ -14,16 +15,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { key: "projects" },
     { key: "services" },
     { key: "contact" },
+    ...contentPageKeys.map(key => ({ key })),
     ...demoProjects.map((project) => ({ key: "project" as const, slug: project.slug })),
   ];
-
-  const lastModified = new Date();
 
   return refs.flatMap((ref) => {
     const paths = allPaths(ref);
     return locales.map((locale) => ({
       url: absoluteUrl(path(ref.key, locale, ref.slug)),
-      lastModified,
+      // Do not present every build time as a content modification date.
       changeFrequency: "monthly" as const,
       priority: ref.key === "home" ? 1 : 0.7,
       alternates: {

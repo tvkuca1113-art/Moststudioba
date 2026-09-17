@@ -32,6 +32,11 @@ export type RouteKey =
   | "projects"
   | "project"
   | "services"
+  | "website"
+  | "webshop"
+  | "redesign"
+  | "coverage"
+  | "pricing"
   | "contact"
   | "demo";
 
@@ -45,6 +50,11 @@ const routeMap: Record<RouteKey, RouteDefinition> = {
   projects: { bs: "/projekti", de: "/de/projekte" },
   project: { bs: "/projekti/:slug", de: "/de/projekte/:slug" },
   services: { bs: "/usluge", de: "/de/leistungen" },
+  website: { bs: "/usluge/izrada-web-stranica", de: "/de/leistungen/website-erstellung" },
+  webshop: { bs: "/usluge/izrada-web-shopa", de: "/de/leistungen/onlineshop" },
+  redesign: { bs: "/usluge/redizajn-web-stranica", de: "/de/leistungen/website-relaunch" },
+  coverage: { bs: "/izrada-web-stranica-bih", de: "/de/webdesign-bosnien-herzegowina" },
+  pricing: { bs: "/vodic/cijena-web-stranice", de: "/de/ratgeber/website-kosten" },
   contact: { bs: "/kontakt", de: "/de/kontakt" },
   demo: { bs: "/demo/:slug", de: "/de/demo/:slug" },
 };

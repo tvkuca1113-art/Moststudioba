@@ -20,9 +20,9 @@ export function HomeView({ locale }: { locale: Locale }) {
     <SiteFrame locale={locale} route={{ key: "home" }} tone="overlay">
       <script
         type="application/ld+json"
-        // Only facts we can stand behind: name, site, description, Instagram.
+        // Confirmed identity, service area and contact; no invented office or reviews.
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(organizationJsonLd(locale, dict.meta.home.description)),
+          __html: JSON.stringify(organizationJsonLd(locale, dict.meta.home.description)).replace(/</g, "\\u003c"),
         }}
       />
       <Hero locale={locale} dict={dict} />

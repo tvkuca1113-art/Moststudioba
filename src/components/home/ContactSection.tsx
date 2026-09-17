@@ -23,6 +23,8 @@ export function ContactSection({ locale, dict }: { locale: Locale; dict: Diction
             <div className="mt-7 border-t border-line-dark pt-5">
               <p className="text-sm text-mist">{c.direct}</p>
               <TrackedAnchor href={site.instagramUrl} target="_blank" rel="noopener noreferrer" track={["outbound_instagram", { locale, from: "contact" }]} className="inline-flex min-h-11 items-center text-lime underline underline-offset-4">{site.instagramHandle} ↗</TrackedAnchor>
+              {site.facebookUrl && <TrackedAnchor href={site.facebookUrl} target="_blank" rel="noopener noreferrer" track={["outbound_facebook", { locale, from: "contact" }]} className="ml-5 inline-flex min-h-11 items-center text-lime underline underline-offset-4">Facebook ↗</TrackedAnchor>}
+              <p className="mt-2 text-sm text-mist">{locale === "bs" ? "Ili emailom: " : "Oder per E-Mail: "}<TrackedAnchor href={`mailto:${site.email}`} track={["outbound_email", { locale, from: "contact" }]} className="inline-block min-h-11 break-all py-3 underline underline-offset-4">{site.email}</TrackedAnchor></p>
             </div>
           </div>
           <ProjectInquiry locale={locale} />

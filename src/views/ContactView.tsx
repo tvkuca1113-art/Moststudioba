@@ -5,6 +5,7 @@ import { ButtonAnchor } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 import { InstagramIcon } from "@/components/ui/icons";
+import { TrackedAnchor } from "@/components/ui/TrackedLink";
 import { site } from "@/content/site";
 import type { Locale } from "@/lib/i18n/config";
 import { getDictionary } from "@/lib/i18n/dictionary";
@@ -43,8 +44,13 @@ export function ContactView({ locale }: { locale: Locale }) {
                 <InstagramIcon className="size-5" />
                 {site.instagramHandle}
               </ButtonAnchor>
+              {site.facebookUrl && <ButtonAnchor href={site.facebookUrl} target="_blank" rel="noopener noreferrer" tone="dark" variant="secondary" className="mt-3 w-full">Facebook</ButtonAnchor>}
               <p className="mt-4 text-sm leading-relaxed text-mist">{dict.contact.primaryHint}</p>
               <p className="mt-2 text-sm leading-relaxed text-mist">{dict.contact.responseNote}</p>
+              <div className="mt-6 border-t border-line-dark pt-4 text-sm text-mist">
+                <p>{locale === "bs" ? "Ako vam više odgovara email:" : "Wenn Sie lieber per E-Mail schreiben:"}</p>
+                <TrackedAnchor href={`mailto:${site.email}`} track={["outbound_email", { locale, from: "contact" }]} className="inline-block min-h-11 break-all py-3 underline underline-offset-4">{site.email}</TrackedAnchor>
+              </div>
             </div>
           </div>
         </Container>

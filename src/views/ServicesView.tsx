@@ -1,5 +1,6 @@
 import { SiteFrame } from "@/components/layout/SiteFrame";
 import { ProcessSection } from "@/components/home/ProcessSection";
+import { ServiceLinks } from "@/components/home/ServiceLinks";
 import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
@@ -20,8 +21,9 @@ export function ServicesView({ locale }: { locale: Locale }) {
           <p className="text-[0.8125rem] font-semibold tracking-[0.22em] text-slate uppercase sm:text-sm">
             {dict.services.eyebrow}
           </p>
-          <h1 className="mt-5 max-w-4xl text-display leading-[0.95]">{dict.services.title}</h1>
+          <h1 className="mt-5 max-w-4xl text-display leading-[0.95]">{locale === "bs" ? "Web dizajn, izrada i redizajn." : "Webdesign, Entwicklung und Relaunch."}</h1>
           <p className="mt-6 max-w-2xl text-lead leading-relaxed text-slate">{dict.services.pageLead}</p>
+          <div className="mt-8"><ServiceLinks locale={locale} /></div>
         </Container>
       </Section>
 
@@ -93,6 +95,7 @@ export function ServicesView({ locale }: { locale: Locale }) {
                 <ButtonLink href={path("projects", locale)} variant="secondary">
                   {dict.projects.all}
                 </ButtonLink>
+                <ButtonLink href={path("pricing", locale)} variant="quiet">{locale === "bs" ? "Vodič o cijeni" : "Kostenratgeber"}</ButtonLink>
               </div>
             </div>
           </div>

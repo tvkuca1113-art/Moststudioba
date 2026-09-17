@@ -1,6 +1,7 @@
 
 import { Container } from "@/components/ui/Container";
 import { Wordmark } from "@/components/ui/Wordmark";
+import { TrackedAnchor } from "@/components/ui/TrackedLink";
 import { InstagramIcon } from "@/components/ui/icons";
 import { demoProjects } from "@/content/projects";
 import { site } from "@/content/site";
@@ -30,6 +31,8 @@ export function Footer({
     { label: dict.nav.process, href: homeAnchor(sectionIds.process) },
     { label: dict.nav.studio, href: homeAnchor(sectionIds.studio) },
     { label: dict.nav.contact, href: path("contact", locale) },
+    { label: locale === "bs" ? "Online saradnja u BiH" : "Online-Zusammenarbeit in BiH", href: path("coverage", locale) },
+    { label: locale === "bs" ? "Vodič o cijeni" : "Kostenratgeber", href: path("pricing", locale) },
   ];
 
   return (
@@ -87,6 +90,8 @@ export function Footer({
               <InstagramIcon className="size-5" />
               {site.instagramHandle}
             </a>
+            {site.facebookUrl && <TrackedAnchor href={site.facebookUrl} target="_blank" rel="noopener noreferrer" track={["outbound_facebook", { locale, from: "footer" }]} className="flex min-h-11 items-center text-[0.9375rem] text-mist hover:text-paper">Facebook ↗</TrackedAnchor>}
+            <TrackedAnchor href={`mailto:${site.email}`} track={["outbound_email", { locale, from: "footer" }]} className="block min-h-11 break-all py-3 text-sm text-mist underline underline-offset-4 hover:text-paper">{site.email}</TrackedAnchor>
             <div className="mt-5">
               <LanguageSwitcher locale={locale} route={route} dict={dict} tone="dark" className="w-fit" />
             </div>

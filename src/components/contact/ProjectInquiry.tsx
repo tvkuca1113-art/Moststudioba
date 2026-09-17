@@ -7,7 +7,7 @@ import { site } from "@/content/site";
 import { event as analytics } from "@/lib/analytics";
 import type { Locale } from "@/lib/i18n/config";
 
-/** Honest two-step handoff. No submission endpoint exists until a real inbox is connected. */
+/** Primary handoff to social messaging, with email as an optional alternative. */
 export function ProjectInquiry({ locale }: { locale: Locale }) {
   const c = positioning[locale];
   const id = useId();
@@ -98,7 +98,9 @@ export function ProjectInquiry({ locale }: { locale: Locale }) {
           <div className="mt-4 flex flex-wrap gap-3">
             <Button onClick={copy} disabled={!message.trim()}>{copied ? c.copied : c.copy}</Button>
             <ButtonAnchor href={site.instagramUrl} target="_blank" rel="noopener noreferrer" variant="secondary" onClick={() => analytics("outbound_instagram", { locale, from: "brief" })}>{c.instagram}</ButtonAnchor>
+            {site.facebookUrl && <ButtonAnchor href={site.facebookUrl} target="_blank" rel="noopener noreferrer" variant="secondary" onClick={() => analytics("outbound_facebook", { locale, from: "brief" })}>Facebook</ButtonAnchor>}
           </div>
+          {message.trim() && <ButtonAnchor className="mt-3 px-0 text-sm" variant="quiet" href={`mailto:${site.email}?subject=${encodeURIComponent(locale === "bs" ? "Upit za web projekt — MOST Studio" : "Projektanfrage — MOST Studio")}&body=${encodeURIComponent(message)}`} onClick={() => analytics("outbound_email", { locale, from: "brief" })}>{c.email}</ButtonAnchor>}
           <p aria-live="polite" className="mt-3 text-sm text-slate">{failed ? c.failed : copied ? c.copied : ""}</p>
           <Button variant="quiet" onClick={() => setPreview(false)} className="mt-2 px-0">{c.edit}</Button>
         </div>

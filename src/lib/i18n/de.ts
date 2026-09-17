@@ -26,10 +26,10 @@ export const de: Dictionary = {
   },
 
   hero: {
-    eyebrow: "WEBDESIGN UND ENTWICKLUNG · BIH + DEUTSCHLAND",
+    eyebrow: "WEBDESIGN · BIH + DEUTSCHLAND",
     titleLine1: "Ihre Qualität.",
     titleLine2: "Online sichtbar.",
-    lead: "Wir gestalten und entwickeln Websites, die Ihr Unternehmen klar präsentieren und den Weg zur Anfrage einfach machen.",
+    lead: "Wir gestalten Websites und Onlineshops für Unternehmen in Bosnien-Herzegowina und Deutschland. Ein klares Angebot, gute mobile Bedienung und ein einfacher Weg zur Anfrage. Die Zusammenarbeit findet online statt.",
     ctaPrimary: "Projekt besprechen",
     ctaSecondary: "Arbeiten entdecken",
     support: "Webdesign · Entwicklung · Relaunch",
@@ -74,11 +74,11 @@ export const de: Dictionary = {
   services: {
     eyebrow: "LEISTUNGEN",
     title: "Von der ersten Idee bis zur Veröffentlichung.",
-    lead: "Drei Bereiche, die aufeinander aufbauen. Sie können alles nehmen oder nur einen Teil.",
+    lead: "Unternehmenswebsite, Onlineshop oder Relaunch. Wählen Sie, was zu Ihrem nächsten Schritt passt.",
     includes: "Was dazugehört",
     outcome: "Was Sie bekommen",
     cta: "Über Ihr Projekt sprechen",
-    pageLead: "Wir machen Design, Entwicklung und Relaunch von Websites. Unten steht im Detail, was jede Leistung umfasst und was Sie konkret erhalten.",
+    pageLead: "Webdesign, Unternehmenswebsites, Onlineshops und Relaunches für Unternehmen in BiH und Deutschland. Finden Sie die passende Leistung mit Umfang, Beispielen und Ablauf der Online-Zusammenarbeit.",
     scopeNote: "Umfang, Preis und Termin legen wir nach dem Gespräch über Ihr Projekt fest. Wir arbeiten nicht mit Festpreis-Paketen, weil sich die Anforderungen deutlich unterscheiden.",
     notOffered: "Was wir nicht machen",
     notOfferedLead: "Das sollten Sie gleich wissen. Wir konzentrieren uns auf Design und Entwicklung von Websites und übernehmen keine Aufgaben, die wir nicht regelmäßig machen:",
@@ -111,7 +111,7 @@ export const de: Dictionary = {
     all: "Alle Fragen und Antworten",
     eyebrow: "HÄUFIGE FRAGEN",
     title: "Fragen, die wir oft bekommen.",
-    lead: "Wenn etwas unklar bleibt, fragen Sie uns direkt auf Instagram.",
+    lead: "Wenn etwas unklar bleibt, schreiben Sie uns per E-Mail oder auf Instagram.",
   },
 
   contact: {
@@ -119,11 +119,11 @@ export const de: Dictionary = {
     titleLine1: "Was sollte Ihre Website",
     titleLine2: "besser können?",
     lead: "Haben Sie bereits eine Website oder fangen Sie gerade an? Schreiben Sie uns, was Sie zeigen möchten und wen Sie ansprechen.",
-    primaryLabel: "Schreiben Sie uns auf Instagram",
+    primaryLabel: "Schreiben Sie uns direkt",
     primaryHint: "Schreiben Sie uns ein paar Sätze über Ihr Projekt.",
     handle: "@moststudioba",
     pageTitle: "Kontakt",
-    pageLead: "Beschreiben Sie Ihr Geschäft und das Ziel Ihrer Website. Bereiten Sie unten Ihre Anfrage vor und senden Sie diese auf Instagram oder schreiben Sie uns direkt.",
+    pageLead: "Beschreiben Sie Ihr Geschäft und das Ziel Ihrer Website. Schreiben Sie uns auf Instagram oder bereiten Sie unten Ihre Anfrage vor. Wir arbeiten online mit Unternehmen in BiH und Deutschland.",
     responseNote: "Wir antworten auf Bosnisch und auf Deutsch.",
   },
 
@@ -219,9 +219,9 @@ export const de: Dictionary = {
 
   meta: {
     home: {
-      title: "MOST Studio | Webdesign und Website-Entwicklung",
+      title: "Webdesign für BiH und Deutschland | MOST Studio",
       description:
-        "MOST Studio gestaltet und entwickelt Websites für Unternehmen in Bosnien-Herzegowina und Deutschland. Sehen Sie sich die Demo-Konzepte an, probieren Sie sie aus und schreiben Sie uns auf Instagram.",
+        "Webdesign, Websites und Onlineshops für Unternehmen in Bosnien-Herzegowina und Deutschland. Online-Zusammenarbeit, funktionierende Demos und klare Projektangebote.",
     },
     projects: {
       title: "Demo-Projekte | MOST Studio",
@@ -231,12 +231,12 @@ export const de: Dictionary = {
     services: {
       title: "Leistungen: Webdesign, Entwicklung und Relaunch | MOST Studio",
       description:
-        "Was Webdesign, Website-Entwicklung und der Relaunch einer bestehenden Seite umfassen — Schritt für Schritt, ohne technischen Fachjargon.",
+        "Websites, Onlineshops und Relaunches von MOST Studio. Informieren Sie sich über Umfang, Ablauf, Demobeispiele und Kostenfaktoren Ihres Projekts.",
     },
     contact: {
       title: "Kontakt | MOST Studio",
       description:
-        "Bereiten Sie Ihre Anfrage in wenigen Klicks vor und senden Sie sie uns auf Instagram. Wir sprechen über Ihr Projekt auf Bosnisch oder Deutsch.",
+        "Kontaktieren Sie MOST Studio auf Instagram @moststudioba für Website, Onlineshop oder Relaunch. Projektanfrage vorbereiten; alternativ ist E-Mail möglich.",
     },
     demo: {
       titleSuffix: "Demo-Konzept | MOST Studio",

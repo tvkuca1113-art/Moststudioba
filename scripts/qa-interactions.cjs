@@ -86,20 +86,24 @@ async function run(){
  render(React.createElement(AppointmentBooking,{locale:'de'}));await user.click(screen.getByRole('button',{name:'Weiter zum Termin'}));assert.equal(screen.getAllByRole('button',{name:/\d\d:\d\d/}).length,6);cleanup();
  const {ProjectInquiry}=require(base+'/src/components/contact/ProjectInquiry.tsx');
  render(React.createElement(ProjectInquiry,{locale:'bs'}));
- await user.click(screen.getByRole('button',{name:'Pripremi poruku'}));
+ await user.click(screen.getByRole('button',{name:'Pregledaj upit'}));
  assert.equal(screen.queryByRole('button',{name:'1. Kopiraj upit'}),null,'Required fields block an empty inquiry');
  await user.type(screen.getByLabelText('Ime'), 'Test osoba');
  await user.type(screen.getByLabelText('Firma / djelatnost'), 'Test firma');
  await user.selectOptions(screen.getByLabelText('Šta vam treba?'), 'Webshop');
  await user.type(screen.getByLabelText('Šta želite da vaš web radi bolje?'), 'Prikaz proizvoda i naručivanje.');
- await user.click(screen.getByRole('button',{name:'Pripremi poruku'}));
+ await user.click(screen.getByRole('button',{name:'Pregledaj upit'}));
  assert.equal(document.activeElement.textContent,'Vaš upit');
  assert.match(screen.getByRole('textbox',{name:'Vaš upit'}).value,/Test firma/);
  assert.match(screen.getByRole('textbox',{name:'Vaš upit'}).value,/Webshop/);
  await user.click(screen.getByRole('button',{name:'1. Kopiraj upit'}));
  assert.match(await navigator.clipboard.readText(),/Test osoba/);
  assert.equal(screen.getByRole('link',{name:'2. Otvori Instagram'}).getAttribute('href'),'https://www.instagram.com/moststudioba/');
- await user.type(screen.getByRole('textbox',{name:'Vaš upit'}),' Dodatak.');
+ await user.type(screen.getByRole('textbox',{name:'Vaš upit'}),' Dodatak: kuhinje & pločice?');
+ const emailUrl = new URL(screen.getByRole('link',{name:'Radije email? Otvori poruku'}).getAttribute('href'));
+ assert.equal(emailUrl.pathname, 'moststudioba@gmail.com');
+ assert.equal(emailUrl.searchParams.get('body'), screen.getByRole('textbox',{name:'Vaš upit'}).value, 'Email must preserve the reviewed Unicode message, including ampersands');
+ assert.equal(emailUrl.searchParams.get('subject'), 'Upit za web projekt — MOST Studio');
  assert(screen.getByRole('button',{name:'1. Kopiraj upit'}));
  const originalWrite=navigator.clipboard.writeText;
  navigator.clipboard.writeText=async()=>{throw new Error('clipboard blocked');};
@@ -115,7 +119,7 @@ async function run(){
  assert(screen.getByRole('option',{name:'Onlineshop'}));
  assert.match(document.body.textContent,/nicht automatisch/);
  cleanup();
- console.log('PASS: inquiry validation, preparation, retained form values, editable message, clipboard success/failure, explicit Instagram handoff and German fields.');
+ console.log('PASS: inquiry validation, preparation, retained form values, editable message, clipboard success/failure, primary Instagram handoff, optional email encoding and German fields.');
  console.log('PASS: repeated menu opening after scroll, viewport overlay ownership, focus and background cleanup; 9 furniture images; furniture selections/clamping/export; full booking, blocked slots, back/edit, service invalidation, confirmation, focus and reset; advisory step validation, majority plan, export, retained edits and reset; German controls.');
 }
 run().catch(e=>{console.error(e);process.exitCode=1;}).finally(()=>dom.window.close());
