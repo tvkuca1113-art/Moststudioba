@@ -41,7 +41,7 @@ export const de: Dictionary = {
 
   projects: {
     eyebrow: "DEMO-ARBEITEN",
-    title: "Drei Branchen. Drei eigene Lösungen.",
+    title: "Unterschiedliche Branchen. Passende Lösungen.",
     lead: "Die Konzepte haben wir selbst entworfen und gebaut — jedes löst ein anderes Besucherproblem.",
     problemLabel: "Das Problem der Besucher",
     functionLabel: "Was Sie ausprobieren können",
@@ -226,7 +226,7 @@ export const de: Dictionary = {
     projects: {
       title: "Demo-Projekte | MOST Studio",
       description:
-        "Drei Demo-Konzepte für Websites, die wir entworfen und gebaut haben: Zahnarztpraxis, Tischlerei und Unternehmensberatung. Jedes lässt sich ausprobieren.",
+        "Testen Sie unsere Demoprojekte: einen Onlineshop mit 50 Artikeln, eine Zahnarztpraxis, eine Tischlerei und eine Unternehmensberatung. Design und Funktionen von MOST Studio.",
     },
     services: {
       title: "Leistungen: Webdesign, Entwicklung und Relaunch | MOST Studio",
