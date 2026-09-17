@@ -12,6 +12,10 @@ import { siteUrl } from "@/lib/site-url";
  */
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
+  // Keep this permanently: Google can re-check ownership after verification.
+  verification: {
+    google: "eExoCdIgROmTlK9gPPFqpIQpTvrDImDbRYYXujw_kz4",
+  },
 };
 
 export const viewport: Viewport = {
