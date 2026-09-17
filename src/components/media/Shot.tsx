@@ -1,29 +1,24 @@
-import Image from "next/image";
-
-import { shots } from "@/content/shots";
+"use client";
+import { useEffect, useRef } from "react";
+import { DemoCover } from "@/components/demos/DemoCover";
+import s from "@/components/demos/PremiumDemos.module.css";
 import { cn } from "@/lib/cn";
 import type { Locale } from "@/lib/i18n/config";
-
-/**
- * A screenshot of an implemented demo page, framed as the device it was
- * captured on. One pair per language, so the headline in the picture is in the
- * language the visitor is reading.
- *
- * `crop` shows the top of the capture inside a shallower window. A card wants
- * to say "this is a designed page", which the first screen already does; the
- * whole 16:10 capture belongs on the concept page, where it is the subject
- * rather than a thumbnail.
- */
+import type { DemoKey } from "@/content/projects";
+const kinds: Record<string, DemoKey> = {
+  "stolarija-hrast": "trades",
+  "ordinacija-lipa": "clinic",
+  "meridijan-savjetovanje": "advisory",
+};
+/** A non-interactive rendering of the actual hero, never an outdated mockup. */
 export function Shot({
   slug,
   locale,
   device,
   alt,
   className,
-  sizes,
   priority = false,
   frame = true,
-  crop,
 }: {
   slug: string;
   locale: Locale;
@@ -33,60 +28,62 @@ export function Shot({
   sizes: string;
   priority?: boolean;
   frame?: boolean;
-  /**
-   * Which window of the capture to show. "pano" is the hero gallery, "card"
-   * the portfolio — two different framings of the same page, so the two
-   * sections do not read as the same picture printed twice.
-   */
   crop?: "pano" | "card";
 }) {
-  const shot = shots[`${slug}-${locale}-${device}` as keyof typeof shots];
-  if (!shot) return null;
-
-  if (device === "mobile") {
-    return (
-      <div
-        className={cn(
-          "overflow-hidden bg-ink",
-          frame && "rounded-[1.4rem] p-1.5 ring-1 ring-mist/25",
-          className,
-        )}
-      >
-        <Image
-          src={shot.src}
-          alt={alt}
-          width={shot.width}
-          height={shot.height}
-          sizes={sizes}
-          priority={priority}
-          className={cn(
-            "w-full object-cover object-top",
-            crop ? "aspect-9/16" : "h-full",
-            frame && "rounded-[1.05rem]",
-          )}
-        />
-      </div>
-    );
-  }
-
+  const holder = useRef<HTMLDivElement>(null);
+  const width = device === "mobile" ? 390 : 1100;
+  useEffect(() => {
+    const element = holder.current;
+    if (!element) return;
+    const fit = () =>
+      element.style.setProperty(
+        "--preview-scale",
+        String(element.clientWidth / width),
+      );
+    fit();
+    const observer = new ResizeObserver(fit);
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [width]);
+  const kind = kinds[slug];
+  if (!kind) return null;
   return (
-    <div className={cn("overflow-hidden bg-ink", frame && "rounded-xl ring-1 ring-mist/25", className)}>
-      {frame && (
-        <div className="flex items-center gap-1.5 border-b border-line-dark px-3.5 py-2.5">
-          <span aria-hidden="true" className="size-2.5 rounded-full bg-mist/35" />
-          <span aria-hidden="true" className="size-2.5 rounded-full bg-mist/35" />
-          <span aria-hidden="true" className="size-2.5 rounded-full bg-mist/35" />
-        </div>
+    <div
+      className={cn(
+        "overflow-hidden",
+        frame &&
+          (device === "mobile"
+            ? "rounded-[1.5rem] border-[5px] border-[#35413b]"
+            : "rounded-xl border border-current/15"),
+        className,
       )}
-      <Image
-        src={shot.src}
-        alt={alt}
-        width={shot.width}
-        height={shot.height}
-        sizes={sizes}
-        priority={priority}
-        className={cn("w-full", crop === "pano" ? "aspect-3/1 object-cover object-top" : crop === "card" ? "aspect-13/5 object-cover object-top" : "h-auto")}
-      />
+      role={alt ? "img" : undefined}
+      aria-label={alt || undefined}
+      aria-hidden={alt ? undefined : true}
+    >
+      {frame && device === "desktop" ? (
+        <div className="flex items-center justify-between bg-[#e8e7e0] px-4 py-2.5 text-[#566055]">
+          <div className="flex gap-1.5" aria-hidden="true">
+            <span className="size-1.5 rounded-full bg-current/40" />
+            <span className="size-1.5 rounded-full bg-current/40" />
+            <span className="size-1.5 rounded-full bg-current/40" />
+          </div>
+          <span className="text-[9px] tracking-[.12em] uppercase">
+            {locale === "de"
+              ? "Interaktives Website-Konzept"
+              : "Interaktivni web koncept"}
+          </span>
+          <span className="w-6" />
+        </div>
+      ) : null}
+      <div
+        ref={holder}
+        className={`${s.preview} ${device === "mobile" ? s.previewPhone : ""}`}
+      >
+        <div className={s.previewInner} inert aria-hidden="true">
+          <DemoCover kind={kind} locale={locale} preview priority={priority} />
+        </div>
+      </div>
     </div>
   );
 }

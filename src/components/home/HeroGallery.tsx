@@ -13,24 +13,10 @@ import type { Dictionary } from "@/lib/i18n/dictionary";
 import { translator } from "@/lib/i18n/localized";
 
 /**
- * The opening gallery: one wall, three works, visible controls.
- *
- * Three decisions worth knowing about.
- *
- * Every panel lives in the same grid cell and all three are always present,
- * so switching cross-fades in place — the section never changes height and
- * nothing below it moves. Panels that are not showing are `visibility:
- * hidden`, which takes them out of the tab order and out of the accessibility
- * tree without removing them from the layout that holds the height.
- *
- * These are screenshots, not three running demos. Three live interfaces on
- * the first screen would mean a second `<h1>` in the page, three sets of
- * scripts and a scroll trap inside a small frame. The running demo is one
- * click away instead.
- *
- * Nothing rotates on its own. A carousel that moves while you are reading it
- * takes the choice away from the visitor, so the only thing that changes a
- * panel is a click, a tap or an arrow key.
+ * Three manually selected concepts. Each preview renders the same first-screen
+ * component as the real demo, at a fixed desktop/phone width. The phone is
+ * secondary and is hidden on narrow screens to keep the primary preview legible.
+ * Hidden panels retain their height and leave the focus/accessibility tree.
  */
 export function HeroGallery({
   projects,
@@ -101,7 +87,9 @@ export function HeroGallery({
         })}
       </div>
 
-      <p className="mt-4 text-[0.9375rem] text-mist sm:hidden">{dict.hero.galleryHint}</p>
+      <p className="mt-4 text-[0.9375rem] text-mist sm:hidden">
+        {dict.hero.galleryHint}
+      </p>
 
       <div className="gallery-stack mt-4 grid sm:mt-5">
         {projects.map((project, index) => {
@@ -129,8 +117,7 @@ export function HeroGallery({
                   className="shadow-[0_40px_90px_-50px_rgba(0,0,0,0.95)]"
                 />
 
-                {/* Kept short enough that the wide capture, not the phone,
-                    decides how tall the panel is. */}
+                {/* The phone is a secondary preview on wide screens only. */}
                 <Shot
                   slug={project.slug}
                   locale={locale}
@@ -139,7 +126,7 @@ export function HeroGallery({
                   priority={index === 0}
                   alt=""
                   sizes="(max-width: 1024px) 40vw, 180px"
-                  className="mx-auto w-[8.5rem] shadow-[0_30px_60px_-34px_rgba(0,0,0,0.95)] sm:w-[9.5rem] lg:mx-0 lg:w-full"
+                  className="hidden w-full shadow-[0_30px_60px_-34px_rgba(0,0,0,0.95)] lg:block"
                 />
               </div>
 
@@ -147,17 +134,30 @@ export function HeroGallery({
                 <span className="text-[0.8125rem] font-semibold tracking-[0.14em] text-mist/80 uppercase">
                   {dict.common.demoBadge}
                 </span>
-                <span className="font-display text-xl leading-tight font-extrabold">{project.brand}</span>
-                <span className="text-[0.9375rem] text-mist">{t(project.sector)}</span>
+                <span className="font-display text-xl leading-tight font-extrabold">
+                  {project.brand}
+                </span>
+                <span className="text-[0.9375rem] text-mist">
+                  {t(project.sector)}
+                </span>
                 <Link
                   href={path("demo", locale, project.slug)}
-                  onClick={() => event("open_demo", { project: project.slug, locale, from: "hero" })}
+                  onClick={() =>
+                    event("open_demo", {
+                      project: project.slug,
+                      locale,
+                      from: "hero",
+                    })
+                  }
                   className="group ml-auto inline-flex min-h-11 items-center gap-2 text-[0.9375rem] font-semibold text-lime underline decoration-lime/40 underline-offset-4 hover:decoration-lime"
                 >
                   {dict.projects.tryDemo}
                   <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:group-hover:transform-none" />
                 </Link>
               </div>
+              <p className="mt-2 text-sm leading-relaxed text-mist">
+                {t(project.tryIt.title)}
+              </p>
             </div>
           );
         })}
