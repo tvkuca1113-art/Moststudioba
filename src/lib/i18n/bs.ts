@@ -43,7 +43,7 @@ export const bs = {
 
   projects: {
     eyebrow: "DEMO RADOVI",
-    title: "Tri posla. Tri različita rješenja.",
+    title: "Različiti poslovi. Promišljena rješenja.",
     lead: "Koncepte smo osmislili i izradili sami — svaki rješava drugi problem posjetioca.",
     problemLabel: "Problem posjetioca",
     functionLabel: "Šta možete isprobati",
@@ -228,7 +228,7 @@ export const bs = {
     projects: {
       title: "Demo projekti | MOST Studio",
       description:
-        "Tri demo koncepta web stranica koje smo osmislili i izradili: stomatološka ordinacija, stolarija i poslovno savjetovanje. Svaki se može isprobati.",
+        "Isprobajte naše demo projekte: webshop s 50 artikala, stomatološku ordinaciju, stolariju i poslovno savjetovanje. Primjeri dizajna i funkcionalnosti MOST Studija.",
     },
     services: {
       title: "Usluge: web dizajn, izrada i redizajn | MOST Studio",
