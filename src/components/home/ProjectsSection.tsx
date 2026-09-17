@@ -1,4 +1,5 @@
 import { Shot } from "@/components/media/Shot";
+import { WebshopDemoCard } from "@/components/home/WebshopDemoCard";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { Section, SectionHeading } from "@/components/ui/Section";
@@ -32,6 +33,9 @@ export function ProjectsSection({ locale, dict }: { locale: Locale; dict: Dictio
         />
 
         <div className="mt-8 lg:mt-10">
+          <div className="mb-12 lg:mb-16">
+            <WebshopDemoCard locale={locale} />
+          </div>
           <Reveal>
             <ProjectCard project={lead} locale={locale} dict={dict} featured />
           </Reveal>
