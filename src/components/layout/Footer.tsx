@@ -37,7 +37,7 @@ export function Footer({
       <Container className="py-11 sm:py-12">
         <div className="grid gap-9 lg:grid-cols-[1.4fr_1fr_1fr_1fr] lg:gap-12">
           <div>
-            <a href={home} className="inline-flex min-h-11 items-center">
+            <a href={`${home}#top`} className="inline-flex min-h-11 items-center">
               <Wordmark />
             </a>
             <p className="mt-4 max-w-[52ch] text-[0.9375rem] leading-relaxed text-mist">{dict.footer.blurb}</p>

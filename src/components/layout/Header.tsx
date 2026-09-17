@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 
@@ -111,13 +110,13 @@ export function Header({
     <header className={cn("fixed inset-x-0 top-0 z-50 transition-colors duration-300", barClass)}>
       <Container>
         <div className="flex h-16 items-center justify-between gap-4 sm:h-20">
-          <Link
-            href={path("home", locale)}
+          <a
+            href={`${path("home", locale)}#top`}
             className="inline-flex min-h-11 shrink-0 items-center"
             aria-label={`${site.name} — ${dict.nav.ariaLabel}`}
           >
             <Wordmark />
-          </Link>
+          </a>
 
           <nav aria-label={dict.nav.ariaLabel} className="hidden lg:block">
             <ul className="flex items-center gap-8">
