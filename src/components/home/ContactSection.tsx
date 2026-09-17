@@ -1,60 +1,31 @@
-import { ButtonLink, buttonClass } from "@/components/ui/Button";
+import { ProjectInquiry } from "@/components/contact/ProjectInquiry";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 import { TrackedAnchor } from "@/components/ui/TrackedLink";
-import { InstagramIcon } from "@/components/ui/icons";
+import { positioning } from "@/content/positioning";
 import { site } from "@/content/site";
-import { path, type Locale } from "@/lib/i18n/config";
+import type { Locale } from "@/lib/i18n/config";
 import type { Dictionary } from "@/lib/i18n/dictionary";
 import { sectionIds } from "@/lib/nav";
 
-/**
- * The closing question, and the one channel that actually exists.
- *
- * Instagram is the only confirmed way to reach the studio, so it is the only
- * one offered here — no address, no phone number, no contact form that would
- * have nowhere to send anything. The brief builder is a link, not a second
- * copy of the form on the contact page.
- */
 export function ContactSection({ locale, dict }: { locale: Locale; dict: Dictionary }) {
+  const c = positioning[locale];
   return (
     <Section id={sectionIds.contact} tone="ink" labelledBy="contact-title">
       <Container>
-        <div className="grid gap-10 lg:grid-cols-[1fr_0.8fr] lg:items-start lg:gap-16">
+        <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-start lg:gap-14">
           <div>
-            <p className="text-[0.8125rem] font-semibold tracking-[0.22em] text-lime uppercase sm:text-sm">
-              {dict.contact.eyebrow}
-            </p>
-            <h2 id="contact-title" className="mt-5 text-display leading-[0.95]">
-              <span className="block">{dict.contact.titleLine1}</span>
-              <span className="block text-mist">{dict.contact.titleLine2}</span>
-            </h2>
-            <p className="mt-6 max-w-[62ch] text-lead leading-[1.55] text-mist">{dict.contact.lead}</p>
-
-            <div className="mt-8 flex flex-wrap gap-3">
-              <ButtonLink href={path("contact", locale)} tone="dark">
-                {dict.brief.title}
-              </ButtonLink>
+            <p className="text-xs font-semibold tracking-[.2em] text-lime uppercase">{dict.contact.eyebrow}</p>
+            <h2 id="contact-title" className="mt-5 text-display leading-[1.05]">{c.contactTitle}</h2>
+            <p className="mt-5 text-lead leading-relaxed text-mist">{c.contactLead}</p>
+            <h3 className="mt-8 text-lg">{c.nextTitle}</h3>
+            <ol className="mt-4 space-y-3 text-base text-mist">{c.next.map((step, i) => <li key={step} className="flex gap-3"><span className="text-lime">0{i+1}</span>{step}</li>)}</ol>
+            <div className="mt-7 border-t border-line-dark pt-5">
+              <p className="text-sm text-mist">{c.direct}</p>
+              <TrackedAnchor href={site.instagramUrl} target="_blank" rel="noopener noreferrer" track={["outbound_instagram", { locale, from: "contact" }]} className="inline-flex min-h-11 items-center text-lime underline underline-offset-4">{site.instagramHandle} ↗</TrackedAnchor>
             </div>
           </div>
-
-          <div className="rounded-3xl border border-line-dark p-6 sm:p-8">
-            <p className="text-[0.8125rem] font-semibold tracking-[0.14em] text-mist uppercase">
-              {dict.contact.primaryLabel}
-            </p>
-            <TrackedAnchor
-              href={site.instagramUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              track={["outbound_instagram", { locale, from: "contact" }]}
-              className={buttonClass("primary", "dark", "mt-4 w-full gap-2.5")}
-            >
-              <InstagramIcon className="size-5" />
-              {site.instagramHandle}
-            </TrackedAnchor>
-            <p className="mt-4 text-[0.9375rem] leading-relaxed text-mist">{dict.contact.primaryHint}</p>
-            <p className="mt-2 text-[0.9375rem] leading-relaxed text-mist">{dict.contact.responseNote}</p>
-          </div>
+          <ProjectInquiry locale={locale} />
         </div>
       </Container>
     </Section>

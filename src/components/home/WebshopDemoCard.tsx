@@ -60,7 +60,7 @@ export function WebshopDemoLink({ locale }: { locale: Locale }) {
   );
 }
 
-export function WebshopDemoCard({ locale }: { locale: Locale }) {
+export function WebshopDemoCard({ locale, compact = false }: { locale: Locale; compact?: boolean }) {
   const c = copy[locale];
 
   return (
@@ -72,7 +72,7 @@ export function WebshopDemoCard({ locale }: { locale: Locale }) {
         </div>
         <h3 id="webshop-demo-title" className="mt-6 text-title leading-[1.05]">{c.title}</h3>
         <p className="mt-5 max-w-[48ch] text-body leading-relaxed text-slate">{c.body}</p>
-        <ul className="mt-6 space-y-3">
+        <ul className={compact ? "sr-only" : "mt-6 space-y-3"}>
           {c.features.map(feature => (
             <li key={feature} className="flex items-center gap-3 text-[1.0625rem]">
               <CheckIcon className="size-5 shrink-0 text-forest" />{feature}
@@ -92,9 +92,9 @@ export function WebshopDemoCard({ locale }: { locale: Locale }) {
           <span className="text-sm text-slate">{c.collection}</span>
         </div>
         <div className="grid grid-cols-2 gap-x-4 gap-y-5">
-          {selection.map((p, i) => (
+          {(compact ? selection.slice(0, 2) : selection).map((p, i) => (
             <div key={p.id} className="min-w-0">
-              <Image src={`${webshopAssetsBase}/products/${p.id}.webp`} alt={c.products[i]} width={396} height={396} unoptimized loading="lazy" className="aspect-square w-full bg-[#e8e4db] object-contain" />
+              <Image src={`${webshopAssetsBase}/products/${p.id}.webp`} alt={c.products[i]} width={396} height={396} unoptimized loading="lazy" className={compact ? "aspect-[3/4] max-h-36 sm:max-h-64 w-full bg-[#e8e4db] object-contain" : "aspect-square w-full bg-[#e8e4db] object-contain"} />
               <p className="mt-2 text-sm leading-snug font-medium text-ink">{c.products[i]}</p>
               <p className="mt-1 text-sm text-slate">{p.price}</p>
             </div>

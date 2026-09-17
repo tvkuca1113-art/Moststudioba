@@ -1,6 +1,9 @@
 import { SiteFrame } from "@/components/layout/SiteFrame";
 import { ContactSection } from "@/components/home/ContactSection";
 import { FaqSection } from "@/components/home/FaqSection";
+import { Container } from "@/components/ui/Container";
+import { Section } from "@/components/ui/Section";
+import { WebshopDemoCard } from "@/components/home/WebshopDemoCard";
 import { Hero } from "@/components/home/Hero";
 import { ProcessSection } from "@/components/home/ProcessSection";
 import { ProjectsSection } from "@/components/home/ProjectsSection";
@@ -24,9 +27,12 @@ export function HomeView({ locale }: { locale: Locale }) {
       />
       <Hero locale={locale} dict={dict} />
       <ProjectsSection locale={locale} dict={dict} />
-      <ServicesSection locale={locale} dict={dict} />
-      <ProcessSection locale={locale} dict={dict} />
       <StudioSection locale={locale} dict={dict} />
+      <Section tone="paper" size="tight" labelledBy="webshop-demo-title">
+        <Container><WebshopDemoCard locale={locale} compact /></Container>
+      </Section>
+      <ServicesSection locale={locale} dict={dict} />
+      <ProcessSection locale={locale} dict={dict} withPhoto={false} />
       <FaqSection locale={locale} dict={dict} limit={4} />
       <ContactSection locale={locale} dict={dict} />
     </SiteFrame>

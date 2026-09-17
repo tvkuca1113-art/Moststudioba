@@ -1,4 +1,4 @@
-import { BriefBuilder } from "@/components/contact/BriefBuilder";
+import { ProjectInquiry } from "@/components/contact/ProjectInquiry";
 import { SiteFrame } from "@/components/layout/SiteFrame";
 import { FaqSection } from "@/components/home/FaqSection";
 import { ButtonAnchor } from "@/components/ui/Button";
@@ -52,16 +52,9 @@ export function ContactView({ locale }: { locale: Locale }) {
 
       <Section tone="paperDim" size="tight" labelledBy="brief-title">
         <Container>
-          <p className="text-[0.8125rem] font-semibold tracking-[0.22em] text-slate uppercase sm:text-sm">
-            {dict.brief.eyebrow}
-          </p>
-          <h2 id="brief-title" className="mt-4 max-w-2xl text-title leading-[1.05]">
-            {dict.brief.title}
-          </h2>
-          <p className="mt-4 max-w-2xl text-[1.0625rem] leading-relaxed text-slate">{dict.brief.lead}</p>
-
-          <div className="mt-10">
-            <BriefBuilder locale={locale} dict={dict} />
+          <h2 id="brief-title" className="sr-only">{dict.brief.eyebrow}</h2>
+          <div className="max-w-3xl">
+            <ProjectInquiry locale={locale} />
           </div>
         </Container>
       </Section>

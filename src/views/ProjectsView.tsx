@@ -23,9 +23,6 @@ export function ProjectsView({ locale }: { locale: Locale }) {
           <p className="mt-6 max-w-2xl text-lead leading-relaxed text-slate">{dict.projects.overviewLead}</p>
 
           <div className="mt-12 lg:mt-16">
-            <div className="mb-14 border-b border-line-light pb-14 lg:mb-16 lg:pb-16">
-              <WebshopDemoCard locale={locale} />
-            </div>
             {demoProjects.map((project, index) => (
               <Reveal
                 key={project.slug}
@@ -35,6 +32,9 @@ export function ProjectsView({ locale }: { locale: Locale }) {
                 <ProjectCard project={project} locale={locale} dict={dict} featured />
               </Reveal>
             ))}
+            <div className="mt-14 border-t border-line-light pt-14">
+              <WebshopDemoCard locale={locale} />
+            </div>
           </div>
 
           <div className="mt-14 flex flex-wrap gap-3 border-t border-line-light pt-8">

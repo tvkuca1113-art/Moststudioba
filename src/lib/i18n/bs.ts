@@ -122,10 +122,10 @@ export const bs = {
     titleLine2: "trebao raditi bolje?",
     lead: "Imate postojeću stranicu ili tek počinjete? Javite nam šta želite predstaviti i kome se obraćate.",
     primaryLabel: "Pišite nam na Instagramu",
-    primaryHint: "Instagram je naš glavni kanal za kontakt.",
+    primaryHint: "Pošaljite nam nekoliko rečenica o projektu.",
     handle: "@moststudioba",
     pageTitle: "Kontakt",
-    pageLead: "Najlakše nam je javiti se porukom na Instagramu. Ispod možete pripremiti poruku u nekoliko klikova — sadrži sve što nam treba za prvi odgovor.",
+    pageLead: "Recite nam čime se bavite i šta vaš web treba postići. Pripremite upit ispod i pošaljite ga na Instagramu, ili nam se javite direktno.",
     responseNote: "Odgovaramo na poruke na bosanskom i njemačkom jeziku.",
   },
 

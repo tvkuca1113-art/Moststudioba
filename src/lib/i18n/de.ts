@@ -120,10 +120,10 @@ export const de: Dictionary = {
     titleLine2: "besser können?",
     lead: "Haben Sie bereits eine Website oder fangen Sie gerade an? Schreiben Sie uns, was Sie zeigen möchten und wen Sie ansprechen.",
     primaryLabel: "Schreiben Sie uns auf Instagram",
-    primaryHint: "Instagram ist unser wichtigster Kontaktkanal.",
+    primaryHint: "Schreiben Sie uns ein paar Sätze über Ihr Projekt.",
     handle: "@moststudioba",
     pageTitle: "Kontakt",
-    pageLead: "Am einfachsten erreichen Sie uns per Nachricht auf Instagram. Unten können Sie Ihre Nachricht in wenigen Klicks vorbereiten — sie enthält alles, was wir für eine erste Antwort brauchen.",
+    pageLead: "Beschreiben Sie Ihr Geschäft und das Ziel Ihrer Website. Bereiten Sie unten Ihre Anfrage vor und senden Sie diese auf Instagram oder schreiben Sie uns direkt.",
     responseNote: "Wir antworten auf Bosnisch und auf Deutsch.",
   },
 

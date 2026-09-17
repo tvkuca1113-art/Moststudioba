@@ -1,10 +1,8 @@
-import { HeroGallery } from "@/components/home/HeroGallery";
-import { WebshopDemoLink } from "@/components/home/WebshopDemoCard";
+import { Shot } from "@/components/media/Shot";
 import { ArchMark } from "@/components/ui/ArchMark";
 import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
-import { demoProjects } from "@/content/projects";
-import { path, type Locale } from "@/lib/i18n/config";
+import { type Locale } from "@/lib/i18n/config";
 import type { Dictionary } from "@/lib/i18n/dictionary";
 import { sectionIds } from "@/lib/nav";
 
@@ -45,18 +43,27 @@ export function Hero({ locale, dict }: { locale: Locale; dict: Dictionary }) {
             <p className="max-w-[62ch] text-lead leading-[1.55] text-mist">{dict.hero.lead}</p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
-              <ButtonLink href={path("contact", locale)} tone="dark">
+              <ButtonLink href={`#${sectionIds.contact}`} tone="dark">
                 {dict.hero.ctaPrimary}
               </ButtonLink>
               <ButtonLink href={`#${sectionIds.projects}`} variant="secondary" tone="dark" withArrow={false}>
                 {dict.hero.ctaSecondary}
               </ButtonLink>
             </div>
-            <WebshopDemoLink locale={locale} />
+
           </div>
         </div>
 
-        <HeroGallery projects={demoProjects} locale={locale} dict={dict} />
+        <div className="mt-10 grid items-center gap-5 border-t border-line-dark pt-6 lg:grid-cols-[0.55fr_1fr] lg:gap-12">
+          <div>
+            <p className="text-xs font-semibold tracking-[.18em] text-lime uppercase">{locale === "bs" ? "Dizajn koji možete isprobati" : "Design zum Ausprobieren"}</p>
+            <p className="mt-3 hidden text-title leading-tight lg:block">{locale === "bs" ? "Lijep prvi dojam. Jasan sljedeći korak." : "Ein guter erster Eindruck. Ein klarer nächster Schritt."}</p>
+            <p className="mt-3 hidden text-sm text-mist lg:block">{locale === "bs" ? "Hrast · naš demo koncept stolarije" : "Hrast · unser Tischlerei-Demokonzept"}</p>
+          </div>
+          <div className="max-h-64 overflow-hidden rounded-xl sm:max-h-80">
+            <Shot slug="stolarija-hrast" locale={locale} device="desktop" alt={dict.hero.figureLabel} sizes="(max-width: 1024px) 100vw, 60vw" priority />
+          </div>
+        </div>
       </Container>
     </section>
   );

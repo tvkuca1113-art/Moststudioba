@@ -1,7 +1,7 @@
+import { ProjectSelector } from "@/components/home/ProjectSelector";
 import { Shot } from "@/components/media/Shot";
-import { WebshopDemoCard } from "@/components/home/WebshopDemoCard";
+import { positioning } from "@/content/positioning";
 import { Container } from "@/components/ui/Container";
-import { Reveal } from "@/components/ui/Reveal";
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { TrackedLink } from "@/components/ui/TrackedLink";
 import { ArrowUpRight } from "@/components/ui/icons";
@@ -20,34 +20,15 @@ import { sectionIds } from "@/lib/nav";
  * what opens.
  */
 export function ProjectsSection({ locale, dict }: { locale: Locale; dict: Dictionary }) {
-  const [lead, ...rest] = demoProjects;
-
+  const c = positioning[locale];
   return (
-    <Section id={sectionIds.projects} tone="paper" labelledBy="projects-title">
+    <Section id={sectionIds.projects} tone="paper" size="tight" labelledBy="projects-title">
       <Container>
-        <SectionHeading
-          id="projects-title"
-          eyebrow={dict.projects.eyebrow}
-          title={dict.projects.title}
-          lead={dict.projects.lead}
-        />
-
-        <div className="mt-8 lg:mt-10">
-          <div className="mb-12 lg:mb-16">
-            <WebshopDemoCard locale={locale} />
-          </div>
-          <Reveal>
-            <ProjectCard project={lead} locale={locale} dict={dict} featured />
-          </Reveal>
-
-          <div className="mt-8 grid gap-9 lg:mt-9 lg:grid-cols-2 lg:gap-8">
-            {rest.map((project, index) => (
-              <Reveal key={project.slug} delay={index * 90}>
-                <ProjectCard project={project} locale={locale} dict={dict} />
-              </Reveal>
-            ))}
-          </div>
-        </div>
+        <SectionHeading id="projects-title" eyebrow={dict.projects.eyebrow} title={c.workTitle} lead={c.workLead} />
+        <ProjectSelector labels={demoProjects.map(p => p.shortName)} locale={locale}>
+          {demoProjects.map(project => <ProjectCard key={project.slug} project={project} locale={locale} dict={dict} />)}
+        </ProjectSelector>
+        <p className="mt-7 max-w-4xl border-t border-line-light pt-4 text-sm leading-relaxed text-slate">{c.disclosure}</p>
       </Container>
     </Section>
   );
@@ -65,6 +46,8 @@ export function ProjectCard({
   featured?: boolean;
 }) {
   const t = translator(locale);
+  const c = positioning[locale];
+  const story = c.cases[demoProjects.findIndex(item => item.slug === project.slug)];
   const caseHref = path("project", locale, project.slug);
   const demoHref = path("demo", locale, project.slug);
   const titleId = `project-${project.slug}`;
@@ -78,10 +61,6 @@ export function ProjectCard({
         featured && "grid gap-8 lg:grid-cols-[1.25fr_0.75fr] lg:items-end lg:gap-12",
       )}
     >
-      {/* The picture is not a link. It used to be a second link to the same
-          page with nothing to announce it; now the one link below is stretched
-          across the whole card, so the picture is still clickable while the
-          accessibility tree holds a single, named target. */}
       <div className="overflow-hidden rounded-2xl">
         <Shot
           slug={project.slug}
@@ -89,13 +68,13 @@ export function ProjectCard({
           device="desktop"
           crop="card"
           alt={`${dict.projects.shotAlt} — ${project.brand}`}
-          sizes={featured ? "(max-width: 1024px) 100vw, 56vw" : "(max-width: 1024px) 100vw, 46vw"}
+          sizes={featured ? "(max-width: 1024px) 100vw, 56vw" : "(max-width: 1024px) 100vw, 33vw"}
           className="transition-transform duration-500 group-hover/card:scale-[1.015] motion-reduce:transition-none motion-reduce:group-hover/card:transform-none"
         />
       </div>
 
       <div className={cn(!featured && "mt-5")}>
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+        <div className="flex flex-col items-start gap-2">
           <span className="rounded-full border border-forest/30 px-2.5 py-1 text-[0.8125rem] font-semibold tracking-[0.1em] text-forest uppercase">
             {dict.common.demoBadge}
           </span>
@@ -108,22 +87,20 @@ export function ProjectCard({
           id={titleId}
           className={cn(
             "mt-4 font-display leading-[0.98] font-extrabold tracking-[-0.03em]",
-            featured ? "text-display" : "text-title",
+            featured ? "text-display" : "text-2xl",
           )}
         >
           {project.brand}
         </h3>
 
-        <p className="mt-3.5 max-w-[62ch] text-body leading-relaxed text-slate">
-          {t(project.visitorProblem)}
-        </p>
-
-        <p className="mt-4 max-w-[62ch] text-body leading-snug">
-          <span className="text-[0.8125rem] font-semibold tracking-[0.14em] text-slate uppercase">
-            {dict.projects.functionLabel}:
-          </span>{" "}
-          <span className="font-semibold text-forest">{t(project.tryIt.title)}</span>
-        </p>
+        <dl className="mt-5 space-y-4">
+          {[[c.problem, story.problem], [c.solution, story.solution], [c.effect, story.effect]].map(([label, body]) => (
+            <div key={label}>
+              <dt className="text-xs font-semibold tracking-[.1em] text-forest uppercase">{label}</dt>
+              <dd className="mt-1 text-base leading-relaxed text-slate">{body}</dd>
+            </div>
+          ))}
+        </dl>
 
         <div className="relative z-10 mt-5 flex flex-wrap items-center gap-x-7 gap-y-3">
           <TrackedLink
@@ -133,7 +110,7 @@ export function ProjectCard({
             // subject and its action, from one link rather than two.
             aria-labelledby={`${titleId} ${ctaId}`}
             track={["view_project", { project: project.slug, locale }]}
-            className="inline-flex min-h-11 items-center gap-2 text-[0.9375rem] font-semibold text-forest underline decoration-forest/30 underline-offset-4 after:absolute after:inset-0 after:content-[''] hover:decoration-forest"
+            className="inline-flex min-h-11 items-center gap-2 text-[0.9375rem] font-semibold text-forest underline decoration-forest/30 underline-offset-4 hover:decoration-forest"
           >
             {dict.projects.cardCta}
             <ArrowUpRight className="size-4 transition-transform group-hover/card:translate-x-0.5 group-hover/card:-translate-y-0.5 motion-reduce:group-hover/card:transform-none" />

@@ -37,6 +37,9 @@ export function ProcessSection({
 }) {
   const t = translator(locale);
   const compact = variant === "compact";
+  const summaries = locale === "bs"
+    ? ["Definišemo cilj, publiku i potrebne funkcije.", "Usklađujemo strukturu, obim i vizuelni smjer.", "Izrađujemo stranicu koju pregledate u toku rada.", "Provjeravamo tokove, unosimo dorade i objavljujemo."]
+    : ["Ziel, Zielgruppe und benötigte Funktionen klären.", "Struktur, Umfang und Gestaltung abstimmen.", "Die Website umsetzen und gemeinsam prüfen.", "Abläufe testen, Details verbessern und veröffentlichen."];
 
   return (
     <Section id={sectionIds.process} tone="forest" labelledBy="process-title">
@@ -72,19 +75,19 @@ export function ProcessSection({
           <>
             <ol className="mt-8 grid gap-px overflow-hidden rounded-2xl bg-line-dark sm:grid-cols-2 lg:mt-10 lg:grid-cols-4">
               {processSteps.map((step, index) => (
-                <Reveal key={step.number} as="li" delay={index * 70} className="bg-forest p-5 sm:p-6">
+                <Reveal key={step.number} as="li" delay={index * 70} className="grid grid-cols-[1.75rem_1fr] gap-x-3 bg-forest p-4 sm:block sm:p-6">
                   <span className="font-display text-sm font-bold tracking-[0.2em] text-lime">
                     {step.number}
                   </span>
-                  <h3 className="mt-3 text-xl leading-tight font-extrabold sm:text-2xl">{t(step.label)}</h3>
-                  <p className="mt-2.5 text-body leading-relaxed text-mist">{t(step.body)}</p>
+                  <h3 className="text-xl leading-tight font-extrabold sm:mt-3 sm:text-2xl">{t(step.label)}</h3>
+                  <p className="col-start-2 mt-2.5 text-base leading-relaxed text-mist">{summaries[index]}</p>
                 </Reveal>
               ))}
             </ol>
 
             <div className="mt-8 flex flex-col gap-4 border-t border-line-dark pt-6 lg:flex-row lg:items-start lg:justify-between lg:gap-12">
               <p className="max-w-[64ch] text-body leading-relaxed text-mist">
-                {dict.process.timingNote}
+                {locale === "bs" ? "Obim, cijenu i rok dogovaramo prije početka." : "Umfang, Preis und Zeitplan vereinbaren wir vor dem Start."}
               </p>
               <Link
                 href={`${path("services", locale)}#${sectionIds.process}`}
