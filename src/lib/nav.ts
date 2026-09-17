@@ -20,7 +20,7 @@ export type NavItem = {
 
 export function mainNav(locale: Locale, dict: Dictionary): NavItem[] {
   const home = path("home", locale);
-  const homeAnchor = (id: string) => `${home === "/" ? "" : home}/#${id}`;
+  const homeAnchor = (id: string) => `${home}#${id}`;
 
   return [
     { label: dict.nav.projects, href: path("projects", locale), route: "projects" },

@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useState } from "react";
+import { useState } from "react";
 
 import { clinicContent as c } from "@/content/demos/clinic";
 import { cn } from "@/lib/cn";
@@ -27,9 +27,8 @@ export function ClinicDemo({
   locale: Locale;
   dict: Dictionary;
 }) {
-  const uid = useId().replace(/[:]/g, "");
   const t = translator(locale);
-  const at = (name: string) => `${uid}-${name}`;
+  const at = (name: string) => `lipa-${name}`;
   const [selected, setSelected] = useState<string>(c.triage.options[0].id);
   const active =
     c.triage.options.find((option) => option.id === selected) ??
@@ -63,32 +62,23 @@ export function ClinicDemo({
           <legend className="sr-only">{t(c.triage.title)}</legend>
           <div className="flex flex-wrap gap-2.5">
             {c.triage.options.map((option) => {
-              const id = `${uid}-${option.id}`;
               const isActive = option.id === selected;
               return (
-                <div key={option.id}>
-                  <input
-                    type="radio"
-                    id={id}
-                    name={`${uid}-triage`}
-                    value={option.id}
-                    checked={isActive}
-                    onChange={() => setSelected(option.id)}
-                    className="peer sr-only"
-                  />
-                  <label
-                    htmlFor={id}
+                  <button
+                    key={option.id}
+                    type="button"
+                    aria-pressed={isActive}
+                    onClick={() => setSelected(option.id)}
                     className={cn(
                       "inline-flex min-h-11 cursor-pointer items-center rounded-full border px-4 text-[0.9375rem] font-medium transition-colors",
-                      "peer-focus-visible:outline-3 peer-focus-visible:outline-offset-3 peer-focus-visible:outline-[#123a42]",
+                      "focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-[#123a42]",
                       isActive
                         ? "border-[#123a42] bg-[#123a42] text-[#fbf9f5]"
                         : "border-[#123a42]/20 bg-white text-[#123a42] hover:border-[#123a42]/50",
                     )}
                   >
                     {t(option.chip)}
-                  </label>
-                </div>
+                  </button>
               );
             })}
           </div>

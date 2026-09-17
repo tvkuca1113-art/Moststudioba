@@ -78,7 +78,7 @@ export const tradesContent = {
         id: "table",
         image: "hrast-sto" as ImageKey,
         name: { bs: "Trpezarijski sto", de: "Esstisch" } as L,
-        kind: { bs: "Mat bijela i masiv · 220 × 95 cm", de: "Mattweiß und Massivholz · 220 × 95 cm" } as L,
+        kind: { bs: "Orah, masiv · 220 × 95 cm", de: "Massives Walnussholz · 220 × 95 cm" } as L,
         body: {
           bs: "Komad koji se radi prema prostoru u koji ulazi: širina prolaza, visina stolica i broj mjesta određuju dimenziju, ne katalog.",
           de: "Ein Stück, das zum Raum passt: Durchgangsbreite, Stuhlhöhe und Anzahl der Plätze bestimmen das Maß — nicht der Katalog.",

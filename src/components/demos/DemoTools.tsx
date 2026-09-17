@@ -8,10 +8,12 @@ import {
 } from "react";
 import { Photo } from "@/components/media/Photo";
 import { ArrowRight, CheckIcon } from "@/components/ui/icons";
-import { tradesContent } from "@/content/demos/trades";
+import { tradesContent, type WoodFinish } from "@/content/demos/trades";
+import { FurniturePreview } from "./FurniturePreview";
 import { advisoryContent } from "@/content/demos/advisory";
 import {
   bookingDays,
+  bookingDateLabel,
   demoTimes,
   demoTimeAvailable,
   dimensionBounds,
@@ -88,13 +90,10 @@ export function FurnitureConfigurator({ locale }: { locale: Locale }) {
   const t = translator(locale);
   const uid = useId();
   const [room, setRoom] = useState<Room>("kitchen");
-  const [finish, setFinish] = useState("oak");
+  const [finish, setFinish] = useState<WoodFinish>("oak");
   const [dimension, setDimension] = useState(320);
   const [extras, setExtras] = useState(["measure", "assembly"]);
   const [saved, setSaved] = useState(false);
-  const project = tradesContent.projects.items.find(
-    (item) => item.id === room,
-  )!;
   const material = tradesContent.materials.items.find(
     (item) => item.id === finish,
   )!;
@@ -163,6 +162,7 @@ export function FurnitureConfigurator({ locale }: { locale: Locale }) {
               ))}
             </div>
           </fieldset>
+          <FurniturePreview room={room} finish={finish} label={`${roomLabel} — ${t(material.name)}`} className={s.mobilePreview} />
           <fieldset>
             <legend className={s.legend}>
               {de ? "02 · Ihre Oberfläche" : "02 · Vaša završna obrada"}
@@ -255,12 +255,7 @@ export function FurnitureConfigurator({ locale }: { locale: Locale }) {
           className={s.summary}
           aria-label={de ? "Projektübersicht" : "Sažetak projekta"}
         >
-          <Photo
-            name={project.image}
-            locale={locale}
-            className={s.summaryPhoto}
-            sizes="(max-width:760px) 100vw, 40vw"
-          />
+          <FurniturePreview room={room} finish={finish} label={`${roomLabel} — ${t(material.name)}`} className={s.desktopPreview} />
           <p className={s.eyebrow}>{de ? "IHRE AUSWAHL" : "VAŠ ODABIR"}</p>
           <h3>{roomLabel}</h3>
           <dl aria-live="polite">
@@ -279,8 +274,8 @@ export function FurnitureConfigurator({ locale }: { locale: Locale }) {
           </dl>
           <p className={s.fine}>
             {de
-              ? "Das Foto zeigt ein Raumkonzept. Ihr Material wird als separates Muster gezeigt; keine fotorealistische Simulation."
-              : "Fotografija prikazuje koncept prostora. Odabrani materijal vidite kao zaseban uzorak; prikaz nije fotorealistična simulacija."}
+              ? "Die Vorschau zeigt die gewählte Oberfläche illustrativ. Maße werden im Projekt gespeichert; die Bildproportionen bleiben unverändert."
+              : "Prikaz ilustrira odabranu završnu obradu. Dimenzije se bilježe u projektu; proporcije fotografije ostaju iste."}
           </p>
           <div className={s.actions}>
             <button type="button" className={s.action} onClick={exportBrief}>
@@ -348,7 +343,7 @@ export function AppointmentBooking({ locale }: { locale: Locale }) {
   const heading = useRef<HTMLHeadingElement>(null);
   const interacted = useRef(false);
   useEffect(() => {
-    if (interacted.current) heading.current?.focus();
+    if (interacted.current) heading.current?.focus({ preventScroll: true });
   }, [step, done]);
   const services = de
     ? ["Erste Untersuchung", "Professionelle Reinigung", "Ästhetische Beratung"]
@@ -357,13 +352,7 @@ export function AppointmentBooking({ locale }: { locale: Locale }) {
   const labels = de
     ? ["Leistung", "Wunschtermin", "Übersicht"]
     : ["Usluga", "Termin", "Pregled"];
-  const dateLabel = (iso: string) =>
-    new Intl.DateTimeFormat(de ? "de-DE" : "bs-BA", {
-      weekday: "long",
-      day: "numeric",
-      month: "long",
-      timeZone: "UTC",
-    }).format(new Date(iso + "T12:00:00Z"));
+  const dateLabel = (iso: string) => bookingDateLabel(iso, locale);
   const changeStep = (next: number) => {
     interacted.current = true;
     setStep(next);
@@ -495,10 +484,7 @@ export function AppointmentBooking({ locale }: { locale: Locale }) {
                         }}
                       >
                         <span>
-                          {new Intl.DateTimeFormat(de ? "de-DE" : "bs-BA", {
-                            weekday: "short",
-                            timeZone: "UTC",
-                          }).format(new Date(iso + "T12:00:00Z"))}
+                          {bookingDateLabel(iso, locale, true)}
                         </span>
                         <strong>{Number(iso.slice(-2))}</strong>
                         <span>{iso.slice(5, 7)}.</span>
@@ -704,7 +690,7 @@ export function AdvisoryPlanner({ locale }: { locale: Locale }) {
   const heading = useRef<HTMLHeadingElement>(null);
   const interacted = useRef(false);
   useEffect(() => {
-    if (interacted.current) heading.current?.focus();
+    if (interacted.current) heading.current?.focus({ preventScroll: true });
   }, [step, done]);
   const selectedArea = choosePlan(answers);
   const area = advisoryContent.areas.items.find(
@@ -736,7 +722,7 @@ export function AdvisoryPlanner({ locale }: { locale: Locale }) {
     if (!area) return;
     saveText(
       "MOST-Meridijan-plan.txt",
-      `MOST STUDIO — MERIDIJAN DEMO\n\n${t(area.name)}\n\n${questions.map((q, i) => `${t(q.text)}\n${t(q.options.find((o) => o.area === answers[i])!.text)}`).join("\n\n")}\n\n${t(area.meeting).join("\n")}\n\n${cadence} ${de ? "Wochen — Beispielrhythmus, keine verbindliche Zusage." : "sedmice — pokazni raspored, nije obavezujuća ponuda."}`,
+      `MOST STUDIO — MERIDIJAN DEMO\n\n${t(area.name)}\n\n${questions.map((q, i) => `${t(q.text)}\n${t(q.options.find((o) => o.area === answers[i])!.text)}`).join("\n\n")}\n\n${t(area.meeting).join("\n")}\n\n${cadence} ${de ? "Wochen — Beispielrhythmus, keine verbindliche Zusage." : `${cadence === "6" ? "sedmica" : "sedmice"} — pokazni raspored, nije obavezujuća ponuda.`}`,
     );
     setSaved(true);
   };
@@ -864,7 +850,7 @@ export function AdvisoryPlanner({ locale }: { locale: Locale }) {
                         setSaved(false);
                       }}
                     >
-                      {value} {de ? "Wochen" : "sedmica"}
+                      {value} {de ? "Wochen" : value === "6" ? "sedmica" : "sedmice"}
                     </button>
                   ))}
                 </div>
@@ -926,7 +912,7 @@ export function AdvisoryPlanner({ locale }: { locale: Locale }) {
               <div>
                 <dt>{de ? "Beispielrhythmus" : "Pokazni raspored"}</dt>
                 <dd>
-                  {cadence} {de ? "Wochen" : "sedmica"}
+                  {cadence} {de ? "Wochen" : cadence === "6" ? "sedmica" : "sedmice"}
                 </dd>
               </div>
             ) : null}

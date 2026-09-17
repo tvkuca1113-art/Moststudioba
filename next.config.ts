@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  allowedDevOrigins: ["terminal.local"],
   async rewrites() {
     return [{ source: "/moststudiowebshop", destination: "/webshop-assets/index.html" }];
   },

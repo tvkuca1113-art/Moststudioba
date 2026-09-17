@@ -1,6 +1,5 @@
 "use client";
 
-import { useId } from "react";
 
 import { tradesContent as c } from "@/content/demos/trades";
 import type { Locale } from "@/lib/i18n/config";
@@ -21,9 +20,8 @@ export function TradesDemo({
   locale: Locale;
   dict: Dictionary;
 }) {
-  const uid = useId().replace(/[:]/g, "");
   const t = translator(locale);
-  const at = (name: string) => `${uid}-${name}`;
+  const at = (name: string) => `hrast-${name}`;
   const gallery = c.projects.items;
 
   return (

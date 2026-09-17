@@ -1,4 +1,3 @@
-import Link from "next/link";
 
 import { Container } from "@/components/ui/Container";
 import { Wordmark } from "@/components/ui/Wordmark";
@@ -23,7 +22,7 @@ export function Footer({
 }) {
   const t = translator(locale);
   const home = path("home", locale);
-  const homeAnchor = (id: string) => `${home === "/" ? "" : home}/#${id}`;
+  const homeAnchor = (id: string) => `${home}#${id}`;
 
   const pages = [
     { label: dict.nav.projects, href: path("projects", locale) },
@@ -38,9 +37,9 @@ export function Footer({
       <Container className="py-11 sm:py-12">
         <div className="grid gap-9 lg:grid-cols-[1.4fr_1fr_1fr_1fr] lg:gap-12">
           <div>
-            <Link href={home} className="inline-flex min-h-11 items-center">
+            <a href={home} className="inline-flex min-h-11 items-center">
               <Wordmark />
-            </Link>
+            </a>
             <p className="mt-4 max-w-[52ch] text-[0.9375rem] leading-relaxed text-mist">{dict.footer.blurb}</p>
           </div>
 
@@ -49,12 +48,12 @@ export function Footer({
             <ul className="mt-4 space-y-1">
               {pages.map((item) => (
                 <li key={item.href}>
-                  <Link
+                  <a
                     href={item.href}
                     className="inline-flex min-h-11 items-center text-[0.9375rem] text-mist hover:text-paper"
                   >
                     {item.label}
-                  </Link>
+                  </a>
                 </li>
               ))}
             </ul>
@@ -65,13 +64,13 @@ export function Footer({
             <ul className="mt-4 space-y-1">
               {demoProjects.map((project) => (
                 <li key={project.slug}>
-                  <Link
+                  <a
                     href={path("project", locale, project.slug)}
                     className="inline-flex min-h-11 items-center text-[0.9375rem] text-mist hover:text-paper"
                   >
                     {project.brand}
                     <span className="sr-only"> — {t(project.sector)}</span>
-                  </Link>
+                  </a>
                 </li>
               ))}
             </ul>

@@ -11,6 +11,7 @@ const eslintConfig = defineConfig([
     ".next/**",
     "out/**",
     "build/**",
+    "public/webshop-assets/assets/**", // Built vendor bundle, lint original sources instead.
     "next-env.d.ts",
   ]),
 ]);

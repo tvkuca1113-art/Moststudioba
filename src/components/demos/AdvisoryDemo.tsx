@@ -1,6 +1,5 @@
 "use client";
 
-import { useId } from "react";
 
 import { advisoryContent as c } from "@/content/demos/advisory";
 import { cn } from "@/lib/cn";
@@ -29,10 +28,9 @@ export function AdvisoryDemo({
   locale: Locale;
   dict: Dictionary;
 }) {
-  const uid = useId().replace(/[:]/g, "");
   const t = translator(locale);
   // Ids are derived per instance: a case page renders this demo twice.
-  const at = (name: string) => `${uid}-${name}`;
+  const at = (name: string) => `meridijan-${name}`;
   return (
     <div className="bg-[#f4f1ea] font-sans text-[#1b2130]">
       <DemoCover

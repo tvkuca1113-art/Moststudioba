@@ -24,6 +24,20 @@ export function bookingDays(isoDay: string) {
   }
   return days;
 }
+/** Explicit labels avoid server/browser ICU differences and hydration errors. */
+export function bookingDateLabel(iso: string, locale: "bs" | "de", short = false) {
+  const date = new Date(iso + "T12:00:00Z");
+  const days = locale === "de"
+    ? ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"]
+    : ["nedjelja", "ponedjeljak", "utorak", "srijeda", "četvrtak", "petak", "subota"];
+  const abbreviated = locale === "de"
+    ? ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"]
+    : ["ned", "pon", "uto", "sri", "čet", "pet", "sub"];
+  const months = locale === "de"
+    ? ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"]
+    : ["januar", "februar", "mart", "april", "maj", "juni", "juli", "august", "septembar", "oktobar", "novembar", "decembar"];
+  return short ? abbreviated[date.getUTCDay()] : `${days[date.getUTCDay()]}, ${date.getUTCDate()}. ${months[date.getUTCMonth()]}`;
+}
 export const demoTimes = ["09:00", "10:30", "12:00", "14:00", "15:30", "17:00"];
 export function demoTimeAvailable(
   dayIndex: number,

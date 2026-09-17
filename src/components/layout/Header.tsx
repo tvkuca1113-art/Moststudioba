@@ -32,6 +32,7 @@ export function Header({
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
   const toggleRef = useRef<HTMLButtonElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
 
   const items = mainNav(locale, dict);
   const contactHref = path("contact", locale);
@@ -54,23 +55,48 @@ export function Header({
 
   useEffect(() => {
     if (!menuOpen) return;
+    const rootOverflow = document.documentElement.style.overflow;
+    const bodyOverflow = document.body.style.overflow;
+    const background = [...document.querySelectorAll<HTMLElement>("main, footer")];
+    const previousInert = background.map((node) => node.inert);
+    background.forEach((node) => { node.inert = true; });
+    document.documentElement.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
+    panelRef.current?.querySelector<HTMLElement>("a")?.focus({ preventScroll: true });
     const onKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         setMenuOpen(false);
-        toggleRef.current?.focus();
+        toggleRef.current?.focus({ preventScroll: true });
+      }
+      if (event.key === "Tab") {
+        const links = [...(panelRef.current?.querySelectorAll<HTMLElement>("a[href], button:not([disabled])") ?? [])];
+        const first = toggleRef.current;
+        const last = links.at(-1);
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last?.focus({ preventScroll: true });
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first?.focus({ preventScroll: true });
+        }
       }
     };
+    const desktop = window.matchMedia("(min-width: 1024px)");
+    const onResize = () => { if (desktop.matches) setMenuOpen(false); };
+    desktop.addEventListener("change", onResize);
     document.addEventListener("keydown", onKey);
-    document.body.style.overflow = "hidden";
     return () => {
+      desktop.removeEventListener("change", onResize);
       document.removeEventListener("keydown", onKey);
-      document.body.style.overflow = "";
+      document.documentElement.style.overflow = rootOverflow;
+      document.body.style.overflow = bodyOverflow;
+      background.forEach((node, index) => { node.inert = previousInert[index]; });
     };
   }, [menuOpen]);
 
   const closeMenu = useCallback(() => setMenuOpen(false), []);
 
-  const dark = tone === "overlay" && !scrolled ? true : tone === "overlay";
+  const dark = tone === "overlay";
   const barClass =
     tone === "overlay"
       ? scrolled
@@ -81,6 +107,7 @@ export function Header({
         : "bg-paper text-ink";
 
   return (
+    <>
     <header className={cn("fixed inset-x-0 top-0 z-50 transition-colors duration-300", barClass)}>
       <Container>
         <div className="flex h-16 items-center justify-between gap-4 sm:h-20">
@@ -96,7 +123,7 @@ export function Header({
             <ul className="flex items-center gap-8">
               {items.map((item) => (
                 <li key={item.href}>
-                  <Link
+                  <a
                     href={item.href}
                     className={cn(
                       "relative inline-flex min-h-11 items-center text-sm font-medium transition-opacity hover:opacity-100",
@@ -104,7 +131,7 @@ export function Header({
                     )}
                   >
                     {item.label}
-                  </Link>
+                  </a>
                 </li>
               ))}
             </ul>
@@ -142,24 +169,26 @@ export function Header({
           </div>
         </div>
       </Container>
+    </header>
 
       <div
+        ref={panelRef}
         id="mobile-menu"
         hidden={!menuOpen}
-        className="fixed inset-0 top-16 z-40 overflow-y-auto bg-ink text-paper on-dark sm:top-20 lg:hidden"
+        className="fixed inset-0 top-16 z-40 overflow-y-auto overscroll-contain bg-ink text-paper on-dark sm:top-20 lg:hidden"
       >
-        <Container className="flex min-h-full flex-col gap-10 py-10">
+        <Container className="flex min-h-full flex-col gap-10 py-8 pb-[max(2rem,env(safe-area-inset-bottom))]">
           <nav aria-label={dict.nav.ariaLabel}>
             <ul className="flex flex-col">
               {[...items, { label: dict.nav.contact, href: contactHref }].map((item) => (
                 <li key={item.href} className="border-b border-line-dark">
-                  <Link
+                  <a
                     href={item.href}
                     onClick={closeMenu}
                     className="flex min-h-16 items-center font-display text-3xl font-bold tracking-tight"
                   >
                     {item.label}
-                  </Link>
+                  </a>
                 </li>
               ))}
             </ul>
@@ -179,7 +208,7 @@ export function Header({
           </div>
         </Container>
       </div>
-    </header>
+    </>
   );
 }
 
