@@ -32,6 +32,8 @@ export function Footer({
     { label: dict.nav.studio, href: homeAnchor(sectionIds.studio) },
     { label: dict.nav.contact, href: path("contact", locale) },
     { label: locale === "bs" ? "Online saradnja u BiH" : "Online-Zusammenarbeit in BiH", href: path("coverage", locale) },
+    { label: locale === "bs" ? "Web stranica ili Instagram?" : "Website oder Instagram?", href: path("socialWebsite", locale) },
+    { label: locale === "bs" ? "Zašto web nije na Googleu?" : "Website nicht bei Google?", href: path("googleVisibility", locale) },
     { label: locale === "bs" ? "Vodič o cijeni" : "Kostenratgeber", href: path("pricing", locale) },
   ];
 

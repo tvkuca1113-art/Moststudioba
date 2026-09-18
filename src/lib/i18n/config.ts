@@ -37,6 +37,8 @@ export type RouteKey =
   | "redesign"
   | "coverage"
   | "pricing"
+  | "googleVisibility"
+  | "socialWebsite"
   | "contact"
   | "demo";
 
@@ -55,6 +57,8 @@ const routeMap: Record<RouteKey, RouteDefinition> = {
   redesign: { bs: "/usluge/redizajn-web-stranica", de: "/de/leistungen/website-relaunch" },
   coverage: { bs: "/izrada-web-stranica-bih", de: "/de/webdesign-bosnien-herzegowina" },
   pricing: { bs: "/vodic/cijena-web-stranice", de: "/de/ratgeber/website-kosten" },
+  googleVisibility: { bs: "/vodic/web-stranica-nije-na-googleu", de: "/de/ratgeber/website-nicht-bei-google" },
+  socialWebsite: { bs: "/vodic/web-stranica-ili-instagram", de: "/de/ratgeber/website-oder-instagram" },
   contact: { bs: "/kontakt", de: "/de/kontakt" },
   demo: { bs: "/demo/:slug", de: "/de/demo/:slug" },
 };

@@ -29,6 +29,7 @@ export function ContentPageView({ pageKey, locale }: { pageKey: ContentPageKey; 
             <div>
               <p className="text-xs font-semibold tracking-[.18em] text-forest uppercase">{page.eyebrow}</p>
               <h1 className="mt-5 max-w-4xl text-display leading-[1.02]">{page.heading}</h1>
+              {page.publishedOn && <p className="mt-5 flex flex-wrap gap-x-2 text-sm text-slate"><Link href={`${path("home", locale)}#studio`} className="underline underline-offset-4">MOST Studio</Link><span aria-hidden="true">·</span><span>{bs ? "Objavljeno" : "Veröffentlicht"} <time dateTime={page.publishedOn}>{new Intl.DateTimeFormat(bs ? "bs-BA" : "de-DE", { dateStyle: "long", timeZone: "UTC" }).format(new Date(page.publishedOn))}</time></span></p>}
               <p className="mt-6 max-w-[65ch] text-lead leading-relaxed text-slate">{page.lead}</p>
               <div className="mt-7 flex flex-wrap gap-3">
                 <ButtonLink href="#projektni-upit">{bs ? "Zatražite procjenu projekta" : "Projekt anfragen"}</ButtonLink>
@@ -46,17 +47,24 @@ export function ContentPageView({ pageKey, locale }: { pageKey: ContentPageKey; 
       </Section>
       <Section tone="paperDim" size="tight">
         <Container>
-          <div className="grid gap-9 lg:grid-cols-[0.6fr_1.4fr] lg:gap-20">
+          <div className="grid gap-9 lg:grid-cols-[minmax(0,0.6fr)_minmax(0,1.4fr)] lg:gap-20">
             <nav aria-label={bs ? "Sadržaj ove stranice" : "Auf dieser Seite"} className="self-start lg:sticky lg:top-28">
               <p className="text-xs font-semibold tracking-[.16em] text-slate uppercase">{bs ? "Na ovoj stranici" : "Auf dieser Seite"}</p>
               <ol className="mt-4 border-t border-line-light">{page.sections.map((section, index) => <li key={section.id} className="border-b border-line-light"><a href={`#${section.id}`} className="flex min-h-12 gap-4 py-3 text-sm leading-relaxed hover:text-forest"><span className="text-slate">0{index + 1}</span>{section.title}</a></li>)}</ol>
             </nav>
-            <div className="space-y-12">
+            <div className="min-w-0 space-y-12">
               {page.sections.map(section => <section id={section.id} key={section.id} aria-labelledby={`${section.id}-title`}>
                 <h2 id={`${section.id}-title`} className="text-title leading-[1.1]">{section.title}</h2>
                 {section.paragraphs.map(paragraph => <p key={paragraph} className="mt-4 max-w-[68ch] text-base leading-[1.85] text-slate sm:text-lg">{paragraph}</p>)}
+                {section.table && <table className="mt-6 w-full table-fixed border-collapse text-left text-sm leading-relaxed sm:text-base">
+                  <caption className="pb-3 text-left text-sm font-semibold text-forest">{section.table.caption}</caption>
+                  <thead className="bg-forest text-paper"><tr>{section.table.columns.map((column, i) => <th key={column} scope="col" className={`p-3 align-top font-semibold sm:p-4 ${i === 0 ? "w-2/5" : "w-3/5"}`}>{column}</th>)}</tr></thead>
+                  <tbody>{section.table.rows.map(([label, value]) => <tr key={label} className="border-b border-line-light odd:bg-paper"><th scope="row" className="p-3 align-top font-semibold [overflow-wrap:anywhere] sm:p-4">{label}</th><td className="p-3 align-top text-slate [overflow-wrap:anywhere] sm:p-4">{value}</td></tr>)}</tbody>
+                </table>}
+                {section.links && <ul className="mt-5 space-y-2">{section.links.map(link => <li key={link.label}><Link href={path(link.route.key, locale, link.route.slug)} className="inline-flex min-h-11 items-center gap-2 py-2 text-sm font-semibold text-forest underline underline-offset-4">{link.label}<ArrowUpRight className="size-4 shrink-0" /></Link></li>)}</ul>}
                 {section.points && <ul className="mt-5 space-y-3">{section.points.map(point => <li key={point} className="flex gap-3 text-base leading-relaxed"><CheckIcon className="mt-1 size-4 shrink-0 text-forest" />{point}</li>)}</ul>}
               </section>)}
+              {page.sources && <aside className="border-t border-line-light pt-6" aria-label={bs ? "Izvori vodiča" : "Quellen des Ratgebers"}><h2 className="text-lg font-semibold">{bs ? "Izvori i dodatna provjera" : "Quellen zum Weiterlesen"}</h2><p className="mt-2 text-sm leading-relaxed text-slate">{bs ? "Googleova dokumentacija za provjere opisane u ovom vodiču:" : "Google-Dokumentation zu den beschriebenen Prüfungen:"}</p><ul className="mt-3 space-y-1">{page.sources.map(source => <li key={source.href}><a href={source.href} className="inline-flex min-h-11 items-center py-2 text-sm text-forest underline underline-offset-4">{source.label}</a></li>)}</ul></aside>}
             </div>
           </div>
         </Container>
@@ -76,7 +84,7 @@ export function ContentPageView({ pageKey, locale }: { pageKey: ContentPageKey; 
       </Section>
       <Section tone="paper" size="tight" labelledBy="page-faq-title">
         <Container>
-          <div className="grid gap-8 lg:grid-cols-[0.6fr_1.4fr] lg:gap-20">
+          <div className="grid gap-8 lg:grid-cols-[minmax(0,0.6fr)_minmax(0,1.4fr)] lg:gap-20">
             <h2 id="page-faq-title" className="text-title leading-tight">{bs ? "Još nekoliko korisnih odgovora." : "Weitere hilfreiche Antworten."}</h2>
             <div className="divide-y divide-line-light border-y border-line-light">{page.faq.map(item => <details key={item.question} className="group py-5"><summary className="cursor-pointer text-lg font-semibold marker:text-forest">{item.question}</summary><p className="mt-4 text-base leading-relaxed text-slate">{item.answer}</p></details>)}</div>
           </div>

@@ -2,7 +2,7 @@
 import concurrent.futures, json, pathlib, re, sys, time, urllib.request, xml.etree.ElementTree as ET
 origin='https://moststudioba.com'
 stage=sys.argv[1] if len(sys.argv)>1 else 'after'
-out=pathlib.Path('qa/evidence/2026-09-18');out.mkdir(parents=True,exist_ok=True)
+out=pathlib.Path(sys.argv[2] if len(sys.argv)>2 else 'qa/evidence/2026-09-18');out.mkdir(parents=True,exist_ok=True)
 def get(url):
  start=time.perf_counter()
  with urllib.request.urlopen(url,timeout=45) as r:
@@ -21,17 +21,27 @@ if stage=='before':sys.exit(0)
 sitemap=get(origin+'/sitemap.xml');robots=get(origin+'/robots.txt')
 xml=ET.fromstring(sitemap['body']);ns={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
 urls=[e.text for e in xml.findall('s:url/s:loc',ns)]
-assert len(urls)==24;assert '<lastmod>' not in sitemap['body'];assert 'Allow: /' in robots['body'];assert 'Disallow: /' not in robots['body']
+expected=ET.fromstring(pathlib.Path('.next/server/app/sitemap.xml.body').read_text())
+expected_urls=[e.text for e in expected.findall('s:url/s:loc',ns)]
+assert set(urls)==set(expected_urls), 'Live sitemap must match the tested build'
+assert '<lastmod>' not in sitemap['body'];assert 'Allow: /' in robots['body'];assert 'Disallow: /' not in robots['body']
 def verify(url):
  d=get(url);html=d.pop('body');d.pop('headers')
  canonical=re.search(r'<link rel="canonical" href="([^"]+)"',html).group(1)
+ head=html.split('</head>',1)[0]
  assert canonical.rstrip('/')==url.rstrip('/'),(url,canonical)
- assert 'eExoCdIgROmTlK9gPPFqpIQpTvrDImDbRYYXujw_kz4' in html
+ assert '<meta name="google-site-verification" content="eExoCdIgROmTlK9gPPFqpIQpTvrDImDbRYYXujw_kz4"' in head
  assert len(re.findall(r'<h1\b',html))==1,url
  assert not re.search(r'<meta name="robots" content="[^"]*noindex',html),url
  d['title']=re.search(r'<title>(.*?)</title>',html).group(1)
  d['canonical']=canonical;d['hreflang']=re.findall(r'<link rel="alternate" hrefLang="([^"]+)" href="([^"]+)"',html)
  assert len(d['hreflang'])==3,(url,d['hreflang'])
+ localpath=urllib.parse.urlparse(url).path
+ build=pathlib.Path('.next/server/app')/('index.html' if localpath=='/' else localpath.lstrip('/')+'.html')
+ expected_title=re.search(r'<title>(.*?)</title>',build.read_text()).group(1)
+ assert d['title']==expected_title,(url,'Published title differs from tested build')
+ d['article_count']=sum(1 for script in re.findall(r'<script type="application/ld\+json">(.*?)</script>',html) for entity in json.loads(script).get('@graph',[]) if entity.get('@type')=='Article')
+ if any(slug in url for slug in ['web-stranica-nije-na-googleu','web-stranica-ili-instagram','website-nicht-bei-google','website-oder-instagram']): assert d['article_count']==1
  return d
 with concurrent.futures.ThreadPoolExecutor(max_workers=6) as pool: pages=list(pool.map(verify,urls))
 class Redirects(urllib.request.HTTPRedirectHandler):
@@ -47,6 +57,7 @@ for base in ['http://moststudioba.com','http://www.moststudioba.com','https://ww
    final=r.url;status=r.status
   redirects.append(dict(source=source,final=final,status=status,chain=handler.chain,pass_check=final==origin+'/usluge/izrada-web-stranica?qa=most-20260918'))
  except Exception as e:redirects.append(dict(source=source,error=str(e),chain=handler.chain))
+assert all(item.get('pass_check') and all(hop['status'] in (301,308) for hop in item['chain']) for item in redirects), redirects
 for route in ['/demo/stolarija-hrast','/de/demo/ordinacija-lipa','/demo/meridijan-savjetovanje','/moststudiowebshop']:
  d=get(origin+route);assert re.search(r'<meta name="robots" content="[^"]*noindex',d['body'])
 (out/'public-after.json').write_text(json.dumps(dict(pages=pages,sitemap_status=sitemap['status'],robots=robots['body'],redirects=redirects),indent=2,ensure_ascii=False))

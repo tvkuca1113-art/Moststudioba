@@ -15,7 +15,7 @@ const sitemap = new JSDOM(fs.readFileSync(path.join(root, 'sitemap.xml.body'), '
 const entries = [...sitemap.window.document.getElementsByTagName('url')];
 const urls = entries.map(entry => normalize(entry.getElementsByTagName('loc')[0].textContent));
 assert.equal(new Set(urls).size, urls.length, 'No duplicate sitemap URLs');
-assert(urls.length >= 24, 'Service pages and both translations must be discoverable');
+assert(urls.length >= 28, 'Service pages and both translated buyer guides must be discoverable');
 const docs = new Map();
 const titles=new Set(),descriptions=new Set();
 assert.equal(sitemap.window.document.getElementsByTagName("lastmod").length,0,"No fabricated lastmod");
@@ -49,6 +49,13 @@ for (const url of urls) {
     assert(!script.textContent.includes('moststudioba.vercel.app'));
     for (const entity of data['@graph'] ?? [data]) {
       assert(!('aggregateRating' in entity), 'No fabricated ratings');
+      if (entity['@type'] === 'Article') {
+        assert.equal(entity.headline, doc.querySelector('h1').textContent, `Article matches visible heading: ${url}`);
+        assert.equal(entity.datePublished, doc.querySelector('time')?.dateTime, `Visible publication date: ${url}`);
+        assert.equal(entity.author.name, 'MOST Studio');
+        assert.equal(normalize(entity.url), url);
+        for (const source of entity.citation ?? []) assert([...doc.querySelectorAll('a[href]')].some(a => a.href === source), `Visible source: ${source}`);
+      }
       if (entity['@type'] === 'BreadcrumbList') {
         entity.itemListElement.forEach((item, i) => {
           assert.equal(item.position, i + 1);
@@ -60,6 +67,15 @@ for (const url of urls) {
 }
 for (const [url, dom] of docs) {
   const doc = dom.window.document;
+  for (const link of doc.querySelectorAll('a[href^="#"]')) {
+    const id = decodeURIComponent(link.getAttribute('href').slice(1));
+    if (id) assert(doc.getElementById(id), `Section link has a destination: ${url}#${id}`);
+  }
+  for (const table of doc.querySelectorAll('table')) {
+    assert(table.querySelector('caption')?.textContent, `Table caption: ${url}`);
+    assert.equal(table.querySelectorAll('thead th[scope="col"]').length, 2);
+    assert(table.querySelector('tbody th[scope="row"]'));
+  }
   const otherLang = doc.documentElement.lang === 'bs' ? 'de' : 'bs';
   const counterpart = normalize(doc.querySelector(`link[hreflang="${otherLang}"]`).href);
   const back = docs.get(counterpart).window.document.querySelector(`link[hreflang="${doc.documentElement.lang}"]`).href;
@@ -79,6 +95,11 @@ while (queue.length) {
 }
 assert.equal(reached.size, urls.length, 'All sitemap pages reachable from the homepage');
 const home = docs.get(origin).window.document;
+for (const route of ['/vodic/web-stranica-nije-na-googleu', '/vodic/web-stranica-ili-instagram', '/de/ratgeber/website-nicht-bei-google', '/de/ratgeber/website-oder-instagram']) {
+  const doc = docs.get(origin + route)?.window.document;
+  assert(doc, `Guide is in sitemap: ${route}`);
+  assert([...doc.querySelectorAll('script[type="application/ld+json"]')].some(script => JSON.parse(script.textContent)['@graph']?.some(entity => entity['@type'] === 'Article')), `Guide Article schema: ${route}`);
+}
 assert.equal(home.querySelectorAll("iframe").length,0,"No embedded demo apps");
 assert.equal(home.querySelectorAll("[data-demo-cover]").length,0,"Previews are static screenshots");
 assert(!home.documentElement.innerHTML.includes("--preview-scale"));
