@@ -1,0 +1,641 @@
+{
+  "pages": [
+    {
+      "url": "https://moststudioba.com",
+      "final": "https://moststudioba.com",
+      "status": 200,
+      "ttfb_ms": 10121,
+      "total_ms": 10376,
+      "bytes": 157934,
+      "title": "Izrada web stranica za Mostar i BiH | MOST Studio",
+      "canonical": "https://moststudioba.com",
+      "hreflang": [
+        [
+          "bs",
+          "https://moststudioba.com"
+        ],
+        [
+          "de",
+          "https://moststudioba.com/de"
+        ],
+        [
+          "x-default",
+          "https://moststudioba.com"
+        ]
+      ]
+    },
+    {
+      "url": "https://moststudioba.com/de",
+      "final": "https://moststudioba.com/de",
+      "status": 200,
+      "ttfb_ms": 10418,
+      "total_ms": 10563,
+      "bytes": 162115,
+      "title": "Webdesign für BiH und Deutschland | MOST Studio",
+      "canonical": "https://moststudioba.com/de",
+      "hreflang": [
+        [
+          "bs",
+          "https://moststudioba.com"
+        ],
+        [
+          "de",
+          "https://moststudioba.com/de"
+        ],
+        [
+          "x-default",
+          "https://moststudioba.com"
+        ]
+      ]
+    },
+    {
+      "url": "https://moststudioba.com/projekti",
+      "final": "https://moststudioba.com/projekti",
+      "status": 200,
+      "ttfb_ms": 10406,
+      "total_ms": 10512,
+      "bytes": 96572,
+      "title": "Demo projekti | MOST Studio",
+      "canonical": "https://moststudioba.com/projekti",
+      "hreflang": [
+        [
+          "bs",
+          "https://moststudioba.com/projekti"
+        ],
+        [
+          "de",
+          "https://moststudioba.com/de/projekte"
+        ],
+        [
+          "x-default",
+          "https://moststudioba.com/projekti"
+        ]
+      ]
+    },
+    {
+      "url": "https://moststudioba.com/de/projekte",
+      "final": "https://moststudioba.com/de/projekte",
+      "status": 200,
+      "ttfb_ms": 10381,
+      "total_ms": 10422,
+      "bytes": 99205,
+      "title": "Demo-Projekte | MOST Studio",
+      "canonical": "https://moststudioba.com/de/projekte",
+      "hreflang": [
+        [
+          "bs",
+          "https://moststudioba.com/projekti"
+        ],
+        [
+          "de",
+          "https://moststudioba.com/de/projekte"
+        ],
+        [
+          "x-default",
+          "https://moststudioba.com/projekti"
+        ]
+      ]
+    },
+    {
+      "url": "https://moststudioba.com/usluge",
+      "final": "https://moststudioba.com/usluge",
+      "status": 200,
+      "ttfb_ms": 10281,
+      "total_ms": 10290,
+      "bytes": 110160,
+      "title": "Web dizajn, izrada stranica i webshopa u BiH | MOST Studio",
+      "canonical": "https://moststudioba.com/usluge",
+      "hreflang": [
+        [
+          "bs",
+          "https://moststudioba.com/usluge"
+        ],
+        [
+          "de",
+          "https://moststudioba.com/de/leistungen"
+        ],
+        [
+          "x-default",
+          "https://moststudioba.com/usluge"
+        ]
+      ]
+    },
+    {
+      "url": "https://moststudioba.com/de/leistungen",
+      "final": "https://moststudioba.com/de/leistungen",
+      "status": 200,
+      "ttfb_ms": 10340,
+      "total_ms": 10389,
+      "bytes": 114164,
+      "title": "Leistungen: Webdesign, Entwicklung und Relaunch | MOST Studio",
+      "canonical": "https://moststudioba.com/de/leistungen",
+      "hreflang": [
+        [
+          "bs",
+          "https://moststudioba.com/usluge"
+        ],
+        [
+          "de",
+          "https://moststudioba.com/de/leistungen"
+        ],
+        [
+          "x-default",
+          "https://moststudioba.com/usluge"
+        ]
+      ]
+    },
+    {
+      "url": "https://moststudioba.com/kontakt",
+      "final": "https://moststudioba.com/kontakt",
+      "status": 200,
+      "ttfb_ms": 10465,
+      "total_ms": 10498,
+      "bytes": 84312,
+      "title": "Kontakt i projektni upit | MOST Studio",
+      "canonical": "https://moststudioba.com/kontakt",
+      "hreflang": [
+        [
+          "bs",
+          "https://moststudioba.com/kontakt"
+        ],
+        [
+          "de",
+          "https://moststudioba.com/de/kontakt"
+        ],
+        [
+          "x-default",
+          "https://moststudioba.com/kontakt"
+        ]
+      ]
+    },
+    {
+      "url": "https://moststudioba.com/de/kontakt",
+      "final": "https://moststudioba.com/de/kontakt",
+      "status": 200,
+      "ttfb_ms": 10875,
+      "total_ms": 10914,
+      "bytes": 87512,
+      "title": "Kontakt und Projektanfrage | MOST Studio",
+      "canonical": "https://moststudioba.com/de/kontakt",
+      "hreflang": [
+        [
+          "bs",
+          "https://moststudioba.com/kontakt"
+        ],
+        [
+          "de",
+          "https://moststudioba.com/de/kontakt"
+        ],
+        [
+          "x-default",
+          "https://moststudioba.com/kontakt"
+        ]
+      ]
+    },
+    {
+      "url": "https://moststudioba.com/usluge/izrada-web-stranica",
+      "final": "https://moststudioba.com/usluge/izrada-web-stranica",
+      "status": 200,
+      "ttfb_ms": 10744,
+      "total_ms": 10858,
+      "bytes": 107949,
+      "title": "Izrada web stranica za firme u BiH | MOST Studio",
+      "canonical": "https://moststudioba.com/usluge/izrada-web-stranica",
+      "hreflang": [
+        [
+          "bs",
+          "https://moststudioba.com/usluge/izrada-web-stranica"
+        ],
+        [
+          "de",
+          "https://moststudioba.com/de/leistungen/website-erstellung"
+        ],
+        [
+          "x-default",
+          "https://moststudioba.com/usluge/izrada-web-stranica"
+        ]
+      ]
+    },
+    {
+      "url": "https://moststudioba.com/de/leistungen/website-erstellung",
+      "final": "https://moststudioba.com/de/leistungen/website-erstellung",
+      "status": 200,
+      "ttfb_ms": 10554,
+      "total_ms": 10669,
+      "bytes": 111382,
+      "title": "Website-Erstellung für Unternehmen in BiH | MOST Studio",
+      "canonical": "https://moststudioba.com/de/leistungen/website-erstellung",
+      "hreflang": [
+        [
+          "bs",
+          "https://moststudioba.com/usluge/izrada-web-stranica"
+        ],
+        [
+          "de",
+          "https://moststudioba.com/de/leistungen/website-erstellung"
+        ],
+        [
+          "x-default",
+          "https://moststudioba.com/usluge/izrada-web-stranica"
+        ]
+      ]
+    },
+    {
+      "url": "https://moststudioba.com/usluge/izrada-web-shopa",
+      "final": "https://moststudioba.com/usluge/izrada-web-shopa",
+      "status": 200,
+      "ttfb_ms": 10466,
+      "total_ms": 10513,
+      "bytes": 105555,
+      "title": "Izrada web shopa u BiH | MOST Studio",
+      "canonical": "https://moststudioba.com/usluge/izrada-web-shopa",
+      "hreflang": [
+        [
+          "bs",
+          "https://moststudioba.com/usluge/izrada-web-shopa"
+        ],
+        [
+          "de",
+          "https://moststudioba.com/de/leistungen/onlineshop"
+        ],
+        [
+          "x-default",
+          "https://moststudioba.com/usluge/izrada-web-shopa"
+        ]
+      ]
+    },
+    {
+      "url": "https://moststudioba.com/de/leistungen/onlineshop",
+      "final": "https://moststudioba.com/de/leistungen/onlineshop",
+      "status": 200,
+      "ttfb_ms": 10591,
+      "total_ms": 10636,
+      "bytes": 108914,
+      "title": "Onlineshop erstellen für BiH | MOST Studio",
+      "canonical": "https://moststudioba.com/de/leistungen/onlineshop",
+      "hreflang": [
+        [
+          "bs",
+          "https://moststudioba.com/usluge/izrada-web-shopa"
+        ],
+        [
+          "de",
+          "https://moststudioba.com/de/leistungen/onlineshop"
+        ],
+        [
+          "x-default",
+          "https://moststudioba.com/usluge/izrada-web-shopa"
+        ]
+      ]
+    },
+    {
+      "url": "https://moststudioba.com/usluge/redizajn-web-stranica",
+      "final": "https://moststudioba.com/usluge/redizajn-web-stranica",
+      "status": 200,
+      "ttfb_ms": 12017,
+      "total_ms": 12124,
+      "bytes": 107272,
+      "title": "Redizajn web stranica i migracija | MOST Studio",
+      "canonical": "https://moststudioba.com/usluge/redizajn-web-stranica",
+      "hreflang": [
+        [
+          "bs",
+          "https://moststudioba.com/usluge/redizajn-web-stranica"
+        ],
+        [
+          "de",
+          "https://moststudioba.com/de/leistungen/website-relaunch"
+        ],
+        [
+          "x-default",
+          "https://moststudioba.com/usluge/redizajn-web-stranica"
+        ]
+      ]
+    },
+    {
+      "url": "https://moststudioba.com/de/leistungen/website-relaunch",
+      "final": "https://moststudioba.com/de/leistungen/website-relaunch",
+      "status": 200,
+      "ttfb_ms": 11939,
+      "total_ms": 11986,
+      "bytes": 110404,
+      "title": "Website-Relaunch und Migration | MOST Studio",
+      "canonical": "https://moststudioba.com/de/leistungen/website-relaunch",
+      "hreflang": [
+        [
+          "bs",
+          "https://moststudioba.com/usluge/redizajn-web-stranica"
+        ],
+        [
+          "de",
+          "https://moststudioba.com/de/leistungen/website-relaunch"
+        ],
+        [
+          "x-default",
+          "https://moststudioba.com/usluge/redizajn-web-stranica"
+        ]
+      ]
+    },
+    {
+      "url": "https://moststudioba.com/izrada-web-stranica-bih",
+      "final": "https://moststudioba.com/izrada-web-stranica-bih",
+      "status": 200,
+      "ttfb_ms": 11729,
+      "total_ms": 11840,
+      "bytes": 101388,
+      "title": "Web dizajn za firme širom BiH: online saradnja | MOST Studio",
+      "canonical": "https://moststudioba.com/izrada-web-stranica-bih",
+      "hreflang": [
+        [
+          "bs",
+          "https://moststudioba.com/izrada-web-stranica-bih"
+        ],
+        [
+          "de",
+          "https://moststudioba.com/de/webdesign-bosnien-herzegowina"
+        ],
+        [
+          "x-default",
+          "https://moststudioba.com/izrada-web-stranica-bih"
+        ]
+      ]
+    },
+    {
+      "url": "https://moststudioba.com/de/webdesign-bosnien-herzegowina",
+      "final": "https://moststudioba.com/de/webdesign-bosnien-herzegowina",
+      "status": 200,
+      "ttfb_ms": 11665,
+      "total_ms": 11710,
+      "bytes": 104672,
+      "title": "Webdesign in Bosnien-Herzegowina: online arbeiten | MOST Studio",
+      "canonical": "https://moststudioba.com/de/webdesign-bosnien-herzegowina",
+      "hreflang": [
+        [
+          "bs",
+          "https://moststudioba.com/izrada-web-stranica-bih"
+        ],
+        [
+          "de",
+          "https://moststudioba.com/de/webdesign-bosnien-herzegowina"
+        ],
+        [
+          "x-default",
+          "https://moststudioba.com/izrada-web-stranica-bih"
+        ]
+      ]
+    },
+    {
+      "url": "https://moststudioba.com/vodic/cijena-web-stranice",
+      "final": "https://moststudioba.com/vodic/cijena-web-stranice",
+      "status": 200,
+      "ttfb_ms": 11769,
+      "total_ms": 11820,
+      "bytes": 106878,
+      "title": "Cijena izrade web stranice u BiH: šta utiče na ponudu",
+      "canonical": "https://moststudioba.com/vodic/cijena-web-stranice",
+      "hreflang": [
+        [
+          "bs",
+          "https://moststudioba.com/vodic/cijena-web-stranice"
+        ],
+        [
+          "de",
+          "https://moststudioba.com/de/ratgeber/website-kosten"
+        ],
+        [
+          "x-default",
+          "https://moststudioba.com/vodic/cijena-web-stranice"
+        ]
+      ]
+    },
+    {
+      "url": "https://moststudioba.com/de/ratgeber/website-kosten",
+      "final": "https://moststudioba.com/de/ratgeber/website-kosten",
+      "status": 200,
+      "ttfb_ms": 11717,
+      "total_ms": 11727,
+      "bytes": 109853,
+      "title": "Website-Kosten in BiH: Was ein Angebot bestimmt | MOST Studio",
+      "canonical": "https://moststudioba.com/de/ratgeber/website-kosten",
+      "hreflang": [
+        [
+          "bs",
+          "https://moststudioba.com/vodic/cijena-web-stranice"
+        ],
+        [
+          "de",
+          "https://moststudioba.com/de/ratgeber/website-kosten"
+        ],
+        [
+          "x-default",
+          "https://moststudioba.com/vodic/cijena-web-stranice"
+        ]
+      ]
+    },
+    {
+      "url": "https://moststudioba.com/projekti/stolarija-hrast",
+      "final": "https://moststudioba.com/projekti/stolarija-hrast",
+      "status": 200,
+      "ttfb_ms": 11255,
+      "total_ms": 11293,
+      "bytes": 88145,
+      "title": "Stolarija Hrast — Stolarija i montaža po mjeri | Demo koncept",
+      "canonical": "https://moststudioba.com/projekti/stolarija-hrast",
+      "hreflang": [
+        [
+          "bs",
+          "https://moststudioba.com/projekti/stolarija-hrast"
+        ],
+        [
+          "de",
+          "https://moststudioba.com/de/projekte/stolarija-hrast"
+        ],
+        [
+          "x-default",
+          "https://moststudioba.com/projekti/stolarija-hrast"
+        ]
+      ]
+    },
+    {
+      "url": "https://moststudioba.com/de/projekte/stolarija-hrast",
+      "final": "https://moststudioba.com/de/projekte/stolarija-hrast",
+      "status": 200,
+      "ttfb_ms": 11376,
+      "total_ms": 11415,
+      "bytes": 91051,
+      "title": "Stolarija Hrast — Tischlerei und Montage nach Maß | Demo-Konzept",
+      "canonical": "https://moststudioba.com/de/projekte/stolarija-hrast",
+      "hreflang": [
+        [
+          "bs",
+          "https://moststudioba.com/projekti/stolarija-hrast"
+        ],
+        [
+          "de",
+          "https://moststudioba.com/de/projekte/stolarija-hrast"
+        ],
+        [
+          "x-default",
+          "https://moststudioba.com/projekti/stolarija-hrast"
+        ]
+      ]
+    },
+    {
+      "url": "https://moststudioba.com/projekti/ordinacija-lipa",
+      "final": "https://moststudioba.com/projekti/ordinacija-lipa",
+      "status": 200,
+      "ttfb_ms": 11206,
+      "total_ms": 11238,
+      "bytes": 88288,
+      "title": "Ordinacija Lipa — Stomatološka ordinacija | Demo koncept",
+      "canonical": "https://moststudioba.com/projekti/ordinacija-lipa",
+      "hreflang": [
+        [
+          "bs",
+          "https://moststudioba.com/projekti/ordinacija-lipa"
+        ],
+        [
+          "de",
+          "https://moststudioba.com/de/projekte/ordinacija-lipa"
+        ],
+        [
+          "x-default",
+          "https://moststudioba.com/projekti/ordinacija-lipa"
+        ]
+      ]
+    },
+    {
+      "url": "https://moststudioba.com/de/projekte/ordinacija-lipa",
+      "final": "https://moststudioba.com/de/projekte/ordinacija-lipa",
+      "status": 200,
+      "ttfb_ms": 11385,
+      "total_ms": 11425,
+      "bytes": 90851,
+      "title": "Ordinacija Lipa — Zahnarztpraxis | Demo-Konzept",
+      "canonical": "https://moststudioba.com/de/projekte/ordinacija-lipa",
+      "hreflang": [
+        [
+          "bs",
+          "https://moststudioba.com/projekti/ordinacija-lipa"
+        ],
+        [
+          "de",
+          "https://moststudioba.com/de/projekte/ordinacija-lipa"
+        ],
+        [
+          "x-default",
+          "https://moststudioba.com/projekti/ordinacija-lipa"
+        ]
+      ]
+    },
+    {
+      "url": "https://moststudioba.com/projekti/meridijan-savjetovanje",
+      "final": "https://moststudioba.com/projekti/meridijan-savjetovanje",
+      "status": 200,
+      "ttfb_ms": 11162,
+      "total_ms": 11196,
+      "bytes": 88662,
+      "title": "Meridijan — Poslovno savjetovanje | Demo koncept",
+      "canonical": "https://moststudioba.com/projekti/meridijan-savjetovanje",
+      "hreflang": [
+        [
+          "bs",
+          "https://moststudioba.com/projekti/meridijan-savjetovanje"
+        ],
+        [
+          "de",
+          "https://moststudioba.com/de/projekte/meridijan-savjetovanje"
+        ],
+        [
+          "x-default",
+          "https://moststudioba.com/projekti/meridijan-savjetovanje"
+        ]
+      ]
+    },
+    {
+      "url": "https://moststudioba.com/de/projekte/meridijan-savjetovanje",
+      "final": "https://moststudioba.com/de/projekte/meridijan-savjetovanje",
+      "status": 200,
+      "ttfb_ms": 11239,
+      "total_ms": 11272,
+      "bytes": 91466,
+      "title": "Meridijan — Unternehmensberatung | Demo-Konzept",
+      "canonical": "https://moststudioba.com/de/projekte/meridijan-savjetovanje",
+      "hreflang": [
+        [
+          "bs",
+          "https://moststudioba.com/projekti/meridijan-savjetovanje"
+        ],
+        [
+          "de",
+          "https://moststudioba.com/de/projekte/meridijan-savjetovanje"
+        ],
+        [
+          "x-default",
+          "https://moststudioba.com/projekti/meridijan-savjetovanje"
+        ]
+      ]
+    }
+  ],
+  "sitemap_status": 200,
+  "robots": "User-Agent: *\nAllow: /\n\nHost: https://moststudioba.com\nSitemap: https://moststudioba.com/sitemap.xml\n",
+  "redirects": [
+    {
+      "source": "http://moststudioba.com/usluge/izrada-web-stranica?qa=most-20260918",
+      "final": "https://moststudioba.com/usluge/izrada-web-stranica?qa=most-20260918",
+      "status": 200,
+      "chain": [
+        {
+          "status": 308,
+          "source": "http://moststudioba.com/usluge/izrada-web-stranica?qa=most-20260918",
+          "target": "https://moststudioba.com/usluge/izrada-web-stranica?qa=most-20260918"
+        }
+      ],
+      "pass_check": true
+    },
+    {
+      "source": "http://www.moststudioba.com/usluge/izrada-web-stranica?qa=most-20260918",
+      "final": "https://moststudioba.com/usluge/izrada-web-stranica?qa=most-20260918",
+      "status": 200,
+      "chain": [
+        {
+          "status": 308,
+          "source": "http://www.moststudioba.com/usluge/izrada-web-stranica?qa=most-20260918",
+          "target": "https://www.moststudioba.com/usluge/izrada-web-stranica?qa=most-20260918"
+        },
+        {
+          "status": 308,
+          "source": "https://www.moststudioba.com/usluge/izrada-web-stranica?qa=most-20260918",
+          "target": "https://moststudioba.com/usluge/izrada-web-stranica?qa=most-20260918"
+        }
+      ],
+      "pass_check": true
+    },
+    {
+      "source": "https://www.moststudioba.com/usluge/izrada-web-stranica?qa=most-20260918",
+      "final": "https://moststudioba.com/usluge/izrada-web-stranica?qa=most-20260918",
+      "status": 200,
+      "chain": [
+        {
+          "status": 308,
+          "source": "https://www.moststudioba.com/usluge/izrada-web-stranica?qa=most-20260918",
+          "target": "https://moststudioba.com/usluge/izrada-web-stranica?qa=most-20260918"
+        }
+      ],
+      "pass_check": true
+    },
+    {
+      "source": "https://moststudioba.vercel.app/usluge/izrada-web-stranica?qa=most-20260918",
+      "final": "https://moststudioba.com/usluge/izrada-web-stranica?qa=most-20260918",
+      "status": 200,
+      "chain": [
+        {
+          "status": 308,
+          "source": "https://moststudioba.vercel.app/usluge/izrada-web-stranica?qa=most-20260918",
+          "target": "https://moststudioba.com/usluge/izrada-web-stranica?qa=most-20260918"
+        }
+      ],
+      "pass_check": true
+    }
+  ]
+}
