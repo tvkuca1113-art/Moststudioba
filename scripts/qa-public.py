@@ -36,7 +36,7 @@ def verify(url):
  d['title']=re.search(r'<title>(.*?)</title>',html).group(1)
  d['canonical']=canonical;d['hreflang']=re.findall(r'<link rel="alternate" hrefLang="([^"]+)" href="([^"]+)"',html)
  assert len(d['hreflang'])==3,(url,d['hreflang'])
- localpath=urllib.parse.urlparse(url).path
+ localpath=urllib.parse.urlparse(url).path or '/'
  build=pathlib.Path('.next/server/app')/('index.html' if localpath=='/' else localpath.lstrip('/')+'.html')
  expected_title=re.search(r'<title>(.*?)</title>',build.read_text()).group(1)
  assert d['title']==expected_title,(url,'Published title differs from tested build')

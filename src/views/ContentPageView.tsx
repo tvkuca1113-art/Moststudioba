@@ -50,7 +50,7 @@ export function ContentPageView({ pageKey, locale }: { pageKey: ContentPageKey; 
           <div className="grid gap-9 lg:grid-cols-[minmax(0,0.6fr)_minmax(0,1.4fr)] lg:gap-20">
             <nav aria-label={bs ? "Sadržaj ove stranice" : "Auf dieser Seite"} className="self-start lg:sticky lg:top-28">
               <p className="text-xs font-semibold tracking-[.16em] text-slate uppercase">{bs ? "Na ovoj stranici" : "Auf dieser Seite"}</p>
-              <ol className="mt-4 border-t border-line-light">{page.sections.map((section, index) => <li key={section.id} className="border-b border-line-light"><a href={`#${section.id}`} className="flex min-h-12 gap-4 py-3 text-sm leading-relaxed hover:text-forest"><span className="text-slate">0{index + 1}</span>{section.title}</a></li>)}</ol>
+              <ol className="mt-4 border-t border-line-light">{page.sections.map((section, index) => <li key={section.id} className="border-b border-line-light"><a href={`#${section.id}`} className="flex min-h-12 gap-4 py-3 text-sm leading-relaxed hover:text-forest"><span className="text-slate">0{index + 1}</span>{section.title.replace(/^\d+\.\s/, "")}</a></li>)}</ol>
             </nav>
             <div className="min-w-0 space-y-12">
               {page.sections.map(section => <section id={section.id} key={section.id} aria-labelledby={`${section.id}-title`}>

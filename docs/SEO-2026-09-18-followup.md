@@ -35,7 +35,9 @@ A public competitor homepage, e-inzenjering.com, was examined for presentation o
 
 Production build, lint, TypeScript, existing DOM interaction/shop tests and initial-HTML SEO tests pass. SEO checks cover 28 pages, unique titles/descriptions, one H1, self-canonical, OG, reciprocal BS/DE/x-default, verification, schema, crawlable discovery and demo exclusions. New checks require guide Article metadata to match visible text, sources and dates; table semantics and same-page anchor targets are checked.
 
-Cloud-browser access to the local server was blocked by the browser client, so the public deployment must receive a visual smoke test after release. This is not a website bot block and does not establish a production defect. These tests do not establish physical Safari compatibility, Google indexing/rankings, field Core Web Vitals or revenue effects.
+Vercel reported the first release commit `410a675e511ea13f8ed5925f4b2c6295afd7c15b` as deployed successfully. Public desktop Chrome checks confirmed the new guide layout, readable comparison table, route-preserving BS-to-DE switching, FAQ expansion and logo return to `/#top` at scroll position zero. The section jump settled with its heading below the fixed header. A final review removed duplicate numbering in the guide contents and clarified city coverage as service availability rather than a claim of existing clients.
+
+Cloud-browser access to the local server and local narrow-viewport wrapper was blocked by browser URL policy; no workaround was attempted after the explicit policy rejection. No physical mobile or Safari test is claimed. These tests do not establish Google indexing/rankings, field Core Web Vitals or revenue effects. The public HTTP checker below remains the reproducible release gate.
 
 Reproducible release checks:
 
