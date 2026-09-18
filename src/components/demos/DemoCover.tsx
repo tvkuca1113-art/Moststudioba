@@ -115,6 +115,7 @@ export function DemoCover({
   const Heading = preview ? "div" : "h1";
   return (
     <div
+      data-demo-cover
       className={`${s.surface} ${kind === "clinic" ? s.clinic : kind === "advisory" ? s.advisory : ""}`}
     >
       <div className={s.coverNav}>

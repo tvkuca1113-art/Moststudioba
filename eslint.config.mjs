@@ -5,6 +5,11 @@ import nextTs from "eslint-config-next/typescript";
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
+  // The webshop is standalone React, so Next route/image rules do not apply.
+  { files: ["webshop/**/*.tsx"], rules: {
+    "@next/next/no-html-link-for-pages": "off",
+    "@next/next/no-img-element": "off",
+  } },
   // Override default ignores of eslint-config-next.
   globalIgnores([
     // Default ignores of eslint-config-next:

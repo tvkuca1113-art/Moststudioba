@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { SiteFrame } from "@/components/layout/SiteFrame";
+import { SocialContact } from "@/components/contact/SocialContact";
 import { ProjectInquiry } from "@/components/contact/ProjectInquiry";
 import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
@@ -88,7 +89,7 @@ export function ContentPageView({ pageKey, locale }: { pageKey: ContentPageKey; 
         <Container>
           <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
             <div><p className="text-xs font-semibold tracking-[.2em] text-lime">{bs ? "VAŠ SLJEDEĆI KORAK" : "IHR NÄCHSTER SCHRITT"}</p><h2 id="inquiry-title" className="mt-5 text-display leading-tight">{bs ? "Opišite zadatak. Dogovorimo rješenje." : "Aufgabe beschreiben. Lösung abstimmen."}</h2><p className="mt-5 text-lead leading-relaxed text-mist">{bs ? "Pošaljite djelatnost, cilj i potrebne funkcije. Zajedno razjasnimo obim, cijenu i rok prije početka." : "Senden Sie Tätigkeit, Ziel und benötigte Funktionen. Umfang, Preis und Termin klären wir vor dem Start."}</p></div>
-            <ProjectInquiry locale={locale} />
+            <div><SocialContact locale={locale} dark /><details className="mt-6 rounded-2xl border border-line-dark p-4"><summary className="cursor-pointer py-3 font-semibold">{bs ? "Pripremite detalje upita (opcionalno)" : "Anfragedetails vorbereiten (optional)"}</summary><ProjectInquiry locale={locale} /></details></div>
           </div>
         </Container>
       </Section>

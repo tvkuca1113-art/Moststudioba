@@ -1,10 +1,9 @@
 import { ProjectInquiry } from "@/components/contact/ProjectInquiry";
 import { SiteFrame } from "@/components/layout/SiteFrame";
 import { FaqSection } from "@/components/home/FaqSection";
-import { ButtonAnchor } from "@/components/ui/Button";
+import { SocialContact } from "@/components/contact/SocialContact";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
-import { InstagramIcon } from "@/components/ui/icons";
 import { TrackedAnchor } from "@/components/ui/TrackedLink";
 import { site } from "@/content/site";
 import type { Locale } from "@/lib/i18n/config";
@@ -33,18 +32,7 @@ export function ContactView({ locale }: { locale: Locale }) {
               <p className="text-[0.8125rem] font-semibold tracking-[0.14em] text-lime uppercase">
                 {dict.contact.primaryLabel}
               </p>
-              <ButtonAnchor
-                href={site.instagramUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                tone="dark"
-                withArrow={false}
-                className="mt-4 w-full gap-2.5"
-              >
-                <InstagramIcon className="size-5" />
-                {site.instagramHandle}
-              </ButtonAnchor>
-              {site.facebookUrl && <ButtonAnchor href={site.facebookUrl} target="_blank" rel="noopener noreferrer" tone="dark" variant="secondary" className="mt-3 w-full">Facebook</ButtonAnchor>}
+              <div className="mt-4"><SocialContact locale={locale} dark /></div>
               <p className="mt-4 text-sm leading-relaxed text-mist">{dict.contact.primaryHint}</p>
               <p className="mt-2 text-sm leading-relaxed text-mist">{dict.contact.responseNote}</p>
               <div className="mt-6 border-t border-line-dark pt-4 text-sm text-mist">
@@ -58,9 +46,12 @@ export function ContactView({ locale }: { locale: Locale }) {
 
       <Section tone="paperDim" size="tight" labelledBy="brief-title">
         <Container>
-          <h2 id="brief-title" className="sr-only">{dict.brief.eyebrow}</h2>
+          <h2 id="brief-title" className="mb-5 text-title">{locale === "bs" ? "Želite pripremiti više detalja?" : "Möchten Sie mehr Details vorbereiten?"}</h2>
           <div className="max-w-3xl">
-            <ProjectInquiry locale={locale} />
+            <details className="rounded-2xl border border-line-light p-5">
+              <summary className="cursor-pointer py-2 text-lg font-semibold">{locale === "bs" ? "Pripremite projektni upit (opcionalno)" : "Projektanfrage vorbereiten (optional)"}</summary>
+              <ProjectInquiry locale={locale} />
+            </details>
           </div>
         </Container>
       </Section>

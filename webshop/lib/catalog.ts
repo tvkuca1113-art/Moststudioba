@@ -1,0 +1,31 @@
+export type Product={id:string;sku:string;name:string;category:string;price:number;color:string;fabric:string;image:string;sizes:string[];stock:Record<string,number>;description:string};
+export type CartLine={id:string;size:string;quantity:number};
+export const categories=['Odijela i sakoi','Košulje','Hlače','Pletivo i polo','Dodaci'];
+type Entry=[string,number,string,string];
+const groups:{prefix:string;category:string;sizes:string[];description:string;entries:Entry[]}[]=[
+{prefix:'suit',category:categories[0],sizes:['46','48','50','52','54','56'],description:'Čiste linije i kroj koji se lako kombinuje. Za poslovne dane i posebne prilike, uz košulju i detalje po vašem izboru.',entries:[
+['Tamnoplavo odijelo',329,'Tamnoplava','Mješavina vune'],['Antracit odijelo',349,'Antracit','Mješavina vune'],['Odijelo u boji pijeska',319,'Pijesak','Mješavina pamuka'],['Crno klasično odijelo',359,'Crna','Mješavina vune'],['Svijetlosivo odijelo',329,'Svijetlosiva','Mješavina vune'],['Tamnoplavi sako',189,'Tamnoplava','Pamuk i elastan'],['Smeđi sako od tvida',219,'Smeđa','Vuneni tvid'],['Maslinasti laneni sako',179,'Maslinasta','Mješavina lana'],['Sako u krem boji',199,'Krem','Mješavina pamuka'],['Plavi svakodnevni sako',189,'Plava','Pamuk i elastan']]},
+{prefix:'shirt',category:categories[1],sizes:['S','M','L','XL','XXL'],description:'Košulja za jednostavno kombinovanje s odijelom ili omiljenim hlačama. Uredan ovratnik, dugi rukavi i klasično kopčanje.',entries:[
+['Bijela pamučna košulja',89,'Bijela','Pamuk'],['Svijetloplava Oxford košulja',95,'Svijetloplava','Oxford pamuk'],['Tamnoplava košulja',89,'Tamnoplava','Pamuk'],['Lanena košulja — pijesak',109,'Pijesak','Lan'],['Lanena košulja — kadulja',109,'Kadulja','Lan'],['Košulja s plavim prugama',95,'Plavo-bijela','Pamuk'],['Crna pamučna košulja',89,'Crna','Pamuk'],['Roza Oxford košulja',95,'Blijedoružičasta','Oxford pamuk'],['Košulja sa sitnim karom',99,'Plavo-bijela','Pamuk'],['Siva chambray košulja',99,'Siva','Chambray pamuk']]},
+{prefix:'trouser',category:categories[2],sizes:['30','32','34','36','38'],description:'Udoban kroj i uredna silueta. Nosite ih uz košulju za posao ili polo majicu za opušteniji dan.',entries:[
+['Bež chino hlače',119,'Bež','Pamuk i elastan'],['Tamnoplave chino hlače',119,'Tamnoplava','Pamuk i elastan'],['Maslinaste chino hlače',119,'Maslinasta','Pamuk i elastan'],['Antracit poslovne hlače',139,'Antracit','Mješavina vune'],['Crne poslovne hlače',139,'Crna','Mješavina vune'],['Svijetlosive poslovne hlače',139,'Svijetlosiva','Mješavina vune'],['Indigo traperice ravnog kroja',129,'Indigo','Denim pamuk'],['Plave traperice ravnog kroja',129,'Plava','Denim pamuk'],['Lanene hlače — pijesak',129,'Pijesak','Mješavina lana'],['Smeđe chino hlače',119,'Smeđa','Pamuk i elastan']]},
+{prefix:'knit',category:categories[3],sizes:['S','M','L','XL','XXL'],description:'Lako se uklapa u svakodnevnu garderobu. Mekša tekstura i jednostavan kroj za slojevito odijevanje kroz sezonu.',entries:[
+['Smeđi pleteni džemper',99,'Smeđa','Mješavina pamuka'],['Džemper u boji slonovače',99,'Slonovača','Mješavina pamuka'],['Tamnoplavi džemper s patentom',119,'Tamnoplava','Mješavina pamuka'],['Zeleni pleteni kardigan',129,'Tamnozelena','Mješavina vune'],['Sivi pleteni džemper',99,'Siva','Mješavina pamuka'],['Tamnoplava polo majica',69,'Tamnoplava','Piqué pamuk'],['Bijela polo majica',69,'Bijela','Piqué pamuk'],['Bordo polo majica',69,'Bordo','Piqué pamuk'],['Polo majica — pijesak',69,'Pijesak','Piqué pamuk'],['Crna polo majica',69,'Crna','Piqué pamuk']]},
+{prefix:'accessory',category:categories[4],sizes:['Univerzalna'],description:'Završni detalj koji zaokružuje kombinaciju. Nenametljiv dizajn za svakodnevno nošenje ili posebnu priliku.',entries:[
+['Tamnoplava kravata',45,'Tamnoplava','Svila'],['Bordo kravata',45,'Bordo','Svila'],['Zelena kravata',45,'Tamnozelena','Svila'],['Crni kožni remen',59,'Crna','Koža'],['Konjak kožni remen',59,'Konjak','Koža'],['Bijela džepna maramica',25,'Bijela','Lan'],['Maramica s tačkicama',29,'Tamnoplava','Svila'],['Smeđi kožni novčanik',79,'Smeđa','Koža'],['Crni kožni novčanik',79,'Crna','Koža'],['Srebrne manžetne',55,'Srebrna','Metal']]}
+];
+export const products:Product[]=Array.from({length:10},(_,i)=>groups.map((g,gi)=>{
+const e=g.entries[i],id=`${g.prefix}-${String(i+1).padStart(2,'0')}`;
+const sizes=g.prefix==='accessory'&&[3,4].includes(i)?['90','95','100','105','110']:g.sizes;
+return{id,sku:`MB-${String(gi*10+i+1).padStart(3,'0')}`,name:e[0],category:g.category,price:e[1],color:e[2],fabric:e[3],image:`/webshop-assets/products/${id}.webp`,sizes,description:g.description,stock:Object.fromEntries(sizes.map((s,j)=>[s,i===0&&j===0&&sizes.length>1?0:3+(i+j)%5]))};
+})).flat();
+export const productById=new Map(products.map(p=>[p.id,p]));
+export const money=(n:number)=>new Intl.NumberFormat('bs-BA',{minimumFractionDigits:2,maximumFractionDigits:2}).format(n)+' KM';
+export const normalize=(s:string)=>s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replaceAll('đ','d');
+export const subtotal=(c:CartLine[])=>c.reduce((n,l)=>n+(productById.get(l.id)?.price??0)*l.quantity,0);
+export const shipping=(n:number)=>n===0||n>=200?0:8;
+export function addLines(cart:CartLine[],additions:CartLine[]){
+const next=cart.map(l=>({...l}));
+for(const l of additions){const p=productById.get(l.id);if(!p||!p.sizes.includes(l.size)||!Number.isInteger(l.quantity)||l.quantity<1)throw new Error('Odaberite ispravan proizvod, veličinu i količinu.');const old=next.find(x=>x.id===l.id&&x.size===l.size),quantity=(old?.quantity??0)+l.quantity;if(quantity>(p.stock[l.size]??0))throw new Error('Ta količina nije dostupna za odabranu veličinu.');if(old)old.quantity=quantity;else next.push({...l});}return next;
+}
+export function recoverCart(value:unknown):CartLine[]{if(!Array.isArray(value))return[];let next:CartLine[]=[];for(const item of value.slice(0,150)){if(!item||typeof item!=='object')continue;const l=item as CartLine,p=productById.get(l.id);if(!p||!p.sizes.includes(l.size)||!Number.isInteger(l.quantity)||l.quantity<1)continue;const quantity=Math.min(l.quantity,p.stock[l.size]??0);if(!quantity)continue;try{next=addLines(next,[{id:l.id,size:l.size,quantity}]);}catch{}}return next;}

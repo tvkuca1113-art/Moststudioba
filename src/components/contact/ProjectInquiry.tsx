@@ -14,6 +14,7 @@ export function ProjectInquiry({ locale }: { locale: Locale }) {
   const [values, setValues] = useState({ name: "", company: "", website: "", reply: "", need: "", details: "" });
   const [preview, setPreview] = useState(false);
   const [message, setMessage] = useState("");
+  const preparedValues = useRef("");
   const [copied, setCopied] = useState(false);
   const [failed, setFailed] = useState(false);
   const headingRef = useRef<HTMLHeadingElement>(null);
@@ -27,7 +28,7 @@ export function ProjectInquiry({ locale }: { locale: Locale }) {
   };
   function prepare(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    for (const key of ["name", "company", "details"] as const) {
+    for (const key of ["details"] as const) {
       const input = event.currentTarget.elements.namedItem(key) as HTMLInputElement | HTMLTextAreaElement;
       if (!values[key].trim()) {
         input.setCustomValidity(locale === "bs" ? "Popunite ovo polje." : "Bitte füllen Sie dieses Feld aus.");
@@ -35,15 +36,18 @@ export function ProjectInquiry({ locale }: { locale: Locale }) {
         return;
       }
     }
-    setMessage([
+    const signature = JSON.stringify(values);
+    // Going back without changing the fields must retain the visitor's edits.
+    if (signature !== preparedValues.current) setMessage([
       locale === "bs" ? "Pozdrav MOST Studio," : "Hallo MOST Studio,",
-      `${c.name}: ${values.name.trim()}`,
-      `${c.company}: ${values.company.trim()}`,
+      values.name.trim() && `${c.name}: ${values.name.trim()}`,
+      values.company.trim() && `${c.company}: ${values.company.trim()}`,
       `${c.need} ${values.need}`,
       values.website.trim() && `${c.website}: ${values.website.trim()}`,
       values.reply.trim() && `${c.reply}: ${values.reply.trim()}`,
       "", values.details.trim(),
     ].filter(Boolean).join("\n"));
+    preparedValues.current = signature;
     setCopied(false); setFailed(false); setPreview(true);
   }
   async function copy() {
@@ -65,8 +69,8 @@ export function ProjectInquiry({ locale }: { locale: Locale }) {
         <form onSubmit={prepare} onInput={e => { const input = e.target as HTMLInputElement; input.setCustomValidity?.(""); }} className="mt-6 space-y-4">
           <div className="grid gap-4 sm:grid-cols-2">
             {([['name', c.name, 'name'], ['company', c.company, 'organization']] as const).map(([key, label, autocomplete]) => (
-              <label key={key} htmlFor={`${id}-${key}`} className="block text-sm font-semibold">{label}
-                <input id={`${id}-${key}`} name={key} required maxLength={120} autoComplete={autocomplete} value={values[key]} onChange={e => update(key, e.target.value)} className={field} />
+              <label key={key} htmlFor={`${id}-${key}`} className="block text-sm font-semibold">{label} <span className="font-normal">({c.optional})</span>
+                <input id={`${id}-${key}`} name={key} maxLength={120} autoComplete={autocomplete} value={values[key]} onChange={e => update(key, e.target.value)} className={field} />
               </label>
             ))}
           </div>

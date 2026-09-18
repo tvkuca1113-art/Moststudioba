@@ -79,7 +79,7 @@ export function organizationJsonLd(locale: Locale, description: string) {
         sameAs: [site.instagramUrl, ...(site.facebookUrl ? [site.facebookUrl] : [])],
         knowsLanguage: ["bs", "de"],
         areaServed: [{ "@type": "Country", name: "Bosnia and Herzegovina" }, { "@type": "Country", name: "Germany" }],
-        contactPoint: { "@type": "ContactPoint", email: site.email, contactType: "customer service", availableLanguage: ["bs", "de"] },
+        contactPoint: { "@type": "ContactPoint", url: absoluteUrl(path("contact", locale)), email: site.email, contactType: "customer service", availableLanguage: ["bs", "de"] },
       },
       {
         "@type": "WebSite",
@@ -131,7 +131,7 @@ export function contentPageJsonLd(key: ContentPageKey, locale: Locale) {
         "@type": "Service", "@id": `${url}#service`, url,
         name: pageLabels[locale][key], serviceType: pageLabels[locale][key],
         description: page.lead, provider: { "@id": `${siteUrl}/#organization`, "@type": "Organization", name: site.name, url: siteUrl, email: site.email },
-        areaServed: [{ "@type": "Country", name: "Bosnia and Herzegovina" }],
+        areaServed: [{ "@type": "Country", name: "Bosnia and Herzegovina" }, { "@type": "Country", name: "Germany" }],
         availableChannel: { "@type": "ServiceChannel", serviceUrl: absoluteUrl(path("contact", locale)) },
       }] : []),
     ],

@@ -1,0 +1,27 @@
+{
+  "note": "Published baseline assets versus locally rebuilt shop; same files measured with Node gzip. Excludes shared unchanged product images and fonts.",
+  "before": [
+    {
+      "file": "index-Cnf5-m6Z.css",
+      "bytes": 164184,
+      "gzipBytes": 25851
+    },
+    {
+      "file": "index-VF11bo2x.js",
+      "bytes": 395735,
+      "gzipBytes": 122147
+    }
+  ],
+  "after": [
+    {
+      "file": "shop-c3fea8512b6a.css",
+      "bytes": 49264,
+      "gzipBytes": 10568
+    },
+    {
+      "file": "shop-523dec58a361.js",
+      "bytes": 409320,
+      "gzipBytes": 127503
+    }
+  ]
+}

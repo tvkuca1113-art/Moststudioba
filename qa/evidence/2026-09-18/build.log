@@ -1,0 +1,70 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> most-studio@0.1.0 build
+> npm run build:webshop && next build
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> most-studio@0.1.0 build:webshop
+> node scripts/build-webshop.mjs
+
+Webshop built from source: shop-523dec58a361.js, shop-c3fea8512b6a.css
+▲ Next.js 16.3.5 (Turbopack)
+✓ Running next.config.ts took 68ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 2.1s
+  Running TypeScript ...
+  Finished TypeScript in 5.6s ...
+  Collecting page data using 8 workers ...
+  Generating static pages using 8 workers (0/35) ...
+  Generating static pages using 8 workers (8/35) 
+  Generating static pages using 8 workers (17/35) 
+  Generating static pages using 8 workers (26/35) 
+✓ Generating static pages using 8 workers (35/35) in 1875ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /de
+├   /de/demo/[slug]
+│ ├ ● /de/demo/stolarija-hrast
+│ ├ ● /de/demo/ordinacija-lipa
+│ └ ● /de/demo/meridijan-savjetovanje
+├ ○ /de/kontakt
+├ ○ /de/leistungen
+├ ○ /de/leistungen/onlineshop
+├ ○ /de/leistungen/website-erstellung
+├ ○ /de/leistungen/website-relaunch
+├ ○ /de/projekte
+├   /de/projekte/[slug]
+│ ├ ● /de/projekte/stolarija-hrast
+│ ├ ● /de/projekte/ordinacija-lipa
+│ └ ● /de/projekte/meridijan-savjetovanje
+├ ○ /de/ratgeber/website-kosten
+├ ○ /de/webdesign-bosnien-herzegowina
+├   /demo/[slug]
+│ ├ ● /demo/stolarija-hrast
+│ ├ ● /demo/ordinacija-lipa
+│ └ ● /demo/meridijan-savjetovanje
+├ ○ /icon.svg
+├ ○ /izrada-web-stranica-bih
+├ ○ /kontakt
+├ ○ /projekti
+├   /projekti/[slug]
+│ ├ ● /projekti/stolarija-hrast
+│ ├ ● /projekti/ordinacija-lipa
+│ └ ● /projekti/meridijan-savjetovanje
+├ ○ /robots.txt
+├ ○ /sitemap.xml
+├ ○ /usluge
+├ ○ /usluge/izrada-web-shopa
+├ ○ /usluge/izrada-web-stranica
+├ ○ /usluge/redizajn-web-stranica
+└ ○ /vodic/cijena-web-stranice
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+

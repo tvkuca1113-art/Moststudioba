@@ -12,6 +12,7 @@
  * Our own demo chrome (the MOST bar) is hidden during capture so the shot
  * frames the demo site itself.
  */
+import { createHash } from "node:crypto";
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { chromium } from "@playwright/test";
@@ -27,7 +28,7 @@ const demos = [
 ];
 
 const devices = {
-  desktop: { width: 1440, height: 900, scale: 2, out: 1600 },
+  desktop: { width: 1100, height: 900, scale: 2, out: 1600 },
   mobile: { width: 390, height: 844, scale: 3, out: 780 },
 };
 
@@ -77,11 +78,12 @@ for (const [deviceName, device] of Object.entries(devices)) {
       });
       await page.waitForTimeout(600);
 
-      const raw = await page.screenshot({ type: "png" });
+      const raw = await page.locator("[data-demo-cover]").screenshot({ type: "png" });
       const webp = await sharp(raw).resize({ width: device.out }).webp({ quality: 82, effort: 6 }).toBuffer();
       const meta = await sharp(webp).metadata();
 
-      const file = `${demo.slug}-${lang}-${deviceName}.webp`;
+      const hash = createHash("sha256").update(webp).digest("hex").slice(0, 10);
+      const file = `${demo.slug}-${lang}-${deviceName}-${hash}.webp`;
       await writeFile(path.join(OUT, file), webp);
       entries.push({
         key: `${demo.slug}-${lang}-${deviceName}`,

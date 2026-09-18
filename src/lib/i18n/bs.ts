@@ -31,7 +31,7 @@ export const bs = {
     eyebrow: "WEB DIZAJN · MOSTAR I CIJELA BiH",
     titleLine1: "Vaš kvalitet.",
     titleLine2: "Vidljiv na webu.",
-    lead: "Izrađujemo web stranice i webshopove za firme iz Mostara i cijele Bosne i Hercegovine. Jasna ponuda, dobar mobilni doživljaj i jednostavan put do upita. Saradnju vodimo online.",
+    lead: "Izrađujemo web stranice i webshopove za firme iz Mostara, cijele BiH i Njemačke. Jasna ponuda, dobar mobilni doživljaj i jednostavan put do upita. Saradnju vodimo online.",
     ctaPrimary: "Razgovarajmo o projektu",
     ctaSecondary: "Istražite radove",
     support: "Web dizajn · Izrada · Redizajn",
@@ -113,7 +113,7 @@ export const bs = {
     all: "Sva pitanja i odgovori",
     eyebrow: "ČESTA PITANJA",
     title: "Pitanja koja obično dobijemo.",
-    lead: "Ako nešto nije jasno, javite se emailom ili na Instagramu.",
+    lead: "Ako nešto nije jasno, javite se na Instagramu ili emailom.",
   },
 
   contact: {
@@ -122,7 +122,7 @@ export const bs = {
     titleLine2: "trebao raditi bolje?",
     lead: "Imate postojeću stranicu ili tek počinjete? Javite nam šta želite predstaviti i kome se obraćate.",
     primaryLabel: "Pišite nam direktno",
-    primaryHint: "Pošaljite nam nekoliko rečenica o projektu.",
+    primaryHint: "Otvorite profil i odaberite Poruka. Ako Instagram zatraži prijavu, prijavite se u svom browseru ili aplikaciji.",
     handle: "@moststudioba",
     pageTitle: "Kontakt",
     pageLead: "Recite nam čime se bavite i šta vaš web treba postići. Javite se na Instagramu ili pripremite projektni upit ispod. Sarađujemo online s firmama širom BiH i u Njemačkoj.",
@@ -236,7 +236,7 @@ export const bs = {
         "Usluge MOST Studija: izrada poslovnih web stranica, webshopova i redizajn. Pogledajte obim, proces, demo primjere i vodič o cijeni za vaš projekt.",
     },
     contact: {
-      title: "Kontakt | MOST Studio",
+      title: "Kontakt i projektni upit | MOST Studio",
       description:
         "Javite se MOST Studiju na Instagramu @moststudioba za web stranicu, webshop ili redizajn. Pripremite upit; dostupan je i email. Online saradnja za BiH.",
     },

@@ -37,15 +37,15 @@ export function DemoView({ locale, slug }: { locale: Locale; slug: string }) {
       {/* data-most-chrome: the capture script hides this bar so a portfolio
           screenshot shows the demo site itself, not our wrapper around it. */}
       <header data-most-chrome className="sticky top-0 z-50 border-b border-mist/20 bg-ink text-paper on-dark">
-        <div className="mx-auto flex min-h-16 w-full max-w-[110rem] items-center justify-between gap-3 px-4 py-2 sm:px-6">
+        <div className="mx-auto flex min-h-16 w-full max-w-[110rem] items-center justify-between gap-2 px-3 py-2 sm:px-6">
           <a href={homeHref} aria-label={returnLabel} className="inline-flex min-h-11 items-center">
             <Wordmark />
           </a>
-          <div className="flex items-center gap-3">
-            <LanguageSwitcher locale={locale} route={{ key: "demo", slug }} dict={dict} tone="dark" className="hidden sm:flex" />
-            <a href={homeHref} className="inline-flex min-h-11 items-center gap-2 rounded-full border border-mist/40 px-4 text-sm font-semibold hover:bg-paper/10">
+          <div className="flex items-center gap-2">
+            <LanguageSwitcher locale={locale} route={{ key: "demo", slug }} dict={dict} tone="dark" className="flex" />
+            <a href={homeHref} aria-label={returnLabel} className="inline-flex min-h-11 items-center gap-2 rounded-full border border-mist/40 px-4 text-sm font-semibold hover:bg-paper/10">
               <ArrowRight className="size-4 rotate-180" />
-              {homeLabel}
+              <span className="hidden sm:inline">{homeLabel}</span>
             </a>
           </div>
         </div>

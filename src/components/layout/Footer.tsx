@@ -2,7 +2,7 @@
 import { Container } from "@/components/ui/Container";
 import { Wordmark } from "@/components/ui/Wordmark";
 import { TrackedAnchor } from "@/components/ui/TrackedLink";
-import { InstagramIcon } from "@/components/ui/icons";
+import { SocialContact } from "@/components/contact/SocialContact";
 import { demoProjects } from "@/content/projects";
 import { site } from "@/content/site";
 import { path, type Locale, type RouteRef } from "@/lib/i18n/config";
@@ -81,16 +81,7 @@ export function Footer({
 
           <div>
             <h2 className="text-[0.8125rem] font-semibold tracking-[0.16em] text-lime uppercase">{dict.footer.contactTitle}</h2>
-            <a
-              href={site.instagramUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-4 inline-flex min-h-11 items-center gap-2 text-[0.9375rem] text-mist hover:text-paper"
-            >
-              <InstagramIcon className="size-5" />
-              {site.instagramHandle}
-            </a>
-            {site.facebookUrl && <TrackedAnchor href={site.facebookUrl} target="_blank" rel="noopener noreferrer" track={["outbound_facebook", { locale, from: "footer" }]} className="flex min-h-11 items-center text-[0.9375rem] text-mist hover:text-paper">Facebook ↗</TrackedAnchor>}
+            <div className="mt-4"><SocialContact locale={locale} from="footer" dark /></div>
             <TrackedAnchor href={`mailto:${site.email}`} track={["outbound_email", { locale, from: "footer" }]} className="block min-h-11 break-all py-3 text-sm text-mist underline underline-offset-4 hover:text-paper">{site.email}</TrackedAnchor>
             <div className="mt-5">
               <LanguageSwitcher locale={locale} route={route} dict={dict} tone="dark" className="w-fit" />

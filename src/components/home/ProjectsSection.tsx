@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ProjectSelector } from "@/components/home/ProjectSelector";
 import { Shot } from "@/components/media/Shot";
 import { positioning } from "@/content/positioning";
@@ -103,18 +104,17 @@ export function ProjectCard({
         </dl>
 
         <div className="relative z-10 mt-5 flex flex-wrap items-center gap-x-7 gap-y-3">
-          <TrackedLink
+          <Link
             href={caseHref}
             id={ctaId}
             // Announced as "Stolarija Hrast, Pogledajte projekt" — the card's
             // subject and its action, from one link rather than two.
             aria-labelledby={`${titleId} ${ctaId}`}
-            track={["view_project", { project: project.slug, locale }]}
             className="inline-flex min-h-11 items-center gap-2 text-[0.9375rem] font-semibold text-forest underline decoration-forest/30 underline-offset-4 hover:decoration-forest"
           >
             {dict.projects.cardCta}
             <ArrowUpRight className="size-4 transition-transform group-hover/card:translate-x-0.5 group-hover/card:-translate-y-0.5 motion-reduce:group-hover/card:transform-none" />
-          </TrackedLink>
+          </Link>
           <TrackedLink
             href={demoHref}
             track={["open_demo", { project: project.slug, locale, from: "portfolio" }]}

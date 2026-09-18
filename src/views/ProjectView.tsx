@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { ProjectVisit } from "@/components/ui/ProjectVisit";
 import { Photo } from "@/components/media/Photo";
 import { Shot } from "@/components/media/Shot";
 import { SiteFrame } from "@/components/layout/SiteFrame";
@@ -33,6 +34,7 @@ export function ProjectView({ locale, slug }: { locale: Locale; slug: string }) 
 
   return (
     <SiteFrame locale={locale} route={{ key: "project", slug }}>
+      <ProjectVisit project={slug} locale={locale} />
       {/* Short header, then the work */}
       <Section tone="paper" size="tight">
         <Container>

@@ -3,6 +3,9 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import { JSDOM } from 'jsdom';
+import ts from 'typescript';
+const policyJs=ts.transpileModule(fs.readFileSync('src/lib/site-url.ts','utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS}}).outputText;
+for(const [env,flag,expected] of [['preview','true',false],['development',undefined,false],['production',undefined,true],['production','false',false]]){const result={};new Function('exports','process',policyJs)(result,{env:{VERCEL_ENV:env,NEXT_PUBLIC_ALLOW_INDEXING:flag}});assert.equal(result.indexingAllowed,expected);assert.equal(result.siteUrl,'https://moststudioba.com');}
 
 const root = path.resolve('.next/server/app');
 const origin = 'https://moststudioba.com';
@@ -14,6 +17,8 @@ const urls = entries.map(entry => normalize(entry.getElementsByTagName('loc')[0]
 assert.equal(new Set(urls).size, urls.length, 'No duplicate sitemap URLs');
 assert(urls.length >= 24, 'Service pages and both translations must be discoverable');
 const docs = new Map();
+const titles=new Set(),descriptions=new Set();
+assert.equal(sitemap.window.document.getElementsByTagName("lastmod").length,0,"No fabricated lastmod");
 for (const url of urls) {
   assert.equal(new URL(url).origin, origin);
   const pathname = new URL(url).pathname;
@@ -22,6 +27,9 @@ for (const url of urls) {
   docs.set(url, dom);
   const doc = dom.window.document;
   const title = doc.querySelector('head title')?.textContent;
+  assert(!titles.has(title),`Duplicate title: ${url}`);titles.add(title);
+  const description=doc.querySelector('head meta[name="description"]')?.content;assert(!descriptions.has(description),`Duplicate description: ${url}`);descriptions.add(description);
+  assert.equal(doc.querySelector('meta[name="google-site-verification"]')?.content,verification);
   assert(title?.trim(), `Missing initial title: ${url}`);
   assert(doc.querySelector('head meta[name="description"]')?.content, `Missing description: ${url}`);
   assert.equal(doc.querySelectorAll('h1').length, 1, `One H1: ${url}`);
@@ -71,6 +79,10 @@ while (queue.length) {
 }
 assert.equal(reached.size, urls.length, 'All sitemap pages reachable from the homepage');
 const home = docs.get(origin).window.document;
+assert.equal(home.querySelectorAll("iframe").length,0,"No embedded demo apps");
+assert.equal(home.querySelectorAll("[data-demo-cover]").length,0,"Previews are static screenshots");
+assert(!home.documentElement.innerHTML.includes("--preview-scale"));
+assert(home.querySelector('img[srcset][width][height]'));
 const tags = home.querySelectorAll('head meta[name="google-site-verification"]');
 assert.equal(tags.length, 1);
 assert.equal(tags[0].content, verification);

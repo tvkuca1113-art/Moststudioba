@@ -21,9 +21,8 @@ export function RootDocument({
     <html lang={htmlLang[locale]} className={fontClassName}>
       <body className="bg-paper text-ink antialiased">
         {children}
-        {/* Vercel Web Analytics is wired up but stays off until the studio
-            decides to turn it on, like every other measurement on this site.
-            Set NEXT_PUBLIC_ANALYTICS_ENABLED=true to start collecting. */}
+        {/* One analytics integration; NEXT_PUBLIC_ANALYTICS_ENABLED=false
+            disables both this script and the typed event wrapper. */}
         {site.analyticsEnabled && <Analytics />}
       </body>
     </html>

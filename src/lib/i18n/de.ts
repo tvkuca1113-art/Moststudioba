@@ -111,7 +111,7 @@ export const de: Dictionary = {
     all: "Alle Fragen und Antworten",
     eyebrow: "HÄUFIGE FRAGEN",
     title: "Fragen, die wir oft bekommen.",
-    lead: "Wenn etwas unklar bleibt, schreiben Sie uns per E-Mail oder auf Instagram.",
+    lead: "Wenn etwas unklar bleibt, schreiben Sie uns auf Instagram oder per E-Mail.",
   },
 
   contact: {
@@ -120,7 +120,7 @@ export const de: Dictionary = {
     titleLine2: "besser können?",
     lead: "Haben Sie bereits eine Website oder fangen Sie gerade an? Schreiben Sie uns, was Sie zeigen möchten und wen Sie ansprechen.",
     primaryLabel: "Schreiben Sie uns direkt",
-    primaryHint: "Schreiben Sie uns ein paar Sätze über Ihr Projekt.",
+    primaryHint: "Öffnen Sie das Profil und wählen Sie Nachricht. Falls Instagram eine Anmeldung verlangt, melden Sie sich im Browser oder in der App an.",
     handle: "@moststudioba",
     pageTitle: "Kontakt",
     pageLead: "Beschreiben Sie Ihr Geschäft und das Ziel Ihrer Website. Schreiben Sie uns auf Instagram oder bereiten Sie unten Ihre Anfrage vor. Wir arbeiten online mit Unternehmen in BiH und Deutschland.",
@@ -234,7 +234,7 @@ export const de: Dictionary = {
         "Websites, Onlineshops und Relaunches von MOST Studio. Informieren Sie sich über Umfang, Ablauf, Demobeispiele und Kostenfaktoren Ihres Projekts.",
     },
     contact: {
-      title: "Kontakt | MOST Studio",
+      title: "Kontakt und Projektanfrage | MOST Studio",
       description:
         "Kontaktieren Sie MOST Studio auf Instagram @moststudioba für Website, Onlineshop oder Relaunch. Projektanfrage vorbereiten; alternativ ist E-Mail möglich.",
     },

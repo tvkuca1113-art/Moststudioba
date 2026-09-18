@@ -248,26 +248,7 @@
   color: #1b2534;
   background: #f3efe6f2;
 }
-.preview {
-  container-type: inline-size;
-  position: relative;
-  overflow: hidden;
-  aspect-ratio: 1100/760;
-  background: #f3efe7;
-}
-.previewInner {
-  width: 1100px;
-  transform: scale(var(--preview-scale, 0.32));
-  transform-origin: top left;
-  pointer-events: none;
-  user-select: none;
-}
-.previewPhone {
-  aspect-ratio: 390/875;
-}
-.previewPhone .previewInner {
-  width: 390px;
-}
+
 .tool {
   container-type: inline-size;
   background: #f5f2ea;
@@ -735,3 +716,7 @@
     transition: none;
   }
 }
+
+.exportFallback { margin-top: 20px; border-top: 1px solid #29292330; padding-top: 12px; }
+.exportFallback summary { min-height: 44px; cursor: pointer; font-size: 14px; font-weight: 600; }
+.exportFallback textarea { display: block; width: 100%; min-height: 160px; padding: 12px; margin: 12px 0; border: 1px solid #29292360; background: #fff; color: #292923; font-size: 16px; line-height: 1.5; }

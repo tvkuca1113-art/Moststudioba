@@ -1,6 +1,6 @@
 # Potvrđeni podaci i preostali zadaci
 
-Ažurirano 17. 9. 2026. Stranica je objavljena. Ovaj dokument prati stvarne
+Ažurirano 18. 9. 2026. Stranica je objavljena. Ovaj dokument prati stvarne
 poslovne podatke i nedovršene integracije.
 
 ## Potvrđeno

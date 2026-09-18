@@ -22,7 +22,7 @@ import type { Locale } from "@/lib/i18n/config";
  */
 type Events = {
   outbound_email: { locale: Locale; from: "contact" | "footer" | "brief" };
-  outbound_facebook: { locale: Locale; from: "contact" | "footer" | "brief" };
+  outbound_facebook: { locale: Locale; from: "hero" | "header" | "contact" | "footer" | "brief" };
   /** A concept page was opened. */
   view_project: { project: string; locale: string };
   /** A running demo was opened, and from where. */
@@ -32,7 +32,7 @@ type Events = {
   /** The assembled message was copied. No message text, ever. */
   copy_message: { locale: string; need: string; goal: string; length: "short" | "long" };
   /** The visitor left for the Instagram profile. */
-  outbound_instagram: { locale: string; from: "header" | "contact" | "footer" | "brief" };
+  outbound_instagram: { locale: string; from: "hero" | "header" | "contact" | "footer" | "brief" };
   /** Reserved: a real enquiry received by a backend. Never a copy. */
   lead_submit: { locale: string; channel: string };
 };

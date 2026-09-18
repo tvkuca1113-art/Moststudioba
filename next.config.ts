@@ -3,7 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   allowedDevOrigins: ["terminal.local"],
   async redirects() {
-    return ["moststudioba.vercel.app"].map((host) => ({
+    return ["moststudioba.vercel.app", "www.moststudioba.com"].map((host) => ({
       source: "/:path*",
       has: [{ type: "host" as const, value: host }],
       destination: "https://moststudioba.com/:path*",

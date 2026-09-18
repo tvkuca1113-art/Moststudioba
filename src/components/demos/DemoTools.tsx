@@ -9,6 +9,7 @@ import {
 import { Photo } from "@/components/media/Photo";
 import { ArrowRight, CheckIcon } from "@/components/ui/icons";
 import { tradesContent, type WoodFinish } from "@/content/demos/trades";
+import { saveText, TextExport } from "./TextExport";
 import { FurniturePreview } from "./FurniturePreview";
 import { advisoryContent } from "@/content/demos/advisory";
 import {
@@ -26,18 +27,6 @@ import type { Locale } from "@/lib/i18n/config";
 import { translator } from "@/lib/i18n/localized";
 import s from "./PremiumDemos.module.css";
 
-function saveText(filename: string, text: string) {
-  const url = URL.createObjectURL(
-    new Blob(["\uFEFF" + text], { type: "text/plain;charset=utf-8" }),
-  );
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = filename;
-  document.body.appendChild(link);
-  link.click();
-  link.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
-}
 function DemoNote({ locale }: { locale: Locale }) {
   return (
     <p className={s.fine}>
@@ -107,16 +96,14 @@ export function FurnitureConfigurator({ locale }: { locale: Locale }) {
     ["finish", de ? "Zusätzliche Schutzbehandlung" : "Dodatna zaštitna obrada"],
   ];
   const roomLabel = roomLabels[["kitchen", "wardrobe", "table"].indexOf(room)];
-  const exportBrief = () => {
-    saveText(
-      "MOST-Hrast-projekt.txt",
-      `MOST STUDIO — DEMO HRAST\n\n${roomLabel}\n${t(material.name)}\n${dimension} cm\n${extraOptions
+  const summaryText = `MOST STUDIO — DEMO HRAST\n\n${roomLabel}\n${t(material.name)}\n${dimension} cm\n${extraOptions
         .filter(([id]) => extras.includes(id))
         .map(([, label]) => label)
         .join(
           "\n",
-        )}\n\n${de ? "Konzept für ein Erstgespräch. Keine Bestellung oder verbindliche Planung." : "Koncept za prvi razgovor. Nije narudžba ni konačan izvedbeni plan."}`,
-    );
+        )}\n\n${de ? "Konzept für ein Erstgespräch. Keine Bestellung oder verbindliche Planung." : "Koncept za prvi razgovor. Nije narudžba ni konačan izvedbeni plan."}`;
+  const exportBrief = () => {
+    saveText("MOST-Hrast-projekt.txt", summaryText);
     setSaved(true);
   };
   return (
@@ -286,12 +273,13 @@ export function FurnitureConfigurator({ locale }: { locale: Locale }) {
           <p role="status" className={s.fine}>
             {saved
               ? de
-                ? "Ihre Projektdatei wurde zum Download vorbereitet."
-                : "Vaš sažetak je pripremljen za preuzimanje."
+                ? "Download gestartet. Prüfen Sie Ihre Downloads oder kopieren Sie den Text unten."
+                : "Pokrenut je pokušaj preuzimanja. Provjerite preuzimanja ili kopirajte tekst ispod."
               : de
                 ? "Die endgültigen Maße werden beim Aufmaß bestätigt."
                 : "Konačne dimenzije potvrđuju se na mjerenju."}
           </p>
+          <TextExport locale={locale} text={summaryText} />
           <DemoNote locale={locale} />
         </aside>
       </div>
@@ -718,12 +706,10 @@ export function AdvisoryPlanner({ locale }: { locale: Locale }) {
     setCadence("4");
     setSaved(false);
   };
+  const summaryText = done && area ? `MOST STUDIO — MERIDIJAN DEMO\n\n${t(area.name)}\n\n${questions.map((q, i) => `${t(q.text)}\n${t(q.options.find((o) => o.area === answers[i])!.text)}`).join("\n\n")}\n\n${t(area.meeting).join("\n")}\n\n${cadence} ${de ? "Wochen — Beispielrhythmus, keine verbindliche Zusage." : `${cadence === "6" ? "sedmica" : "sedmice"} — pokazni raspored, nije obavezujuća ponuda.`}` : "";
   const download = () => {
-    if (!area) return;
-    saveText(
-      "MOST-Meridijan-plan.txt",
-      `MOST STUDIO — MERIDIJAN DEMO\n\n${t(area.name)}\n\n${questions.map((q, i) => `${t(q.text)}\n${t(q.options.find((o) => o.area === answers[i])!.text)}`).join("\n\n")}\n\n${t(area.meeting).join("\n")}\n\n${cadence} ${de ? "Wochen — Beispielrhythmus, keine verbindliche Zusage." : `${cadence === "6" ? "sedmica" : "sedmice"} — pokazni raspored, nije obavezujuća ponuda.`}`,
-    );
+    if (!summaryText) return;
+    saveText("MOST-Meridijan-plan.txt", summaryText);
     setSaved(true);
   };
   return (
@@ -875,12 +861,13 @@ export function AdvisoryPlanner({ locale }: { locale: Locale }) {
               <p role="status" className={s.fine}>
                 {saved
                   ? de
-                    ? "Die Datei ist zum Download vorbereitet."
-                    : "Plan je pripremljen za preuzimanje."
+                    ? "Download gestartet. Prüfen Sie Ihre Downloads oder kopieren Sie den Text unten."
+                    : "Pokrenut je pokušaj preuzimanja. Provjerite preuzimanja ili kopirajte tekst ispod."
                   : de
                     ? "Ein Ausgangspunkt für das Gespräch, keine Unternehmensbewertung."
                     : "Polazna tačka za razgovor, nije procjena poslovanja."}
               </p>
+              <TextExport locale={locale} text={summaryText} />
             </>
           ) : null}
         </div>

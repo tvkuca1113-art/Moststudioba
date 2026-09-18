@@ -60,7 +60,7 @@ export function Hero({ locale, dict }: { locale: Locale; dict: Dictionary }) {
             <p className="mt-3 hidden text-title leading-tight lg:block">{locale === "bs" ? "Lijep prvi dojam. Jasan sljedeći korak." : "Ein guter erster Eindruck. Ein klarer nächster Schritt."}</p>
             <p className="mt-3 hidden text-sm text-mist lg:block">{locale === "bs" ? "Hrast · naš demo koncept stolarije" : "Hrast · unser Tischlerei-Demokonzept"}</p>
           </div>
-          <div className="max-h-64 overflow-hidden rounded-xl sm:max-h-80">
+          <div className="min-w-0 rounded-xl">
             <Shot slug="stolarija-hrast" locale={locale} device="desktop" alt={dict.hero.figureLabel} sizes="(max-width: 1024px) 100vw, 60vw" priority />
           </div>
         </div>

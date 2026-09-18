@@ -1,0 +1,65 @@
+{
+  "method": "Three HTTPS GET requests per URL from same execution environment; connection establishment included, no browser rendering metrics.",
+  "results": {
+    "/": [
+      {
+        "status": 200,
+        "ttfb_ms": 10805,
+        "total_ms": 10942,
+        "bytes": 159950
+      },
+      {
+        "status": 200,
+        "ttfb_ms": 8033,
+        "total_ms": 8181,
+        "bytes": 159950
+      },
+      {
+        "status": 200,
+        "ttfb_ms": 8498,
+        "total_ms": 8572,
+        "bytes": 159950
+      }
+    ],
+    "/kontakt": [
+      {
+        "status": 200,
+        "ttfb_ms": 10948,
+        "total_ms": 10993,
+        "bytes": 82069
+      },
+      {
+        "status": 200,
+        "ttfb_ms": 8065,
+        "total_ms": 8163,
+        "bytes": 82069
+      },
+      {
+        "status": 200,
+        "ttfb_ms": 8457,
+        "total_ms": 8495,
+        "bytes": 82069
+      }
+    ],
+    "/moststudiowebshop": [
+      {
+        "status": 200,
+        "ttfb_ms": 10728,
+        "total_ms": 10738,
+        "bytes": 781
+      },
+      {
+        "status": 200,
+        "ttfb_ms": 8132,
+        "total_ms": 8132,
+        "bytes": 781
+      },
+      {
+        "status": 200,
+        "ttfb_ms": 8680,
+        "total_ms": 8684,
+        "bytes": 781
+      }
+    ]
+  }
+}

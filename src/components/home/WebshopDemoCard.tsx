@@ -16,7 +16,7 @@ const copy = {
     body: "Otvorite naš primjer webshopa s 50 artikala. Pronađite proizvod, odaberite veličinu i isprobajte cijeli put do narudžbe.",
     features: ["Pretraga i filteri", "Izbor veličine i korpa", "Probna narudžba bez naplate"],
     cta: "Isprobajte webshop",
-    note: "Otvara se u novoj kartici. Bez prijave i stvarnog plaćanja.",
+    note: "Bez prijave i stvarnog plaćanja. Povratak na MOST Studio je uvijek dostupan.",
     collection: "Iz demo kolekcije",
     products: ["Tamnoplavo odijelo", "Bijela pamučna košulja", "Bež chino hlače", "Smeđi pleteni džemper"],
     disclosure: "Generisane fotografije i ilustrativne cijene. Primjer izrade MOST Studija.",
@@ -29,7 +29,7 @@ const copy = {
     body: "Entdecken Sie unseren Beispielshop mit 50 Artikeln. Finden Sie ein Produkt, wählen Sie eine Größe und testen Sie den Weg bis zur Bestellung.",
     features: ["Suche und Filter", "Größenauswahl und Warenkorb", "Testbestellung ohne Zahlung"],
     cta: "Onlineshop ausprobieren",
-    note: "Öffnet in einem neuen Tab. Demo auf Bosnisch, ohne Anmeldung und echte Zahlung.",
+    note: "Demo auf Bosnisch, ohne Anmeldung und echte Zahlung. Der Rückweg zu MOST Studio bleibt sichtbar.",
     collection: "Aus der Demo-Kollektion",
     products: ["Dunkelblauer Anzug", "Weißes Baumwollhemd", "Beige Chinohose", "Brauner Strickpullover"],
     disclosure: "Generierte Fotos und Beispielpreise. Ein Demoprojekt von MOST Studio.",
@@ -48,14 +48,12 @@ export function WebshopDemoLink({ locale }: { locale: Locale }) {
   return (
     <TrackedAnchor
       href={webshopDemoUrl}
-      target="_blank"
-      rel="noopener noreferrer"
       track={["open_demo", { project: "webshop", locale, from: "hero" }]}
       className="mt-4 inline-flex min-h-11 items-center gap-2 text-[0.9375rem] font-medium text-lime underline decoration-lime/40 underline-offset-4 hover:text-paper"
     >
       {copy[locale].quickLink}
       <ArrowUpRight className="size-4 shrink-0" />
-      <span className="sr-only">{locale === "bs" ? "(nova kartica)" : "(neuer Tab, Demo auf Bosnisch)"}</span>
+
     </TrackedAnchor>
   );
 }
@@ -80,7 +78,7 @@ export function WebshopDemoCard({ locale, compact = false }: { locale: Locale; c
           ))}
         </ul>
         <div className="mt-8">
-          <TrackedAnchor href={webshopDemoUrl} target="_blank" rel="noopener noreferrer" track={["open_demo", { project: "webshop", locale, from: "portfolio" }]} className={buttonClass()}>
+          <TrackedAnchor href={webshopDemoUrl} track={["open_demo", { project: "webshop", locale, from: "portfolio" }]} className={buttonClass()}>
             {c.cta}<ArrowUpRight className="size-4 shrink-0" />
           </TrackedAnchor>
           <p className="mt-3 max-w-[48ch] text-sm leading-relaxed text-slate">{c.note}</p>

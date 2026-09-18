@@ -6,7 +6,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { Wordmark } from "@/components/ui/Wordmark";
-import { InstagramIcon } from "@/components/ui/icons";
+import { SocialContact } from "@/components/contact/SocialContact";
 import { site } from "@/content/site";
 import { cn } from "@/lib/cn";
 import { path, type Locale, type RouteRef } from "@/lib/i18n/config";
@@ -71,7 +71,13 @@ export function Header({
         const links = [...(panelRef.current?.querySelectorAll<HTMLElement>("a[href], button:not([disabled])") ?? [])];
         const first = toggleRef.current;
         const last = links.at(-1);
-        if (event.shiftKey && document.activeElement === first) {
+        if (event.shiftKey && document.activeElement === links[0]) {
+          event.preventDefault();
+          first?.focus({ preventScroll: true });
+        } else if (!event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          links[0]?.focus({ preventScroll: true });
+        } else if (event.shiftKey && document.activeElement === first) {
           event.preventDefault();
           last?.focus({ preventScroll: true });
         } else if (!event.shiftKey && document.activeElement === last) {
@@ -195,15 +201,7 @@ export function Header({
 
           <div className="flex flex-col gap-6">
             <LanguageSwitcher locale={locale} route={route} dict={dict} tone="dark" className="self-start" />
-            <a
-              href={site.instagramUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-mist"
-            >
-              <InstagramIcon className="size-5" />
-              {site.instagramHandle}
-            </a>
+            <SocialContact locale={locale} from="header" dark />
           </div>
         </Container>
       </div>

@@ -33,7 +33,7 @@ export function ServicesSection({ locale, dict }: { locale: Locale; dict: Dictio
           </dl>
         </details>
         <div className="mt-6 flex flex-col justify-between gap-5 border-t border-line-light pt-6 sm:flex-row sm:items-center">
-          <p className="max-w-xl text-base leading-relaxed text-slate">{locale === "bs" ? "Online radimo s firmama iz Mostara, Sarajeva, Banje Luke, Tuzle i ostatka BiH. Obim, materijale i rok dogovaramo prije početka." : "Wir arbeiten online mit Unternehmen aus Mostar, Sarajevo, Banja Luka, Tuzla und ganz BiH. Umfang, Materialien und Termin klären wir vor dem Start."}</p>
+          <p className="max-w-xl text-base leading-relaxed text-slate">{locale === "bs" ? "Online radimo s firmama iz Mostara, cijele BiH i Njemačke. Obim, materijale i rok dogovaramo prije početka." : "Wir arbeiten online mit Unternehmen in Bosnien-Herzegowina und Deutschland. Umfang, Materialien und Termin klären wir vor dem Start."}</p>
           <div className="flex shrink-0 flex-col items-start">
             <ButtonLink className="px-0 text-sm" href={path("coverage", locale)} variant="quiet">{locale === "bs" ? "Kako sarađujemo online" : "So arbeiten wir online"}</ButtonLink>
             <ButtonLink className="px-0 text-sm" href={path("pricing", locale)} variant="quiet">{locale === "bs" ? "Šta određuje cijenu weba" : "Was den Website-Preis bestimmt"}</ButtonLink>

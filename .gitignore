@@ -42,3 +42,5 @@ next-env.d.ts
 
 # QA artefakti
 /qa/shots/
+/qa/browser-results/
+/playwright-report/

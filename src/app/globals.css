@@ -65,8 +65,6 @@
     font-synthesis-weight: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
-    /* no horizontal overflow anywhere, at any width */
-    overflow-x: clip;
   }
 
   h1,

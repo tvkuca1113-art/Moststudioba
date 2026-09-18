@@ -1,0 +1,8 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> most-studio@0.1.0 test:interactions
+> node scripts/qa-interactions.cjs && node scripts/qa-webshop.cjs
+
+PASS: inquiry validation, preparation, retained form values, editable message, clipboard success/failure, primary Instagram handoff, optional email encoding and German fields.
+PASS: repeated menu opening after scroll, viewport overlay ownership, focus and background cleanup; 9 furniture images; furniture selections/clamping/export; full booking, blocked slots, back/edit, service invalidation, confirmation, focus and reset; advisory step validation, majority plan, export, retained edits and reset; German controls.
+PASS: all 50 products and image files, size/stock guards, immutable cart quantities, shipping thresholds, stored-cart recovery, source-built noindex shop and home links.

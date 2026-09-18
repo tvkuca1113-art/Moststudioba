@@ -12,6 +12,7 @@ import { siteUrl } from "@/lib/site-url";
  */
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
+  verification: { google: "eExoCdIgROmTlK9gPPFqpIQpTvrDImDbRYYXujw_kz4" },
 };
 
 export const viewport: Viewport = {

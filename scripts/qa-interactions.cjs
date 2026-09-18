@@ -16,7 +16,7 @@ const {JSDOM}=require('jsdom');const dom=new JSDOM('<!doctype html><html><body><
 for(const key of ['window','document','HTMLElement','HTMLAnchorElement','HTMLInputElement','Node','MutationObserver','getComputedStyle'])global[key]=key==='getComputedStyle'?dom.window.getComputedStyle.bind(dom.window):dom.window[key];
 Object.defineProperty(global,'navigator',{value:dom.window.navigator,configurable:true});
 global.IS_REACT_ACT_ENVIRONMENT=true;
-const downloads=[];global.URL.createObjectURL=()=> 'blob:demo';global.URL.revokeObjectURL=()=>{};dom.window.HTMLAnchorElement.prototype.click=function(){downloads.push(this.download);};
+const downloads=[],blobs=[],revoked=[];global.URL.createObjectURL=blob=>{blobs.push(blob);return 'blob:demo';};global.URL.revokeObjectURL=url=>revoked.push(url);dom.window.HTMLAnchorElement.prototype.click=function(){downloads.push(this.download);};
 const {render,screen,cleanup,within}=require('@testing-library/react');const userEvent=require('@testing-library/user-event').default;
 const {Header}=require(base+'/src/components/layout/Header.tsx');
 const {getDictionary}=require(base+'/src/lib/i18n/dictionary.ts');
@@ -58,7 +58,9 @@ async function run(){
  await user.click(screen.getByRole('button',{name:'Trpezarijski sto'}));assert.equal(screen.getByRole('slider').value,'280');
  await user.click(screen.getByRole('button',{name:'Mat bijela'}));assert.equal(screen.getByRole('button',{name:'Mat bijela'}).getAttribute('aria-pressed'),'true');
  await user.click(screen.getByRole('checkbox',{name:'Dostava i montaža'}));assert.equal(screen.getByRole('checkbox',{name:'Dostava i montaža'}).checked,false);
- await user.click(screen.getByRole('button',{name:'Preuzmi svoj projekt'}));assert.equal(downloads.at(-1),'MOST-Hrast-projekt.txt');assert.match(screen.getByRole('status').textContent,/pripremljen/);cleanup();
+ await user.click(screen.getByRole('button',{name:'Preuzmi svoj projekt'}));assert.equal(downloads.at(-1),'MOST-Hrast-projekt.txt');assert.match(screen.getAllByRole('status')[0].textContent,/pokušaj preuzimanja/);
+ const hrastBytes=Buffer.from(await blobs.at(-1).arrayBuffer());assert.equal(hrastBytes.subarray(0,3).toString('hex'),'efbbbf');assert.equal(blobs.at(-1).type,'text/plain;charset=utf-8');const hrastText=hrastBytes.toString('utf8');assert.match(hrastText,/Trpezarijski sto/);assert.match(hrastText,/Mat bijela/);assert.match(hrastText,/280 cm/);assert(!hrastText.includes('Dostava i montaža'));assert.equal(revoked.length,0,'Blob URL must survive the click handler');
+ await user.click(screen.getByText('Pregledaj ili kopiraj sažetak'));assert.equal(screen.getByRole('textbox',{name:'Sažetak za kopiranje'}).value,hrastText.replace(/^\uFEFF/,''));await user.click(screen.getByRole('button',{name:'Kopiraj sažetak'}));assert.equal(await navigator.clipboard.readText(),hrastText.replace(/^\uFEFF/,''));cleanup();
  render(React.createElement(AppointmentBooking,{locale:'bs'}));
  await user.click(screen.getByRole('button',{name:'Odaberite datum'}));
  assert.equal(screen.getByRole('button',{name:'Pregled odabira'}).disabled,true);
@@ -80,7 +82,7 @@ async function run(){
   await user.click(screen.getByRole('button',{name:step===2?'Pogledaj moj plan':'Dalje'}));
  }
  assert(screen.getByRole('heading',{name:'Ponuda i novi klijenti'}));
- await user.click(screen.getByRole('button',{name:'6 sedmica'}));await user.click(screen.getByRole('button',{name:'Preuzmi plan'}));assert.equal(downloads.at(-1),'MOST-Meridijan-plan.txt');
+ await user.click(screen.getByRole('button',{name:'6 sedmica'}));await user.click(screen.getByRole('button',{name:'Preuzmi plan'}));assert.equal(downloads.at(-1),'MOST-Meridijan-plan.txt');const planText=await blobs.at(-1).text();assert.match(planText,/Ponuda i novi klijenti/);assert.match(planText,/6 sedmica/);assert(planText.includes('MOST STUDIO'));
  await user.click(screen.getByRole('button',{name:'Izmijeni odgovore'}));assert.equal(screen.getByRole('button',{name:/Promet raste/}).getAttribute('aria-pressed'),'true');
  await user.click(screen.getByRole('button',{name:'Počni ispočetka'}));assert.equal(screen.getByRole('button',{name:'Dalje'}).disabled,true);cleanup();
  render(React.createElement(AppointmentBooking,{locale:'de'}));await user.click(screen.getByRole('button',{name:'Weiter zum Termin'}));assert.equal(screen.getAllByRole('button',{name:/\d\d:\d\d/}).length,6);cleanup();
@@ -88,8 +90,8 @@ async function run(){
  render(React.createElement(ProjectInquiry,{locale:'bs'}));
  await user.click(screen.getByRole('button',{name:'Pregledaj upit'}));
  assert.equal(screen.queryByRole('button',{name:'1. Kopiraj upit'}),null,'Required fields block an empty inquiry');
- await user.type(screen.getByLabelText('Ime'), 'Test osoba');
- await user.type(screen.getByLabelText('Firma / djelatnost'), 'Test firma');
+ await user.type(screen.getByLabelText('Ime (opcionalno)'), 'Test osoba');
+ await user.type(screen.getByLabelText('Firma / djelatnost (opcionalno)'), 'Test firma');
  await user.selectOptions(screen.getByLabelText('Šta vam treba?'), 'Webshop');
  await user.type(screen.getByLabelText('Šta želite da vaš web radi bolje?'), 'Prikaz proizvoda i naručivanje.');
  await user.click(screen.getByRole('button',{name:'Pregledaj upit'}));
@@ -100,6 +102,7 @@ async function run(){
  assert.match(await navigator.clipboard.readText(),/Test osoba/);
  assert.equal(screen.getByRole('link',{name:'2. Otvori Instagram'}).getAttribute('href'),'https://www.instagram.com/moststudioba/');
  await user.type(screen.getByRole('textbox',{name:'Vaš upit'}),' Dodatak: kuhinje & pločice?');
+ const editedMessage=screen.getByRole('textbox',{name:'Vaš upit'}).value;
  const emailUrl = new URL(screen.getByRole('link',{name:'Radije email? Otvori poruku'}).getAttribute('href'));
  assert.equal(emailUrl.pathname, 'moststudioba@gmail.com');
  assert.equal(emailUrl.searchParams.get('body'), screen.getByRole('textbox',{name:'Vaš upit'}).value, 'Email must preserve the reviewed Unicode message, including ampersands');
@@ -111,11 +114,13 @@ async function run(){
  assert.match(document.body.textContent,/Kopiranje nije uspjelo/);
  navigator.clipboard.writeText=originalWrite;
  await user.click(screen.getByRole('button',{name:'Uredi podatke'}));
- assert.equal(screen.getByLabelText('Firma / djelatnost').value,'Test firma');
+ assert.equal(screen.getByLabelText('Firma / djelatnost (opcionalno)').value,'Test firma');
  assert.equal(screen.getByLabelText('Šta vam treba?').value,'Webshop');
+ await user.click(screen.getByRole('button',{name:'Pregledaj upit'}));assert.equal(screen.getByRole('textbox',{name:'Vaš upit'}).value,editedMessage,'Manual edits survive back and prepare');
  cleanup();
+ render(React.createElement(ProjectInquiry,{locale:'bs'}));await user.selectOptions(screen.getByLabelText('Šta vam treba?'),'Trebam savjet');await user.type(screen.getByLabelText('Šta želite da vaš web radi bolje?'),'Jasnija ponuda.');await user.click(screen.getByRole('button',{name:'Pregledaj upit'}));assert(screen.getByRole('button',{name:'1. Kopiraj upit'}),'No identity or email required');cleanup();
  render(React.createElement(ProjectInquiry,{locale:'de'}));
- assert(screen.getByLabelText('Unternehmen / Tätigkeit'));
+ assert(screen.getByLabelText('Unternehmen / Tätigkeit (optional)'));
  assert(screen.getByRole('option',{name:'Onlineshop'}));
  assert.match(document.body.textContent,/nicht automatisch/);
  cleanup();
