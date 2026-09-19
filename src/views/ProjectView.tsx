@@ -217,7 +217,7 @@ export function ProjectView({ locale, slug }: { locale: Locale; slug: string }) 
               <p className="mt-4 max-w-[62ch] text-body leading-relaxed text-mist">
                 {dict.projects.wantThisBody}
               </p>
-              <ButtonLink href={path("contact", locale)} tone="dark" className="mt-7">
+              <ButtonLink href={`${path("contact", locale)}#top`} tone="dark" className="mt-7">
                 {dict.nav.cta}
               </ButtonLink>
             </div>

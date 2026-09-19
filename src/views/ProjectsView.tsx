@@ -38,7 +38,7 @@ export function ProjectsView({ locale }: { locale: Locale }) {
           </div>
 
           <div className="mt-14 flex flex-wrap gap-3 border-t border-line-light pt-8">
-            <ButtonLink href={path("contact", locale)}>{dict.services.cta}</ButtonLink>
+            <ButtonLink href={`${path("contact", locale)}#top`}>{dict.services.cta}</ButtonLink>
             <ButtonLink href={path("services", locale)} variant="secondary">
               {dict.nav.services}
             </ButtonLink>

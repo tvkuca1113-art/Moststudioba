@@ -91,7 +91,7 @@ export function ServicesView({ locale }: { locale: Locale }) {
                 {dict.services.scopeNote}
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
-                <ButtonLink href={path("contact", locale)}>{dict.services.cta}</ButtonLink>
+                <ButtonLink href={`${path("contact", locale)}#top`}>{dict.services.cta}</ButtonLink>
                 <ButtonLink href={path("projects", locale)} variant="secondary">
                   {dict.projects.all}
                 </ButtonLink>

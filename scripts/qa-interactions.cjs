@@ -30,6 +30,7 @@ async function run(){
  const main=document.createElement('main');main.inert=false;document.body.appendChild(main);
  Object.defineProperty(window,'scrollY',{value:1800,configurable:true});
  render(React.createElement(Header,{locale:'bs',route:{key:'home'},dict:getDictionary('bs'),tone:'overlay'}));
+ assert.equal(screen.getByRole('link',{name:'Razgovarajmo',exact:true}).getAttribute('href'),'/kontakt#top');
  for (let repeat=0;repeat<3;repeat++) {
   await user.click(screen.getByRole('button',{name:'Otvori meni'}));
   const panel=document.getElementById('mobile-menu');
