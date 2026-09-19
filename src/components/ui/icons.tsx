@@ -98,3 +98,9 @@ export function CopyIcon({ className }: IconProps) {
     </svg>
   );
 }
+
+export function FacebookIcon({ className }: IconProps) {
+  return <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false" className={className}>
+    <path d="M14 22v-9h3l.5-4H14V7c0-1.2.4-2 2-2h2V1.4A24 24 0 0 0 15.1 1C12.2 1 10 2.8 10 6v3H7v4h3v9h4Z" />
+  </svg>;
+}

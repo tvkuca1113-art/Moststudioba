@@ -113,7 +113,7 @@ export const bs = {
     all: "Sva pitanja i odgovori",
     eyebrow: "ČESTA PITANJA",
     title: "Pitanja koja obično dobijemo.",
-    lead: "Ako nešto nije jasno, javite se na Instagramu ili emailom.",
+    lead: "Imate još pitanja? Pišite nam na Instagramu ili Facebooku.",
   },
 
   contact: {
@@ -122,10 +122,10 @@ export const bs = {
     titleLine2: "trebao raditi bolje?",
     lead: "Imate postojeću stranicu ili tek počinjete? Javite nam šta želite predstaviti i kome se obraćate.",
     primaryLabel: "Pišite nam direktno",
-    primaryHint: "Otvorite profil i odaberite Poruka. Ako Instagram zatraži prijavu, prijavite se u svom browseru ili aplikaciji.",
+    primaryHint: "Odaberite Instagram ili Facebook i otvorite poruke. Razgovaramo na bosanskom i njemačkom jeziku.",
     handle: "@moststudioba",
     pageTitle: "Kontakt",
-    pageLead: "Recite nam čime se bavite i šta vaš web treba postići. Javite se na Instagramu ili pripremite projektni upit ispod. Sarađujemo online s firmama širom BiH i u Njemačkoj.",
+    pageLead: "Nova stranica, webshop ili bolji postojeći web? Pišite nam direktno ili sastavite kratak upit. Zajedno ćemo razjasniti šta vam treba, obim i cijenu.",
     responseNote: "Odgovaramo na poruke na bosanskom i njemačkom jeziku.",
   },
 

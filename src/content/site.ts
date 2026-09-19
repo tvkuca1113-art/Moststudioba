@@ -3,7 +3,7 @@ import type { L } from "@/lib/i18n/localized";
 /**
  * Only confirmed facts belong in this file.
  *
- * Confirmed: brand, Instagram, Gmail inbox, online delivery and the two markets.
+ * Confirmed: brand, Instagram, Facebook, Gmail inbox, online delivery and the two markets.
  * No public office, telephone, legal form or client results have been supplied.
  * `MISSING_FOR_LAUNCH.md` tracks what is still needed before going public.
  */
@@ -13,8 +13,8 @@ export const site = {
   email: "moststudioba@gmail.com",
   instagramHandle: "@moststudioba",
   instagramUrl: "https://www.instagram.com/moststudioba/",
-  // Add the owner's confirmed Page URL. Do not guess a Facebook handle.
-  facebookUrl: "" as string,
+  // Exact Facebook destination supplied by the owner. No guessed Messenger handle.
+  facebookUrl: "https://www.facebook.com/share/1HoECngdYP/?mibextid=wwXIfr",
   markets: ["BiH", "Njemačka"],
   /**
    * The canonical URL and the indexing switch live in `@/lib/site-url`: they

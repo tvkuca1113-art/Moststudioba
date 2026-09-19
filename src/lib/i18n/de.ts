@@ -111,7 +111,7 @@ export const de: Dictionary = {
     all: "Alle Fragen und Antworten",
     eyebrow: "HÄUFIGE FRAGEN",
     title: "Fragen, die wir oft bekommen.",
-    lead: "Wenn etwas unklar bleibt, schreiben Sie uns auf Instagram oder per E-Mail.",
+    lead: "Noch Fragen? Schreiben Sie uns auf Instagram oder Facebook.",
   },
 
   contact: {
@@ -120,10 +120,10 @@ export const de: Dictionary = {
     titleLine2: "besser können?",
     lead: "Haben Sie bereits eine Website oder fangen Sie gerade an? Schreiben Sie uns, was Sie zeigen möchten und wen Sie ansprechen.",
     primaryLabel: "Schreiben Sie uns direkt",
-    primaryHint: "Öffnen Sie das Profil und wählen Sie Nachricht. Falls Instagram eine Anmeldung verlangt, melden Sie sich im Browser oder in der App an.",
+    primaryHint: "Wählen Sie Instagram oder Facebook und öffnen Sie die Nachrichten. Wir sprechen Bosnisch und Deutsch.",
     handle: "@moststudioba",
     pageTitle: "Kontakt",
-    pageLead: "Beschreiben Sie Ihr Geschäft und das Ziel Ihrer Website. Schreiben Sie uns auf Instagram oder bereiten Sie unten Ihre Anfrage vor. Wir arbeiten online mit Unternehmen in BiH und Deutschland.",
+    pageLead: "Neue Website, Onlineshop oder ein besserer bestehender Auftritt? Schreiben Sie direkt oder bereiten Sie eine kurze Anfrage vor. Gemeinsam klären wir Bedarf, Umfang und Preis.",
     responseNote: "Wir antworten auf Bosnisch und auf Deutsch.",
   },
 
