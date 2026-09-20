@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 import { ProjectView } from "@/views/ProjectView";
-import { demoProjects, getProject } from "@/content/projects";
+import { demoProjects, getProject, projectSearchCopy } from "@/content/projects";
 import { getDictionary } from "@/lib/i18n/dictionary";
 import { buildMetadata } from "@/lib/seo";
 
@@ -22,8 +22,8 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   return buildMetadata({
     locale,
     route: { key: "project", slug },
-    title: `${project.brand} — ${project.sector[locale]} | ${dict.common.demoBadge}`,
-    description: project.tagline[locale],
+    title: projectSearchCopy[project.key].title[locale],
+    description: projectSearchCopy[project.key].description[locale],
   });
 }
 

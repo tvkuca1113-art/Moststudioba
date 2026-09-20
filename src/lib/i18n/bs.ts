@@ -31,7 +31,7 @@ export const bs = {
     eyebrow: "IZRADA WEB STRANICA · MOSTAR I BiH",
     titleLine1: "Vaš kvalitet.",
     titleLine2: "Vidljiv na webu.",
-    lead: "Izrađujemo web stranice i webshopove za firme iz Mostara, cijele BiH i Njemačke. Jasna ponuda, dobar mobilni doživljaj i jednostavan put do upita. Saradnju vodimo online.",
+    lead: "Pokažite šta nudite, odgovorite na pitanja kupaca i olakšajte prvi upit. Dizajniramo i izrađujemo web stranice i webshopove za firme iz Mostara, cijele BiH i Njemačke. Saradnju vodimo online.",
     ctaPrimary: "Razgovarajmo o projektu",
     ctaSecondary: "Istražite radove",
     support: "Web dizajn · Izrada · Redizajn",
@@ -81,7 +81,7 @@ export const bs = {
     outcome: "Šta vi dobijate",
     cta: "Razgovarajmo o vašem projektu",
     pageLead: "Web dizajn, izrada poslovnih stranica, webshopovi i redizajn za firme u BiH. Odaberite ono što vam treba i pogledajte obim, primjere i način online saradnje.",
-    scopeNote: "Obim, cijenu i rok dogovaramo nakon razgovora o vašem projektu. Ne nudimo pakete s unaprijed određenim cijenama jer se potrebe razlikuju.",
+    scopeNote: "Početna ponuda odnosi se na jednostraničnu prezentaciju s jasno navedenim obimom. Za više stranica, jezika, webshop ili integracije pripremamo zasebnu procjenu. Ukupnu cijenu i rok potvrđujemo prije početka.",
     notOffered: "Šta ne radimo",
     notOfferedLead: "Bolje je da odmah znate. Fokusirani smo na dizajn i izradu stranica i ne preuzimamo poslove koje ne radimo redovno:",
     notOfferedItems: [

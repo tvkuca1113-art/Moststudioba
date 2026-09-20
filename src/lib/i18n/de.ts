@@ -29,7 +29,7 @@ export const de: Dictionary = {
     eyebrow: "WEBDESIGN · BIH + DEUTSCHLAND",
     titleLine1: "Ihre Qualität.",
     titleLine2: "Online sichtbar.",
-    lead: "Wir gestalten Websites und Onlineshops für Unternehmen in Bosnien-Herzegowina und Deutschland. Ein klares Angebot, gute mobile Bedienung und ein einfacher Weg zur Anfrage. Die Zusammenarbeit findet online statt.",
+    lead: "Zeigen Sie Ihr Angebot, beantworten Sie Kundenfragen und erleichtern Sie die erste Anfrage. Wir gestalten und entwickeln Websites und Onlineshops für Unternehmen in Bosnien-Herzegowina und Deutschland. Die Zusammenarbeit findet online statt.",
     ctaPrimary: "Projekt besprechen",
     ctaSecondary: "Arbeiten entdecken",
     support: "Webdesign · Entwicklung · Relaunch",
@@ -79,7 +79,7 @@ export const de: Dictionary = {
     outcome: "Was Sie bekommen",
     cta: "Über Ihr Projekt sprechen",
     pageLead: "Webdesign, Unternehmenswebsites, Onlineshops und Relaunches für Unternehmen in BiH und Deutschland. Finden Sie die passende Leistung mit Umfang, Beispielen und Ablauf der Online-Zusammenarbeit.",
-    scopeNote: "Umfang, Preis und Termin legen wir nach dem Gespräch über Ihr Projekt fest. Wir arbeiten nicht mit Festpreis-Paketen, weil sich die Anforderungen deutlich unterscheiden.",
+    scopeNote: "Das Einstiegsangebot gilt für eine One-Page-Website mit klar beschriebenem Umfang. Weitere Seiten, Sprachen, Onlineshops und Schnittstellen erhalten eine eigene Kalkulation. Gesamtpreis und Termin bestätigen wir vor dem Start.",
     notOffered: "Was wir nicht machen",
     notOfferedLead: "Das sollten Sie gleich wissen. Wir konzentrieren uns auf Design und Entwicklung von Websites und übernehmen keine Aufgaben, die wir nicht regelmäßig machen:",
     notOfferedItems: [

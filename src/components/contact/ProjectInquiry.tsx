@@ -6,6 +6,7 @@ import { FileText, RefreshCw, ShoppingBag, MessageCircle, Check, Copy, ArrowLeft
 import { FacebookIcon, InstagramIcon } from "@/components/ui/icons";
 import { positioning } from "@/content/positioning";
 import { site } from "@/content/site";
+import { inquiryFields } from "@/content/offer";
 import { event as analytics } from "@/lib/analytics";
 import type { Locale } from "@/lib/i18n/config";
 
@@ -15,8 +16,9 @@ const needIcons = [FileText, RefreshCw, ShoppingBag, MessageCircle];
 export function ProjectInquiry({ locale, headingLevel = "h3" }: { locale: Locale; headingLevel?: "h2" | "h3" }) {
   const Heading = headingLevel;
   const c = positioning[locale];
+  const offer = inquiryFields[locale];
   const id = useId();
-  const [values, setValues] = useState({ name: "", company: "", website: "", need: "", details: "" });
+  const [values, setValues] = useState({ name: "", company: "", website: "", need: "", details: "", budget: "", timing: "" });
   const [preview, setPreview] = useState(false);
   const [message, setMessage] = useState("");
   const preparedValues = useRef("");
@@ -49,6 +51,8 @@ export function ProjectInquiry({ locale, headingLevel = "h3" }: { locale: Locale
       values.company.trim() && `${c.company}: ${values.company.trim()}`,
       `${c.need} ${values.need}`,
       values.website.trim() && `${c.website}: ${values.website.trim()}`,
+      values.budget.trim() && `${offer.budget}: ${values.budget.trim()}`,
+      values.timing.trim() && `${offer.timing}: ${values.timing.trim()}`,
       "", values.details.trim(),
     ].filter(Boolean).join("\n"));
     preparedValues.current = signature;
@@ -93,7 +97,7 @@ export function ProjectInquiry({ locale, headingLevel = "h3" }: { locale: Locale
             <textarea id={`${id}-details`} name="details" rows={3} required maxLength={3000} placeholder={c.placeholder} value={values.details} onChange={e => update('details', e.target.value)} className={field} />
           </label>
           <details className="rounded-xl border border-line-light px-4">
-            <summary className="cursor-pointer py-4 text-sm font-medium">{locale === "bs" ? "Dodajte ime, firmu ili link" : "Name, Unternehmen oder Link ergänzen"} <span className="font-normal text-slate">({c.optional})</span></summary>
+            <summary className="cursor-pointer py-4 text-sm font-medium">{locale === "bs" ? "Firma, postojeći web, budžet i rok" : "Unternehmen, Website, Budget und Termin"} <span className="font-normal text-slate">({c.optional})</span></summary>
             <div className="space-y-4 pb-5">
               <div className="grid gap-4 sm:grid-cols-2">
                 {([['name', c.name, 'name'], ['company', c.company, 'organization']] as const).map(([key, label, autocomplete]) => (
@@ -105,6 +109,13 @@ export function ProjectInquiry({ locale, headingLevel = "h3" }: { locale: Locale
               <label htmlFor={`${id}-website`} className="block text-sm font-semibold">{c.website} <span className="font-normal">({c.optional})</span>
                 <input id={`${id}-website`} name="website" inputMode="url" autoComplete="url" maxLength={250} placeholder={locale === "bs" ? "www.primjer.ba" : "www.beispiel.de"} value={values.website} onChange={e => update('website', e.target.value)} className={field} />
               </label>
+              <div className="grid gap-4 sm:grid-cols-2">
+                {([['budget', offer.budget, offer.budgetPlaceholder], ['timing', offer.timing, offer.timingPlaceholder]] as const).map(([key, label, placeholder]) => (
+                  <label key={key} htmlFor={`${id}-${key}`} className="block text-sm font-semibold">{label} <span className="font-normal">({c.optional})</span>
+                    <input id={`${id}-${key}`} name={key} maxLength={120} placeholder={placeholder} value={values[key]} onChange={e => update(key, e.target.value)} className={field} />
+                  </label>
+                ))}
+              </div>
             </div>
           </details>
           <div>

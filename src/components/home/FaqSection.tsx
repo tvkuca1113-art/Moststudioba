@@ -27,7 +27,9 @@ export function FaqSection({
   limit?: number;
 }) {
   const t = translator(locale);
-  const items = limit ? faqItems.slice(0, limit) : faqItems;
+  const priority = ["price", "prepare", "timeline", "after-launch"];
+  const ordered = [...faqItems].sort((a, b) => (priority.includes(a.id) ? priority.indexOf(a.id) : priority.length) - (priority.includes(b.id) ? priority.indexOf(b.id) : priority.length));
+  const items = limit ? ordered.slice(0, limit) : ordered;
   const truncated = items.length < faqItems.length;
 
   return (

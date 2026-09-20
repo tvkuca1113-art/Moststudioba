@@ -6,6 +6,7 @@ import { path, type Locale } from "@/lib/i18n/config";
 import type { Dictionary } from "@/lib/i18n/dictionary";
 import { sectionIds } from "@/lib/nav";
 import { ServiceLinks } from "./ServiceLinks";
+import { PricingOffer } from "@/components/services/PricingOffer";
 
 /** One concise choice per service; detailed scope has its own crawlable page. */
 export function ServicesSection({ locale, dict }: { locale: Locale; dict: Dictionary }) {
@@ -26,6 +27,7 @@ export function ServicesSection({ locale, dict }: { locale: Locale; dict: Dictio
         />
 
         <div className="mt-8"><ServiceLinks locale={locale} /></div>
+        <div className="mt-8"><PricingOffer locale={locale} contactHref={`#${sectionIds.contact}`} /></div>
         <details className="mt-6 rounded-xl border border-line-light p-5 open:bg-paper">
           <summary className="cursor-pointer text-lg font-semibold">{positioning[locale].craftTitle}</summary>
           <dl className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

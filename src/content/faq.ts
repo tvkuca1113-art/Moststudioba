@@ -1,4 +1,5 @@
 import type { L } from "@/lib/i18n/localized";
+import { starterOffer } from "./offer";
 
 export type FaqItem = {
   id: string;
@@ -78,21 +79,19 @@ export const faqItems: FaqItem[] = [
   {
     id: "price",
     question: {
-      bs: "Od čega zavisi cijena?",
-      de: "Wovon hängt der Preis ab?",
+      bs: "Koliko košta izrada i šta ulazi u početnu cijenu?",
+      de: "Was kostet die Website und was ist im Einstieg enthalten?",
     },
     answer: {
       bs: [
-        "Od obima: koliko stranica i sekcija ima, koliko sadržaja treba oblikovati i da li je potreban rad na tekstovima i fotografijama.",
-        "Od jezika: dvojezična stranica traži više posla od jednojezične.",
-        "Od funkcionalnosti i integracija: jednostavan kontakt link nije isto što i obrazac, rezervacija termina ili povezivanje s postojećim sistemom.",
-        "Cijenu dajemo tek kada znamo šta stranica treba sadržavati. Ne objavljujemo unaprijed određene pakete.",
+        `Jednostranična prezentacija počinje od ${starterOffer.bs.price}: do pet sekcija, jedan jezik, vaši gotovi tekstovi i fotografije, mobilni prikaz, kontakt linkovi, osnovna SEO priprema i jedan krug korekcija.`,
+        starterOffer.bs.separate,
+        "Više sadržaja, jezika i funkcija znači drugačiji obim. Ukupnu cijenu, uključene stavke i rok potvrđujemo u pisanoj ponudi prije početka.",
       ],
       de: [
-        "Vom Umfang: wie viele Seiten und Abschnitte es gibt, wie viel Inhalt zu gestalten ist und ob an Texten und Fotos gearbeitet werden muss.",
-        "Von den Sprachen: eine zweisprachige Website bedeutet mehr Arbeit als eine einsprachige.",
-        "Von Funktionen und Integrationen: ein einfacher Kontaktlink ist etwas anderes als ein Formular, eine Terminbuchung oder die Anbindung an ein bestehendes System.",
-        "Einen Preis nennen wir erst, wenn feststeht, was die Website enthalten soll. Wir veröffentlichen keine vorgefertigten Pakete.",
+        `Eine One-Page-Website beginnt ab ${starterOffer.de.price}: bis zu fünf Abschnitte, eine Sprache, Ihre fertigen Texte und Bilder, mobiles Layout, Kontaktlinks, SEO-Grundlagen und eine Korrekturrunde.`,
+        starterOffer.de.separate,
+        "Weitere Inhalte, Sprachen und Funktionen verändern den Umfang. Gesamtpreis, Leistungen und Termin bestätigen wir vor dem Start im schriftlichen Angebot.",
       ],
     },
   },
@@ -113,6 +112,14 @@ export const faqItems: FaqItem[] = [
         "Der häufigste Grund für Verzögerungen ist nicht die Umsetzung, sondern das Warten auf Texte, Fotos und Rückmeldungen. Deshalb schreiben wir in jedem Schritt klar, was wir von Ihnen brauchen.",
         "Einen konkreten Termin vereinbaren wir, sobald der Umfang feststeht. Vorher nennen wir keine Frist.",
       ],
+    },
+  },
+  {
+    id: "after-launch",
+    question: { bs: "Šta dobijamo pri predaji i šta slijedi nakon objave?", de: "Was erhalten wir bei der Übergabe und nach dem Start?" },
+    answer: {
+      bs: ["Prije početka u ponudi definišemo domenu, hosting, pristupe, datoteke i eventualni sistem za uređivanje. Pri predaji prolazimo kontakt, linkove i dogovorene funkcije te objašnjavamo kako tražiti buduće izmjene.", "Domena i hosting imaju svoje troškove. Održavanje, nove funkcije i kontinuirani SEO dogovaraju se zasebno; nisu automatski uključeni u jednokratnu izradu."],
+      de: ["Vor dem Start halten wir Domain, Hosting, Zugänge, Dateien und ein mögliches Redaktionssystem im Angebot fest. Bei der Übergabe prüfen wir Kontakt, Links und vereinbarte Funktionen und erklären, wie spätere Änderungen beauftragt werden.", "Domain und Hosting verursachen eigene Kosten. Wartung, neue Funktionen und laufende SEO werden separat vereinbart; sie sind nicht automatisch im einmaligen Erstellungspreis enthalten."],
     },
   },
   {

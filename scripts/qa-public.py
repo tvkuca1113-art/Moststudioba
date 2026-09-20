@@ -1,5 +1,5 @@
 """Read-only HTTP verification of the live release; run after deployment."""
-import concurrent.futures, json, pathlib, re, sys, time, urllib.request, xml.etree.ElementTree as ET
+import concurrent.futures, json, pathlib, re, sys, time, urllib.request, urllib.error, xml.etree.ElementTree as ET
 origin='https://moststudioba.com'
 stage=sys.argv[1] if len(sys.argv)>1 else 'after'
 out=pathlib.Path(sys.argv[2] if len(sys.argv)>2 else 'qa/evidence/2026-09-18');out.mkdir(parents=True,exist_ok=True)
@@ -26,13 +26,17 @@ expected_urls=[e.text for e in expected.findall('s:url/s:loc',ns)]
 assert set(urls)==set(expected_urls), 'Live sitemap must match the tested build'
 assert '<lastmod>' not in sitemap['body'];assert 'Allow: /' in robots['body'];assert 'Disallow: /' not in robots['body']
 def verify(url):
- d=get(url);html=d.pop('body');d.pop('headers')
+ d=get(url);html=d.pop('body');headers={key.lower():value for key,value in d.pop('headers').items()}
+ assert d['status']==200 and d['final'].rstrip('/')==url.rstrip('/'),(url,'Sitemap URL must be the final 200 destination')
+ assert not re.search(r'\b(noindex|none)\b',headers.get('x-robots-tag',''),re.I),(url,'HTTP header forbids indexing')
+ assert 'text/html' in headers.get('content-type',''),(url,'HTML required')
+ d['x_robots_tag']=headers.get('x-robots-tag','')
  canonical=re.search(r'<link rel="canonical" href="([^"]+)"',html).group(1)
  head=html.split('</head>',1)[0]
  assert canonical.rstrip('/')==url.rstrip('/'),(url,canonical)
  assert '<meta name="google-site-verification" content="eExoCdIgROmTlK9gPPFqpIQpTvrDImDbRYYXujw_kz4"' in head
  assert len(re.findall(r'<h1\b',html))==1,url
- assert not re.search(r'<meta name="robots" content="[^"]*noindex',html),url
+ assert not re.search(r'<meta name="(?:robots|googlebot)" content="[^"]*\b(?:noindex|none)\b',html,re.I),url
  d['title']=re.search(r'<title>(.*?)</title>',html).group(1)
  d['canonical']=canonical;d['hreflang']=re.findall(r'<link rel="alternate" hrefLang="([^"]+)" href="([^"]+)"',html)
  assert len(d['hreflang'])==3,(url,d['hreflang'])

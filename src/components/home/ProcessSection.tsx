@@ -38,8 +38,8 @@ export function ProcessSection({
   const t = translator(locale);
   const compact = variant === "compact";
   const summaries = locale === "bs"
-    ? ["Definišemo cilj, publiku i potrebne funkcije.", "Usklađujemo strukturu, obim i vizuelni smjer.", "Izrađujemo stranicu koju pregledate u toku rada.", "Provjeravamo tokove, unosimo dorade i objavljujemo."]
-    : ["Ziel, Zielgruppe und benötigte Funktionen klären.", "Struktur, Umfang und Gestaltung abstimmen.", "Die Website umsetzen und gemeinsam prüfen.", "Abläufe testen, Details verbessern und veröffentlichen."];
+    ? ["Dobijate prijedlog glavnog cilja i potrebnih funkcija.", "Dobijate strukturu, vizuelni smjer i pisanu ponudu.", "Dobijate radnu verziju i dogovoreni krug povratnih informacija.", "Prolazimo provjere, objavljujemo i predajemo dogovorene pristupe."]
+    : ["Sie erhalten einen Vorschlag für Ziel und benötigte Funktionen.", "Sie erhalten Struktur, Gestaltungsrichtung und ein schriftliches Angebot.", "Sie erhalten eine Arbeitsversion und die vereinbarte Feedbackrunde.", "Wir prüfen die Abläufe, veröffentlichen und übergeben vereinbarte Zugänge."];
 
   return (
     <Section id={sectionIds.process} tone="forest" labelledBy="process-title">

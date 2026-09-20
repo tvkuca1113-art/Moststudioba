@@ -5,8 +5,8 @@ import { path, type Locale } from "@/lib/i18n/config";
 
 export function ServiceLinks({ locale }: { locale: Locale }) {
   const descriptions = locale === "bs"
-    ? ["Predstavite usluge i olakšajte prvi upit.", "Katalog, izbor proizvoda i tok narudžbe.", "Bolji sadržaj, mobilni UX i plan migracije."]
-    : ["Leistungen vorstellen und Anfragen erleichtern.", "Katalog, Produktauswahl und Bestellablauf.", "Bessere Inhalte, mobile Nutzung und Migration."];
+    ? ["Kupac razumije šta nudite i kako da vam se javi. Struktura, sadržaj, mobilni dizajn i objava.", "Kupac pronalazi proizvod i završava narudžbu. Katalog, varijante, korpa i dogovorene integracije.", "Postojeći web prati vaš posao. Pregled problema, jasnija ponuda i plan očuvanja važnih URL-ova."]
+    : ["Kunden verstehen Ihr Angebot und finden den Kontakt. Struktur, Inhalte, mobiles Design und Veröffentlichung.", "Kunden finden Produkte und schließen die Bestellung ab. Katalog, Varianten, Warenkorb und vereinbarte Schnittstellen.", "Die bestehende Website passt zu Ihrem Geschäft. Bestandsaufnahme, ein klareres Angebot und ein Plan für wichtige URLs."];
   return (
     <nav aria-label={locale === "bs" ? "Detalji usluga" : "Leistungen im Detail"} className="grid gap-3 md:grid-cols-3">
       {(["website", "webshop", "redesign"] as const).map((key, i) => <Link key={key} href={path(key, locale)} className="group flex flex-col rounded-xl border border-line-light bg-paper p-5 transition-colors hover:border-forest">

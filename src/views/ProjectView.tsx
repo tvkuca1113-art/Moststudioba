@@ -220,6 +220,11 @@ export function ProjectView({ locale, slug }: { locale: Locale; slug: string }) 
               <ButtonLink href={`${path("contact", locale)}#top`} tone="dark" className="mt-7">
                 {dict.nav.cta}
               </ButtonLink>
+              <p className="mt-5 text-sm leading-relaxed text-mist">
+                <Link href={path("website", locale)} className="underline underline-offset-4 hover:text-lime">{locale === "bs" ? "Šta obuhvata izrada web stranice" : "Was die Website-Erstellung umfasst"}</Link>
+                <span aria-hidden="true"> · </span>
+                <Link href={path("pricing", locale)} className="underline underline-offset-4 hover:text-lime">{locale === "bs" ? "Cijena i planiranje budžeta" : "Kosten und Budgetplanung"}</Link>
+              </p>
             </div>
             <Link
               href={path("project", locale, next.slug)}

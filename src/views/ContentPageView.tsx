@@ -2,6 +2,7 @@ import Link from "next/link";
 import { SiteFrame } from "@/components/layout/SiteFrame";
 import { SocialContact } from "@/components/contact/SocialContact";
 import { ProjectInquiry } from "@/components/contact/ProjectInquiry";
+import { PricingOffer } from "@/components/services/PricingOffer";
 import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
@@ -45,6 +46,7 @@ export function ContentPageView({ pageKey, locale }: { pageKey: ContentPageKey; 
           </div>
         </Container>
       </Section>
+      {(pageKey === "pricing" || pageKey === "website") && <Section tone="paper" size="tight"><Container><PricingOffer locale={locale} contactHref="#projektni-upit" showGuide={pageKey !== "pricing"} /></Container></Section>}
       <Section tone="paperDim" size="tight">
         <Container>
           <div className="grid gap-9 lg:grid-cols-[minmax(0,0.6fr)_minmax(0,1.4fr)] lg:gap-20">

@@ -3,6 +3,22 @@ import type { L } from "@/lib/i18n/localized";
 
 export type DemoKey = "clinic" | "trades" | "advisory";
 
+/** Search snippets identify these as our web work, never as operating demo businesses. */
+export const projectSearchCopy: Record<DemoKey, { title: L; description: L }> = {
+  trades: {
+    title: { bs: "Web dizajn za stolariju: demo Hrast | MOST Studio", de: "Webdesign für Tischlereien: Demo Hrast | MOST Studio" },
+    description: { bs: "Kako smo osmislili web za stolariju: pregled radova, izbor materijala i konfigurator za konkretniji upit. Isprobajte demo koncept MOST Studija.", de: "Unser Webkonzept für eine Tischlerei: Arbeiten, Materialauswahl und Konfigurator für konkretere Anfragen. MOST Studio Demo testen." },
+  },
+  clinic: {
+    title: { bs: "Web dizajn za stomatologe: demo Lipa | MOST Studio", de: "Webdesign für Zahnarztpraxen: Demo Lipa | MOST Studio" },
+    description: { bs: "Web koncept za stomatološku ordinaciju: razumljive usluge i probni odabir termina. Pogledajte UX odluke i isprobajte demo Lipa koji je izradio MOST Studio.", de: "Website-Konzept für eine Zahnarztpraxis: verständliche Leistungen und eine Test-Terminwahl. UX-Entscheidungen ansehen und MOST Studio Demo Lipa testen." },
+  },
+  advisory: {
+    title: { bs: "Web dizajn za savjetnike: demo Meridijan | MOST Studio", de: "Webdesign für Beratung: Demo Meridijan | MOST Studio" },
+    description: { bs: "Web koncept za poslovno savjetovanje: jasna ponuda i interaktivna procjena potreba prije razgovora. Isprobajte demo Meridijan koji je izradio MOST Studio.", de: "Webkonzept für Unternehmensberatung: ein klares Angebot und interaktive Bedarfsklärung vor dem Gespräch. MOST Studio Demo Meridijan ausprobieren." },
+  },
+};
+
 export type Decision = { title: L; body: L };
 
 /**
