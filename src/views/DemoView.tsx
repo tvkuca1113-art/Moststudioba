@@ -53,27 +53,17 @@ export function DemoView({ locale, slug }: { locale: Locale; slug: string }) {
         </div>
       </header>
       <div data-most-chrome className="bg-ink text-paper on-dark">
-        <div className="mx-auto flex w-full max-w-[110rem] flex-wrap items-center justify-between gap-3 px-4 py-3 sm:px-6">
-          <div className="flex items-center gap-4">
-            <span className="rounded-full bg-lime px-3 py-1 text-[0.8125rem] font-bold tracking-[0.14em] text-ink uppercase sm:text-sm">
-              {dict.demoChrome.bannerTitle}
-            </span>
+        <div className="mx-auto w-full max-w-[110rem] px-4 py-3 sm:px-6">
+          <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1">
+            <span className="rounded-full bg-lime px-3 py-1 text-xs font-bold tracking-[0.1em] text-ink uppercase">{dict.demoChrome.bannerTitle}</span>
+            {capability && <a href={`#${capability.anchor}`} className="inline-flex min-h-11 items-center gap-2 text-[0.8125rem] font-semibold text-lime underline underline-offset-4">{capability.action}<ArrowRight className="size-4" /></a>}
           </div>
-
-          <div className="flex flex-wrap items-center gap-x-5 gap-y-1">
-            {capability && <a href={`#${capability.anchor}`} className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-lime underline underline-offset-4">{capability.action}<ArrowRight className="size-4" /></a>}
-            <a
-              href={path("project", locale, project.slug)}
-              className="inline-flex min-h-11 items-center gap-2 text-sm font-medium text-mist hover:text-paper"
-            >
-              {dict.demoChrome.backToCase}
-              <ArrowRight className="size-4" />
-            </a>
-          </div>
+          <details className="text-[0.8125rem] leading-relaxed text-mist">
+            <summary className="flex min-h-11 cursor-pointer items-center underline decoration-mist/40 underline-offset-4">{locale === "bs" ? "O ovom demu · izmišljena firma" : "Über dieses Demo · fiktives Unternehmen"}</summary>
+            <p className="max-w-3xl pb-2">{dict.demoChrome.bannerBody}</p>
+            <a href={path("project", locale, project.slug)} className="inline-flex min-h-11 items-center gap-2 font-medium hover:text-paper">{dict.demoChrome.backToCase}<ArrowRight className="size-4" /></a>
+          </details>
         </div>
-        <p className="mx-auto w-full max-w-[110rem] px-4 pb-3 text-[0.8125rem] leading-relaxed text-mist sm:px-6">
-          {dict.demoChrome.bannerBody}
-        </p>
       </div>
 
       <main id="demo" className="@container">

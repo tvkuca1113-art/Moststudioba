@@ -267,8 +267,8 @@ export const demoProjects: DemoProject[] = [
           de: "Das Angebot steht schon auf dem ersten Bildschirm.",
         },
         body: {
-          bs: "Naslov kaže vrstu ordinacije i grad, a odmah ispod stoji koliko traje prvi pregled. Pacijent ne mora skrolati da bi znao je li na pravom mjestu.",
-          de: "Die Überschrift nennt Art der Praxis und Ort, direkt darunter steht die Dauer der ersten Untersuchung. Niemand muss scrollen, um zu wissen, ob er richtig ist.",
+          bs: "Uvod jasno predstavlja stomatološku ordinaciju i odmah vodi do odabira termina. U toku zakazivanja pacijent vidi uslugu i njeno trajanje prije izbora datuma.",
+          de: "Der Einstieg stellt die Zahnarztpraxis vor und führt direkt zur Terminauswahl. Im Buchungsablauf sind Leistung und Dauer sichtbar, bevor ein Datum gewählt wird.",
         },
       },
       {
