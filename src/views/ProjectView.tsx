@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { LiveDemoPreview } from "@/components/demos/LiveDemoPreview";
+import { demoCapability } from "@/content/demo-capabilities";
 import { ProjectVisit } from "@/components/ui/ProjectVisit";
 import { Photo } from "@/components/media/Photo";
 import { Shot } from "@/components/media/Shot";
@@ -30,6 +32,7 @@ export function ProjectView({ locale, slug }: { locale: Locale; slug: string }) 
   const t = translator(locale);
   const next = nextProject(slug);
   const demoHref = path("demo", locale, project.slug);
+  const capability = demoCapability(slug, locale);
   const decisions = project.decisions.slice(0, 3);
 
   return (
@@ -63,7 +66,7 @@ export function ProjectView({ locale, slug }: { locale: Locale; slug: string }) 
             </div>
             <div className="flex flex-wrap gap-3">
               <TrackedLink
-                href={demoHref}
+                href={`${demoHref}#${capability?.anchor ?? "demo"}`}
                 track={["open_demo", { project: project.slug, locale, from: "project" }]}
                 className={buttonClass()}
               >
@@ -135,31 +138,7 @@ export function ProjectView({ locale, slug }: { locale: Locale; slug: string }) 
           <h2 id="views-title" className="text-title leading-[1.05]">
             {dict.projects.views}
           </h2>
-          <div className="mt-10 grid gap-8 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)] lg:items-start lg:gap-10">
-            <figure>
-              <Shot
-                slug={project.slug}
-                locale={locale}
-                device="desktop"
-                alt={`${dict.projects.shotAlt} — ${project.brand}`}
-                sizes="(max-width: 1024px) 100vw, 58vw"
-              />
-              <figcaption className="mt-3 text-[0.9375rem] text-mist">{dict.projects.shotDesktop}</figcaption>
-            </figure>
-            <figure>
-              <Shot
-                slug={project.slug}
-                locale={locale}
-                device="mobile"
-                alt={`${dict.projects.shotAlt} — ${project.brand}`}
-                sizes="(max-width: 1024px) 60vw, 30vw"
-                className="mx-auto max-w-[17rem]"
-              />
-              <figcaption className="mt-3 text-center text-[0.9375rem] text-mist lg:text-left">
-                {dict.projects.shotMobile}
-              </figcaption>
-            </figure>
-          </div>
+          <LiveDemoPreview slug={slug} locale={locale} brand={project.brand} />
         </Container>
       </Section>
 
@@ -178,7 +157,7 @@ export function ProjectView({ locale, slug }: { locale: Locale; slug: string }) 
                 {t(project.tryIt.body)}
               </p>
               <TrackedLink
-                href={demoHref}
+                href={`${demoHref}#${capability?.anchor ?? "demo"}`}
                 track={["open_demo", { project: project.slug, locale, from: "project" }]}
                 className={buttonClass("primary", "light", "mt-7")}
               >

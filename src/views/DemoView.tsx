@@ -4,6 +4,7 @@ import { demoComponents } from "@/components/demos/registry";
 import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
 import { Wordmark } from "@/components/ui/Wordmark";
 import { ArrowRight } from "@/components/ui/icons";
+import { demoCapability } from "@/content/demo-capabilities";
 import { getProject } from "@/content/projects";
 import { path, type Locale } from "@/lib/i18n/config";
 import { getDictionary } from "@/lib/i18n/dictionary";
@@ -19,6 +20,7 @@ export function DemoView({ locale, slug }: { locale: Locale; slug: string }) {
   const project = getProject(slug);
   if (!project) notFound();
 
+  const capability = demoCapability(slug, locale);
   const dict = getDictionary(locale);
   const Demo = demoComponents[project.key];
   const homeHref = `${path("home", locale)}#top`;
@@ -58,7 +60,8 @@ export function DemoView({ locale, slug }: { locale: Locale; slug: string }) {
             </span>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-1">
+            {capability && <a href={`#${capability.anchor}`} className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-lime underline underline-offset-4">{capability.action}<ArrowRight className="size-4" /></a>}
             <a
               href={path("project", locale, project.slug)}
               className="inline-flex min-h-11 items-center gap-2 text-sm font-medium text-mist hover:text-paper"

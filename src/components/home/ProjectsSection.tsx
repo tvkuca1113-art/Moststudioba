@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ProjectSelector } from "@/components/home/ProjectSelector";
 import { Shot } from "@/components/media/Shot";
+import { demoCapability } from "@/content/demo-capabilities";
 import { positioning } from "@/content/positioning";
 import { Container } from "@/components/ui/Container";
 import { Section, SectionHeading } from "@/components/ui/Section";
@@ -50,7 +51,8 @@ export function ProjectCard({
   const c = positioning[locale];
   const story = c.cases[demoProjects.findIndex(item => item.slug === project.slug)];
   const caseHref = path("project", locale, project.slug);
-  const demoHref = path("demo", locale, project.slug);
+  const capability = demoCapability(project.slug, locale);
+  const demoHref = `${path("demo", locale, project.slug)}#${capability?.anchor ?? "demo"}`;
   const titleId = `project-${project.slug}`;
   const ctaId = `project-${project.slug}-cta`;
 
@@ -120,7 +122,7 @@ export function ProjectCard({
             track={["open_demo", { project: project.slug, locale, from: "portfolio" }]}
             className="relative inline-flex min-h-11 items-center gap-2 text-[0.9375rem] font-medium text-slate underline decoration-slate/30 underline-offset-4 hover:text-forest"
           >
-            {dict.projects.tryDemo}
+            {capability?.action ?? dict.projects.tryDemo}
           </TrackedLink>
         </div>
       </div>

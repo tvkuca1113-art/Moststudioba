@@ -1,4 +1,4 @@
-import { Shot } from "@/components/media/Shot";
+import { CapabilityShowcase } from "./CapabilityShowcase";
 import { ArchMark } from "@/components/ui/ArchMark";
 import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
@@ -56,16 +56,7 @@ export function Hero({ locale, dict }: { locale: Locale; dict: Dictionary }) {
           </div>
         </div>
 
-        <div className="mt-10 grid items-center gap-5 border-t border-line-dark pt-6 lg:grid-cols-[0.55fr_1fr] lg:gap-12">
-          <div>
-            <p className="text-xs font-semibold tracking-[.18em] text-lime uppercase">{locale === "bs" ? "Dizajn koji možete isprobati" : "Design zum Ausprobieren"}</p>
-            <p className="mt-3 hidden text-title leading-tight lg:block">{locale === "bs" ? "Lijep prvi dojam. Jasan sljedeći korak." : "Ein guter erster Eindruck. Ein klarer nächster Schritt."}</p>
-            <p className="mt-3 hidden text-sm text-mist lg:block">{locale === "bs" ? "Hrast · naš demo koncept stolarije" : "Hrast · unser Tischlerei-Demokonzept"}</p>
-          </div>
-          <div className="min-w-0 rounded-xl">
-            <Shot slug="stolarija-hrast" locale={locale} device="desktop" alt={dict.hero.figureLabel} sizes="(max-width: 1024px) 100vw, 60vw" priority />
-          </div>
-        </div>
+        <CapabilityShowcase locale={locale} />
       </Container>
     </section>
   );

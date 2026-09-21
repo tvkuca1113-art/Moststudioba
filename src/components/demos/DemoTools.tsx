@@ -10,6 +10,7 @@ import { Photo } from "@/components/media/Photo";
 import { ArrowRight, CheckIcon } from "@/components/ui/icons";
 import { tradesContent, type WoodFinish } from "@/content/demos/trades";
 import { saveText, TextExport } from "./TextExport";
+import { FurnitureComparison } from "./FurnitureComparison";
 import { FurniturePreview } from "./FurniturePreview";
 import { advisoryContent } from "@/content/demos/advisory";
 import {
@@ -283,6 +284,7 @@ export function FurnitureConfigurator({ locale }: { locale: Locale }) {
           <DemoNote locale={locale} />
         </aside>
       </div>
+      <FurnitureComparison locale={locale} current={{ room, finish, dimension, extras, roomLabel, materialLabel: t(material.name), services: extraOptions.filter(([id]) => extras.includes(id)).map(([, label]) => label) }} onRestore={(variant) => { setRoom(variant.room); setFinish(variant.finish); setDimension(variant.dimension); setExtras([...variant.extras]); setSaved(false); }} />
       <Faq
         items={
           de
@@ -362,8 +364,11 @@ export function AppointmentBooking({ locale }: { locale: Locale }) {
     interacted.current = true;
     setDone(true);
   };
+  const receiptText = `MOST STUDIO — LIPA DEMO\n\n${services[service]}\n${dateLabel(dates[day])} · ${slot}\n${durations[service]} min\n${name} · ${email}\n\n${de ? "Keine echte Reservierung. Es wurde keine E-Mail versendet." : "Probni termin. Nije stvarna rezervacija i email nije poslan."}`;
+  const [receiptSaved, setReceiptSaved] = useState(false);
   const reset = () => {
     interacted.current = true;
+    setReceiptSaved(false);
     setDone(false);
     setStep(0);
     setSlot("");
@@ -591,11 +596,18 @@ export function AppointmentBooking({ locale }: { locale: Locale }) {
               <p className={s.fine}>
                 {name} · {email}
               </p>
+              <dl className={s.receipt}>
+                <div><dt>{de ? "Leistung" : "Usluga"}</dt><dd>{services[service]}</dd></div>
+                <div><dt>{de ? "Termin" : "Termin"}</dt><dd>{dateLabel(dates[day])} · {slot}</dd></div>
+                <div><dt>{de ? "Dauer" : "Trajanje"}</dt><dd>{durations[service]} min</dd></div>
+              </dl>
               <div className={s.actions}>
-                <button type="button" className={s.action} onClick={reset}>
-                  {de ? "Erneut ausprobieren" : "Isprobaj ponovo"}
-                </button>
+                <button type="button" className={s.action} onClick={() => { saveText("MOST-Lipa-probni-termin.txt", receiptText); setReceiptSaved(true); }}>{de ? "Bestätigung herunterladen" : "Preuzmi probnu potvrdu"}</button>
+                <button type="button" className={`${s.action} ${s.secondary}`} onClick={() => { interacted.current = true; setDone(false); setReceiptSaved(false); setStep(1); }}>{de ? "Termin ändern" : "Izmijeni probni termin"}</button>
+                <button type="button" className={`${s.action} ${s.secondary}`} onClick={reset}>{de ? "Erneut ausprobieren" : "Isprobaj ponovo"}</button>
               </div>
+              <p role="status" className={s.fine}>{receiptSaved ? (de ? "Download gestartet. Alternativ können Sie die Zusammenfassung unten kopieren." : "Pokrenuto je preuzimanje. Sažetak možete i kopirati ispod.") : ""}</p>
+              <TextExport locale={locale} text={receiptText} />
             </div>
           )}
         </div>
@@ -706,7 +718,12 @@ export function AdvisoryPlanner({ locale }: { locale: Locale }) {
     setCadence("4");
     setSaved(false);
   };
-  const summaryText = done && area ? `MOST STUDIO — MERIDIJAN DEMO\n\n${t(area.name)}\n\n${questions.map((q, i) => `${t(q.text)}\n${t(q.options.find((o) => o.area === answers[i])!.text)}`).join("\n\n")}\n\n${t(area.meeting).join("\n")}\n\n${cadence} ${de ? "Wochen — Beispielrhythmus, keine verbindliche Zusage." : `${cadence === "6" ? "sedmica" : "sedmice"} — pokazni raspored, nije obavezujuća ponuda.`}` : "";
+  const milestones = [
+    { when: de ? "Start" : "Početak", title: de ? "Ausgangslage" : "Polazno stanje", body: area ? t(area.meeting)[0] : "" },
+    { when: `${de ? "Woche" : "Sedmica"} ${Math.ceil(Number(cadence) / 2)}`, title: de ? "Schwerpunkt prüfen" : "Provjera prioriteta", body: area ? t(area.meeting)[1] : "" },
+    { when: `${de ? "Woche" : "Sedmica"} ${cadence}`, title: de ? "Nächste Schritte" : "Naredni koraci", body: area ? t(area.meeting)[2] : "" },
+  ];
+  const summaryText = done && area ? `MOST STUDIO — MERIDIJAN DEMO\n\n${t(area.name)}\n\n${questions.map((q, i) => `${t(q.text)}\n${t(q.options.find((o) => o.area === answers[i])!.text)}`).join("\n\n")}\n\n${milestones.map(m => `${m.when} · ${m.title}\n${m.body}`).join("\n\n")}\n\n${cadence} ${de ? "Wochen — Beispielrhythmus, keine verbindliche Zusage." : `${cadence === "6" ? "sedmica" : "sedmice"} — pokazni raspored, nije obavezujuća ponuda.`}` : "";
   const download = () => {
     if (!summaryText) return;
     saveText("MOST-Meridijan-plan.txt", summaryText);
@@ -841,6 +858,9 @@ export function AdvisoryPlanner({ locale }: { locale: Locale }) {
                   ))}
                 </div>
               </fieldset>
+              <ol className={s.roadmap} aria-label={de ? "Phasen der Zusammenarbeit" : "Faze saradnje"} aria-live="polite">
+                {milestones.map(m => <li key={m.title}><span>{m.when}</span><div><strong>{m.title}</strong><p>{m.body}</p></div></li>)}
+              </ol>
               <div className={s.actions}>
                 <button type="button" className={s.action} onClick={download}>
                   {de ? "Plan herunterladen" : "Preuzmi plan"}
