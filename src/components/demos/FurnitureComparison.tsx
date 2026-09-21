@@ -16,7 +16,9 @@ export function FurnitureComparison({ current, locale, onRestore }: { current: F
     if (duplicate) { setMessage(de ? "Diese Variante ist bereits im Vergleich. Ändern Sie Ihre Auswahl für eine zweite Variante." : "Ova varijanta je već u poređenju. Promijenite odabir za drugu varijantu."); return; }
     if (variants.length === 2) return;
     setVariants([...variants, { ...current, extras: [...current.extras], services: [...current.services] }]);
-    setMessage(de ? "Variante hinzugefügt. Sie können Ihre Auswahl oben weiter anpassen." : "Varijanta je dodana. Sada možete promijeniti odabir iznad i dodati drugu.");
+    setMessage(variants.length === 0
+      ? (de ? "Variante hinzugefügt. Sie können Ihre Auswahl oben weiter anpassen." : "Varijanta je dodana. Sada možete promijeniti odabir iznad i dodati drugu.")
+      : (de ? "Beide Varianten sind bereit. Wählen Sie eine aus oder entfernen Sie eine Variante für einen neuen Vergleich." : "Obje varijante su spremne. Odaberite jednu ili uklonite varijantu za novo poređenje."));
   }
   return <section className={s.compare} aria-labelledby="variant-comparison-title">
     <div className={s.compareHeader}>

@@ -827,14 +827,6 @@ export function AdvisoryPlanner({ locale }: { locale: Locale }) {
                 {t(area.name)}
               </h3>
               <p className={s.toolLead}>{t(area.body)}</p>
-              <ol className={s.planList}>
-                {t(area.meeting).map((item, i) => (
-                  <li key={item}>
-                    <span>0{i + 1}</span>
-                    {item}
-                  </li>
-                ))}
-              </ol>
               <fieldset>
                 <legend className={s.legend}>
                   {de
