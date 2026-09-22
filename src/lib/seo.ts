@@ -73,6 +73,7 @@ export function organizationJsonLd(locale: Locale, description: string) {
         "@type": "Organization",
         "@id": `${siteUrl}/#organization`,
         name: site.name,
+        alternateName: site.instagramHandle.replace(/^@/, ""),
         logo: absoluteUrl("/icon.svg"),
         url: siteUrl,
         email: site.email,
@@ -87,6 +88,9 @@ export function organizationJsonLd(locale: Locale, description: string) {
         "@id": `${siteUrl}/#website`,
         url: siteUrl,
         name: site.name,
+        // Existing public handle and domain distinguish this studio from namesakes.
+        // This is a site-name preference, not a ranking or indexing guarantee.
+        alternateName: [site.instagramHandle.replace(/^@/, ""), new URL(siteUrl).hostname],
         inLanguage: ["bs", "de"],
         publisher: { "@id": `${siteUrl}/#organization` },
       },
