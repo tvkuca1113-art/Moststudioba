@@ -29,7 +29,7 @@ export const de: Dictionary = {
     eyebrow: "WEBDESIGN · BIH + DEUTSCHLAND",
     titleLine1: "Ihre Qualität.",
     titleLine2: "Online sichtbar.",
-    lead: "Zeigen Sie Ihr Angebot, beantworten Sie Kundenfragen und erleichtern Sie die erste Anfrage. Wir gestalten und entwickeln Websites und Onlineshops für Unternehmen in Bosnien-Herzegowina und Deutschland. Die Zusammenarbeit findet online statt.",
+    lead: "Websites und Onlineshops, die Ihr Angebot verständlich machen und die erste Anfrage erleichtern. Für Unternehmen in Bosnien-Herzegowina und Deutschland. Von der Planung bis zur Veröffentlichung — online.",
     ctaPrimary: "Projekt besprechen",
     ctaSecondary: "Arbeiten entdecken",
     support: "Webdesign · Entwicklung · Relaunch",

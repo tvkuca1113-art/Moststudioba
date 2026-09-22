@@ -39,7 +39,7 @@ export const positioning = {
     prepare: "Pregledaj upit", preview: "Vaš upit", edit: "Uredi podatke", copy: "1. Kopiraj upit", copied: "Upit je kopiran", instagram: "2. Otvori Instagram", email: "Radije email? Otvori poruku",
     note: "Odaberite uslugu i ukratko opišite ideju. Pripremit ćemo poruku za Instagram ili Facebook.",
     privacy: "Obrazac priprema poruku; ne šalje je automatski. Podatke dobijamo tek kada nam ih pošaljete u razgovoru.",
-    failed: "Kopiranje nije uspjelo. Označite poruku ispod i kopirajte je ručno.",
+    failed: "Kopiranje nije uspjelo. Označite tekst poruke i kopirajte ga ručno.",
     ready: "Kopirajte poruku, otvorite Instagram ili Facebook, pa je zalijepite i pošaljite u razgovoru.",
   },
   de: {
@@ -80,7 +80,7 @@ export const positioning = {
     prepare: "Anfrage prüfen", preview: "Ihre Anfrage", edit: "Angaben bearbeiten", copy: "1. Anfrage kopieren", copied: "Anfrage kopiert", instagram: "2. Instagram öffnen", email: "Lieber per E-Mail? Nachricht öffnen",
     note: "Wählen Sie eine Leistung und beschreiben Sie Ihre Idee. Wir bereiten Ihre Nachricht für Instagram oder Facebook vor.",
     privacy: "Das Formular bereitet Ihre Nachricht vor und sendet sie nicht automatisch. Wir erhalten Ihre Angaben erst, wenn Sie die Nachricht im Chat senden.",
-    failed: "Kopieren fehlgeschlagen. Markieren Sie die Nachricht unten und kopieren Sie sie manuell.",
+    failed: "Kopieren fehlgeschlagen. Markieren Sie den Nachrichtentext und kopieren Sie ihn manuell.",
     ready: "Kopieren Sie die Nachricht, öffnen Sie Instagram oder Facebook und fügen Sie sie im Chat ein. Senden Sie die Nachricht dort ab.",
   },
 } satisfies Record<Locale, unknown>;

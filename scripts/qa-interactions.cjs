@@ -131,6 +131,8 @@ async function run(){
  render(React.createElement(ProjectInquiry,{locale:'bs'}));
  await user.click(screen.getByRole('button',{name:'Pregledaj upit'}));
  assert.equal(screen.queryByRole('button',{name:'1. Kopiraj upit'}),null,'Required fields block an empty inquiry');
+ assert.equal(screen.getAllByRole('alert').length,2,'Both missing answers have visible, specific errors');
+ assert.equal(document.activeElement,screen.getByRole('radio',{name:'Nova web stranica'}),'First missing answer receives keyboard focus');
  await user.click(screen.getByText('Firma, postojeći web, budžet i rok'));
  await user.type(screen.getByLabelText('Ime (opcionalno)'), 'Test osoba');
  await user.type(screen.getByLabelText('Firma / djelatnost (opcionalno)'), 'Test firma');
@@ -168,6 +170,23 @@ async function run(){
  assert(screen.getByRole('radio',{name:'Onlineshop'}));
  assert.match(document.body.textContent,/nicht automatisch/);
  cleanup();
+ for (const locale of ['bs','de']) {
+  const labels=locale==='bs'?['Nova web stranica','Redizajn','Webshop']:['Neue Website','Relaunch','Onlineshop'];
+  for (const [index,initialNeed] of ['website','redesign','webshop'].entries()) {
+   render(React.createElement(ProjectInquiry,{locale,initialNeed}));
+   assert(screen.getByRole('radio',{name:labels[index]}).checked,'The service page carries its context into the form');
+   const details=screen.getByLabelText(locale==='bs'?'Šta želite da vaš web radi bolje?':'Was soll Ihre Website besser machen?');
+   assert(details.getAttribute('aria-describedby'),'Instructions remain available while typing');
+   await user.type(details,'   ');
+   await user.click(screen.getByRole('button',{name:locale==='bs'?'Pregledaj upit':'Anfrage prüfen'}));
+   assert(screen.getByRole('alert'),'Whitespace does not produce a blank inquiry');
+   assert.equal(document.activeElement,details);
+   await user.type(details,'Jasan opis projekta.');
+   await user.click(screen.getByRole('button',{name:locale==='bs'?'Pregledaj upit':'Anfrage prüfen'}));
+   assert(screen.getByRole('textbox',{name:locale==='bs'?'Vaš upit':'Ihre Anfrage'}).value.includes(labels[index]),'The prepared message names the selected service');
+   cleanup();
+  }
+ }
  console.log('PASS: inquiry validation, preparation, retained form values, editable message, clipboard success/failure, Instagram and confirmed Facebook handoff, explicit unsent state and German fields.');
  console.log('PASS: repeated menu opening after scroll, viewport overlay ownership, focus and background cleanup; 9 furniture images; furniture selections/clamping/export; full booking, blocked slots, back/edit, service invalidation, confirmation, focus and reset; advisory step validation, majority plan, export, retained edits and reset; German controls.');
 }

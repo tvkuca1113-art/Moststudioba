@@ -12,13 +12,32 @@ import type { Locale } from "@/lib/i18n/config";
 
 /** Prepare locally, review, then explicitly hand off to the chosen social channel. */
 const needIcons = [FileText, RefreshCw, ShoppingBag, MessageCircle];
+const needKeys = ["website", "redesign", "webshop", "advice"] as const;
+export type InquiryNeed = typeof needKeys[number];
+const prompts = {
+  bs: {
+    website: "Koje usluge nudite i šta posjetilac treba uraditi: poslati upit, nazvati ili pogledati radove?",
+    redesign: "Dodajte adresu postojećeg weba i opišite šta želite promijeniti. Npr. ponudu, mobilni prikaz ili put do kontakta.",
+    webshop: "Šta prodajete, koliko približno artikala imate i gdje dostavljate? Navedite potrebne načine plaćanja, ako ih već znate.",
+    advice: "Opišite svoj posao i cilj. Zajedno možemo razjasniti treba li vam nova stranica, webshop ili dorada postojeće.",
+  },
+  de: {
+    website: "Welche Leistungen bieten Sie an? Sollen Besucher anfragen, anrufen oder Ihre Arbeiten ansehen?",
+    redesign: "Nennen Sie die bestehende Webadresse und was sich ändern soll: etwa Angebot, mobile Ansicht oder Kontaktweg.",
+    webshop: "Was verkaufen Sie, wie viele Artikel haben Sie ungefähr und wohin liefern Sie? Nennen Sie gewünschte Zahlungsarten, soweit bekannt.",
+    advice: "Beschreiben Sie Ihr Unternehmen und Ihr Ziel. Gemeinsam klären wir, ob eine neue Website, ein Shop oder eine Überarbeitung sinnvoll ist.",
+  },
+};
 
-export function ProjectInquiry({ locale, headingLevel = "h3" }: { locale: Locale; headingLevel?: "h2" | "h3" }) {
+export function ProjectInquiry({ locale, headingLevel = "h3", initialNeed }: { locale: Locale; headingLevel?: "h2" | "h3"; initialNeed?: InquiryNeed }) {
   const Heading = headingLevel;
   const c = positioning[locale];
   const offer = inquiryFields[locale];
   const id = useId();
-  const [values, setValues] = useState({ name: "", company: "", website: "", need: "", details: "", budget: "", timing: "" });
+  const [values, setValues] = useState({ name: "", company: "", website: "", need: initialNeed ? c.needs[needKeys.indexOf(initialNeed)] : "", details: "", budget: "", timing: "" });
+  const [errors, setErrors] = useState<Partial<Record<"need" | "details", string>>>({});
+  const selectedNeed = needKeys[c.needs.indexOf(values.need)];
+  const hint = selectedNeed ? prompts[locale][selectedNeed] : c.placeholder;
   const [preview, setPreview] = useState(false);
   const [message, setMessage] = useState("");
   const preparedValues = useRef("");
@@ -30,18 +49,26 @@ export function ProjectInquiry({ locale, headingLevel = "h3" }: { locale: Locale
   const field = "mt-2 w-full rounded-xl border border-line-light bg-paper/40 px-4 py-3 text-base text-ink placeholder:text-slate/70 focus:border-forest focus:bg-white";
   const update = (key: keyof typeof values, value: string) => {
     setValues(current => ({ ...current, [key]: value }));
+    if (key === "need" || key === "details") setErrors(current => ({ ...current, [key]: undefined }));
     if (!started.current) { analytics("contact_start", { locale }); started.current = true; }
   };
-  useEffect(() => { if (started.current) headingRef.current?.focus({ preventScroll: true }); }, [preview]);
+  useEffect(() => {
+    if (!started.current) return;
+    const heading = headingRef.current;
+    heading?.focus({ preventScroll: true });
+    const bounds = heading?.getBoundingClientRect();
+    // A shorter second step can leave the visitor below the new content.
+    if (bounds && (bounds.top < 96 || bounds.bottom > window.innerHeight)) heading?.scrollIntoView?.({ block: "start", behavior: "instant" });
+  }, [preview]);
   function prepare(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    for (const key of ["details"] as const) {
-      const input = event.currentTarget.elements.namedItem(key) as HTMLInputElement | HTMLTextAreaElement;
-      if (!values[key].trim()) {
-        input.setCustomValidity(locale === "bs" ? "Popunite ovo polje." : "Bitte füllen Sie dieses Feld aus.");
-        input.reportValidity();
-        return;
-      }
+    const nextErrors: typeof errors = {};
+    if (!values.need) nextErrors.need = locale === "bs" ? "Odaberite uslugu. Ako niste sigurni, odaberite Trebam savjet." : "Wählen Sie eine Leistung. Wenn Sie unsicher sind, wählen Sie Beratung.";
+    if (!values.details.trim()) nextErrors.details = locale === "bs" ? "Ukratko opišite svoj posao i šta želite postići." : "Beschreiben Sie kurz Ihr Unternehmen und Ihr Ziel.";
+    setErrors(nextErrors);
+    if (nextErrors.need || nextErrors.details) {
+      event.currentTarget.querySelector<HTMLElement>(nextErrors.need ? 'input[name="need"]' : 'textarea[name="details"]')?.focus();
+      return;
     }
     const signature = JSON.stringify(values);
     // Going back without changing the fields must retain the visitor's edits.
@@ -75,27 +102,31 @@ export function ProjectInquiry({ locale, headingLevel = "h3" }: { locale: Locale
         <span className="text-[.7rem] font-semibold tracking-[.16em] text-slate uppercase">{locale === "bs" ? "Vaš sljedeći korak" : "Ihr nächster Schritt"}</span>
         <span className="font-mono text-xs text-forest" aria-label={locale === "bs" ? `Korak ${preview ? 2 : 1} od 2` : `Schritt ${preview ? 2 : 1} von 2`}>{preview ? "02" : "01"} / 02</span>
       </div>
-      <Heading ref={headingRef} tabIndex={-1} className="text-2xl tracking-[-.025em] sm:text-3xl">{preview ? c.preview : c.inquiry}</Heading>
+      <Heading ref={headingRef} tabIndex={-1} className="scroll-mt-28 text-2xl tracking-[-.025em] sm:text-3xl">{preview ? c.preview : c.inquiry}</Heading>
       <p className="mt-3 text-sm leading-relaxed text-slate">{preview ? c.ready : c.note}</p>
       {!preview ? (
-        <form onSubmit={prepare} onInput={e => { const input = e.target as HTMLInputElement; input.setCustomValidity?.(""); }} className="mt-6 space-y-6">
+        <form noValidate onSubmit={prepare} className="mt-6 space-y-6">
           <fieldset>
-            <legend className="text-sm font-semibold">{c.need}</legend>
+            <legend className="text-sm font-semibold">{c.need} <span className="font-normal text-slate">({locale === "bs" ? "obavezno" : "erforderlich"})</span></legend>
             <div className="mt-3 grid grid-cols-2 gap-2.5">
               {c.needs.map((need, index) => {
                 const Icon = needIcons[index];
                 return <label key={need} className="relative cursor-pointer">
-                  <input type="radio" name="need" required value={need} checked={values.need === need} onChange={e => update('need', e.target.value)} className="peer sr-only" />
+                  <input type="radio" name="need" required aria-describedby={errors.need ? `${id}-need-error` : undefined} value={need} checked={values.need === need} onChange={e => update('need', e.target.value)} className="peer sr-only" />
                   <span className="flex min-h-24 flex-col gap-3 rounded-xl border border-line-light bg-paper/30 p-3.5 text-sm font-medium transition-colors hover:border-forest/50 peer-checked:border-forest peer-checked:bg-forest peer-checked:text-paper peer-focus-visible:outline-2 peer-focus-visible:outline-offset-4 peer-focus-visible:outline-forest motion-reduce:transition-none sm:p-4">
                     <Icon className="size-5" aria-hidden="true" />{need}
                   </span>
                 </label>;
               })}
             </div>
+            {errors.need && <p id={`${id}-need-error`} role="alert" className="mt-3 text-sm font-semibold text-red-800">{errors.need}</p>}
           </fieldset>
-          <label htmlFor={`${id}-details`} className="block text-sm font-semibold">{c.details}
-            <textarea id={`${id}-details`} name="details" rows={3} required maxLength={3000} placeholder={c.placeholder} value={values.details} onChange={e => update('details', e.target.value)} className={field} />
-          </label>
+          <div>
+            <label htmlFor={`${id}-details`} className="block text-sm font-semibold">{c.details}</label>
+            <p id={`${id}-details-hint`} className="mt-2 text-sm leading-relaxed text-slate">{hint} <span>({locale === "bs" ? "Obavezno polje." : "Pflichtfeld."})</span></p>
+            <textarea id={`${id}-details`} name="details" rows={3} required maxLength={3000} aria-invalid={Boolean(errors.details)} aria-describedby={`${id}-details-hint${errors.details ? ` ${id}-details-error` : ""}`} value={values.details} onChange={e => update('details', e.target.value)} className={`${field}${errors.details ? " border-red-800" : ""}`} />
+            {errors.details && <p id={`${id}-details-error`} role="alert" className="mt-2 text-sm font-semibold text-red-800">{errors.details}</p>}
+          </div>
           <details className="rounded-xl border border-line-light px-4">
             <summary className="cursor-pointer py-4 text-sm font-medium">{locale === "bs" ? "Firma, postojeći web, budžet i rok" : "Unternehmen, Website, Budget und Termin"} <span className="font-normal text-slate">({c.optional})</span></summary>
             <div className="space-y-4 pb-5">
