@@ -161,7 +161,7 @@
     .hero-backdrop-shade {
       background:
         linear-gradient(180deg, rgb(7 31 26 / 15%), transparent 60%, rgb(7 31 26 / 65%)),
-        linear-gradient(90deg, rgb(7 31 26 / 70%) 10%, rgb(7 31 26 / 48%) 55%, rgb(7 31 26 / 65%));
+        linear-gradient(90deg, rgb(7 31 26 / 70%) 10%, rgb(7 31 26 / 72%) 55%, rgb(7 31 26 / 72%));
     }
   }
 
