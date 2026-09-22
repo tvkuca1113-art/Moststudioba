@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { CapabilityShowcase } from "./CapabilityShowcase";
 import { ArchMark } from "@/components/ui/ArchMark";
 import { ButtonLink } from "@/components/ui/Button";
@@ -27,7 +28,20 @@ export function Hero({ locale, dict }: { locale: Locale; dict: Dictionary }) {
       />
 
       <Container className="relative">
-        <div className="grid gap-x-16 gap-y-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:items-end">
+        <div className="hero-intro relative isolate grid gap-x-16 gap-y-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:items-end">
+          <div aria-hidden="true" className="hero-backdrop pointer-events-none absolute -z-10 overflow-hidden">
+            <div className="hero-backdrop-image absolute inset-x-0">
+              <Image
+                src="/images/hero/most-arch-7b440d0a.webp"
+                alt=""
+                fill
+                sizes="100vw"
+                preload
+                className="object-cover"
+              />
+            </div>
+            <div className="hero-backdrop-shade absolute inset-0" />
+          </div>
           <div>
             <p className="flex items-center gap-3 text-[0.8125rem] font-semibold tracking-[0.2em] text-lime uppercase sm:tracking-[0.24em]">
               <ArchMark draw className="w-9 shrink-0 text-lime/70" strokeWidth={4} />
