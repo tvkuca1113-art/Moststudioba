@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { CapabilityShowcase } from "./CapabilityShowcase";
 import { ArchMark } from "@/components/ui/ArchMark";
 import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
@@ -70,7 +69,6 @@ export function Hero({ locale, dict }: { locale: Locale; dict: Dictionary }) {
           </div>
         </div>
 
-        <CapabilityShowcase locale={locale} />
       </Container>
     </section>
   );
