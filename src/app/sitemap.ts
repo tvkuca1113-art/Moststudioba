@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 
+import { clientProjects } from "@/content/client-projects";
 import { demoProjects } from "@/content/projects";
 import { contentPageKeys } from "@/content/service-pages";
 import { allPaths, htmlLang, locales, path, type RouteRef } from "@/lib/i18n/config";
@@ -16,7 +17,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { key: "services" },
     { key: "contact" },
     ...contentPageKeys.map(key => ({ key })),
-    ...demoProjects.map((project) => ({ key: "project" as const, slug: project.slug })),
+    ...[...clientProjects, ...demoProjects].map((project) => ({ key: "project" as const, slug: project.slug })),
   ];
 
   return refs.flatMap((ref) => {

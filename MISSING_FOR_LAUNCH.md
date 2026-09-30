@@ -1,6 +1,6 @@
 # Potvrđeni podaci i preostali zadaci
 
-Ažurirano 20. 9. 2026. Stranica je objavljena. Ovaj dokument prati stvarne
+Ažurirano 30. 9. 2026. Stranica je objavljena. Ovaj dokument prati stvarne
 poslovne podatke i nedovršene integracije.
 
 ## Potvrđeno
@@ -23,10 +23,19 @@ Produkcija dopušta indeksiranje, preview objave imaju `noindex`.
 `NEXT_PUBLIC_ALLOW_INDEXING=false` može isključiti indeksiranje produkcije.
 Google verification oznaka ostaje u početnom HTML-u početne stranice.
 
-Sitemap sadrži 28 javnih BS/DE stranica. Demo rute i demo webshop ostaju
+Sitemap sadrži 30 javnih BS/DE stranica. Demo rute i demo webshop ostaju
 `noindex` i izvan sitemapa. Robots ih ne blokira, tako da crawler može
 pročitati `noindex`. Prezentacije koncepata imaju vlastiti sadržaj i mogu se
 indeksirati. Ne predstavljaju se kao plaćeni klijentski radovi.
+
+## Objavljena klijentska referenca
+
+Massage und Wellness Mirjana: stvarna njemačka poslovna stranica na
+https://mirjanamassage.vercel.app/. Vlasnik je potvrdio da je uradio cjelokupan
+projekt i zatražio javnu integraciju u MOST portfolio. BS/DE prezentacije
+su na `/projekti/mirjana-massage` i `/de/projekte/mirjana-massage`.
+Kartice i prezentacija koriste stvarne desktop, mobilne i uslužne snimke.
+Detalji i porijeklo: `docs/MIRJANA-PORTFOLIO-2026-09-30.md`.
 
 ## Kontakt i mjerenje
 
@@ -47,7 +56,7 @@ je rezervisan i trenutno se ne emituje. Analitika se može isključiti sa
 | Stavka | Sljedeći korak |
 | --- | --- |
 | Search Console podaci | Pratiti stranice i upite za BiH, poslati javni sitemap i provjeriti nove URL-ove. Indeksiranje nije garancija pozicije. |
-| Stvarni klijentski radovi | Uz dozvolu klijenta objaviti problem, izvedeno rješenje i dokumentovane rezultate. |
+| Dodatne klijentske reference | Mirjana je objavljena kao klijentski projekt uz potvrđeno autorstvo vlasnika. Nove radove dodavati s provjerljivim obimom i odobrenjem za javni prikaz. |
 | Pravni podaci i obavijesti | Dostaviti stvarni naziv subjekta i ostale podatke potrebne za odgovarajuće poslovne i privatnosne obavijesti. |
 | Telefon / WhatsApp | Dodati samo ako vlasnik želi taj kanal i dostavi potvrđen broj. |
 | Poslovni profil na Googleu | Potvrđen je isključivo online rad; ne izmišljati ured ili poslovnicu radi Maps profila. |

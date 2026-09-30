@@ -3,9 +3,9 @@ import type { Locale } from "@/lib/i18n/config";
 export const positioning = {
   bs: {
     workTitle: "Iza svakog dizajna stoji razlog.",
-    workLead: "Tri samostalno izrađena demo koncepta. Tri različita puta od interesa do konkretnog upita.",
+    workLead: "Klijentski rad i demo koncepti s različitim zadacima. Pogledajte kako sadržaj, izgled i funkcije vode do sljedećeg koraka.",
     problem: "Problem", solution: "Naše rješenje", effect: "Očekivana korist",
-    disclosure: "Prikazujemo funkcionalne koncepte, ne klijentske rezultate. Navedene koristi su ciljevi dizajna, bez tvrdnji o izmjerenom rastu.",
+    disclosure: "Demo koncepti su označeni uz svaki primjer i predstavljaju izmišljene firme. Možete ih otvoriti i isprobati njihove funkcije.",
     cases: [
       { problem: "Kupac teško zamišlja konačni namještaj.", solution: "Konfigurator prostora, materijala i dimenzija.", effect: "Konkretniji zahtjev prije prvog razgovora." },
       { problem: "Pacijent ne zna koju uslugu odabrati.", solution: "Izbor usluge i termina kroz jasne korake.", effect: "Manje nejasnoća oko prvog dolaska." },
@@ -44,9 +44,9 @@ export const positioning = {
   },
   de: {
     workTitle: "Hinter jedem Design steht ein Grund.",
-    workLead: "Drei selbst entwickelte Demokonzepte. Drei unterschiedliche Wege vom Interesse zur konkreten Anfrage.",
+    workLead: "Ein Kundenprojekt und Demokonzepte mit unterschiedlichen Aufgaben. Sehen Sie, wie Inhalte, Gestaltung und Funktionen zum nächsten Schritt führen.",
     problem: "Problem", solution: "Unsere Lösung", effect: "Angestrebter Nutzen",
-    disclosure: "Wir zeigen funktionierende Konzepte, keine Kundenergebnisse. Der beschriebene Nutzen ist ein Designziel und keine Behauptung über gemessenes Wachstum.",
+    disclosure: "Demokonzepte sind an jedem Beispiel gekennzeichnet und stellen erfundene Unternehmen dar. Sie können sie öffnen und ihre Funktionen ausprobieren.",
     cases: [
       { problem: "Kunden können sich das fertige Möbel schwer vorstellen.", solution: "Ein Konfigurator für Möbelart, Material und Maße.", effect: "Eine konkretere Anfrage vor dem ersten Gespräch." },
       { problem: "Patienten wissen nicht, welche Leistung sie wählen sollen.", solution: "Leistung und Termin in verständlichen Schritten auswählen.", effect: "Mehr Klarheit vor dem ersten Praxisbesuch." },

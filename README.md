@@ -147,6 +147,25 @@ Dvije odvojene stvari:
 
 Detalji i porijeklo: [`docs/SLIKE.md`](./docs/SLIKE.md).
 
+### Klijentski projekti
+
+`src/content/client-projects.ts` sadrži objavljene klijentske radove, odvojeno
+od demo registra. Koriste iste lokalizovane projektne rute, vlastitu
+prezentaciju i metapodatke te su u sitemapu. Mirjana je prva referenca:
+[BS prezentacija](https://moststudioba.com/projekti/mirjana-massage),
+[DE prezentacija](https://moststudioba.com/de/projekte/mirjana-massage).
+
+Stvarni snimci su u `public/images/projects/mirjana/`, a dimenzije u
+`src/content/client-shots.ts`. Regenerisanje: `npm ci`,
+`npx playwright install chromium`, `node scripts/capture-client-reference.mjs`.
+Skripta sprema snimke i manifest u `qa/client-reference/`; nove datoteke
+treba pregledati i uskladiti hash, dimenzije i putanje prije zamjene.
+Izvori i evidencija: [dokumentacija projekta](./docs/MIRJANA-PORTFOLIO-2026-09-30.md).
+
+CI provjerava BS/DE početnu, portfolio i Mirjaninu prezentaciju na četiri
+širine ekrana skriptom `scripts/qa-client-portfolio.mjs`. Artefakt
+`client-portfolio` sadrži snimke za vizuelni pregled.
+
 ## Kontaktni tok
 
 Instagram je glavni potvrđeni kontakt, email sporedni. Facebook se prikazuje
@@ -203,7 +222,7 @@ nego forest (10,7:1); lime ostaje samo unutar `.on-dark`.
 ## Prije objave
 
 Pogledaj [`MISSING_FOR_LAUNCH.md`](./MISSING_FOR_LAUNCH.md) — popis podataka
-koji još nisu potvrđeni (Facebook, stvarne reference, Search Console i poslovni podaci).
+koji još nisu potvrđeni i sljedećih zadataka za Search Console, dodatne reference i poslovne podatke.
 
 Browser regresije su u `qa/regression/critical-paths.spec.ts`. Za njih treba
 pokrenut produkcijski server i instalirani Playwright browseri:

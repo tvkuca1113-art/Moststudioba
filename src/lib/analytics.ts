@@ -23,7 +23,7 @@ import type { Locale } from "@/lib/i18n/config";
 type Events = {
   outbound_email: { locale: Locale; from: "contact" | "footer" | "brief" };
   outbound_facebook: { locale: Locale; from: "hero" | "header" | "contact" | "footer" | "brief" };
-  /** A concept page was opened. */
+  /** A client project or concept presentation was opened. */
   view_project: { project: string; locale: string };
   /** A running demo was opened, and from where. */
   open_demo: { project: string; locale: string; from: "hero" | "portfolio" | "project" | "nav" };

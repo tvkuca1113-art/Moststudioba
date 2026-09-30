@@ -15,7 +15,7 @@ const sitemap = new JSDOM(fs.readFileSync(path.join(root, 'sitemap.xml.body'), '
 const entries = [...sitemap.window.document.getElementsByTagName('url')];
 const urls = entries.map(entry => normalize(entry.getElementsByTagName('loc')[0].textContent));
 assert.equal(new Set(urls).size, urls.length, 'No duplicate sitemap URLs');
-assert(urls.length >= 28, 'Service pages and both translated buyer guides must be discoverable');
+assert(urls.length >= 30, 'Client cases, service pages and translated buyer guides must be discoverable');
 const docs = new Map();
 const titles=new Set(),descriptions=new Set();
 assert.equal(sitemap.window.document.getElementsByTagName("lastmod").length,0,"No fabricated lastmod");
@@ -118,6 +118,32 @@ for (const lang of ['', 'de/']) {
     dom.window.close();
   }
 }
+
+// Real work uses indexable presentation routes, not the fictional demo registry.
+for (const [locale, prefix, caseRoute, projectsRoute] of [
+  ['bs', '', '/projekti/mirjana-massage', '/projekti'],
+  ['de', '/de', '/de/projekte/mirjana-massage', '/de/projekte'],
+]) {
+  const clientDoc = docs.get(origin + caseRoute)?.window.document;
+  assert(clientDoc, `Client case in sitemap: ${locale}`);
+  const clientCase = clientDoc.querySelector('[data-client-case="mirjana-massage"]');
+  assert(clientCase, 'Client case is server-rendered');
+  assert.equal(clientCase.querySelectorAll('figure[data-client-screenshot]').length, 3);
+  assert(clientCase.querySelector('a[href="https://mirjanamassage.vercel.app/"]'));
+  for (const img of clientCase.querySelectorAll('figure img')) {
+    assert(img.alt.trim(), 'Meaningful client screenshot alt');
+    assert(Number(img.width) > 0 && Number(img.height) > 0, 'Reserved intrinsic image space');
+  }
+  for (const pageRoute of [prefix || '', projectsRoute]) {
+    const pageDoc = docs.get(origin + pageRoute).window.document;
+    const card = pageDoc.querySelector('[data-project-kind="client"]');
+    assert(card?.querySelector(`a[href="${caseRoute}"]`), 'Crawlable featured client case link');
+    assert(card.querySelector('a[href="https://mirjanamassage.vercel.app/"]'));
+    assert(!card.querySelector('a[href*="/demo/"]'), 'Client work never opens a fictional demo');
+  }
+  assert(!urls.includes(`${origin}${prefix}/demo/mirjana-massage`));
+}
+
 const shop = new JSDOM(fs.readFileSync('public/webshop-assets/index.html', 'utf8'));
 assert(shop.window.document.querySelector('meta[name="robots"]').content.includes('noindex'));
 shop.window.close();

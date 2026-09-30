@@ -1,3 +1,4 @@
+import { ClientProjectCard } from "@/components/projects/ClientProjectCard";
 import { SiteFrame } from "@/components/layout/SiteFrame";
 import { ProjectCard } from "@/components/home/ProjectsSection";
 import { WebshopDemoCard } from "@/components/home/WebshopDemoCard";
@@ -23,6 +24,11 @@ export function ProjectsView({ locale }: { locale: Locale }) {
           <p className="mt-6 max-w-2xl text-lead leading-relaxed text-slate">{dict.projects.overviewLead}</p>
 
           <div className="mt-12 lg:mt-16">
+            <ClientProjectCard locale={locale} featured headingLevel={2} />
+            <div className="mt-14 border-t border-line-light pt-10 lg:mt-16">
+              <h2 className="text-title text-forest">{locale === "bs" ? "Demo koncepti" : "Demokonzepte"}</h2>
+              <p className="mt-3 mb-10 max-w-2xl leading-relaxed text-slate">{locale === "bs" ? "Samostalno osmišljeni primjeri koje možete otvoriti i isprobati. Firme i podaci u njima su izmišljeni." : "Selbst entwickelte Beispiele zum Öffnen und Ausprobieren. Unternehmen und Angaben darin sind erfunden."}</p>
+            </div>
             {demoProjects.map((project, index) => (
               <Reveal
                 key={project.slug}

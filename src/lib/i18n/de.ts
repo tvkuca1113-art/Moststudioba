@@ -40,19 +40,19 @@ export const de: Dictionary = {
   },
 
   projects: {
-    eyebrow: "DEMO-ARBEITEN",
+    eyebrow: "PROJEKTE",
     title: "Unterschiedliche Branchen. Passende Lösungen.",
-    lead: "Die Konzepte haben wir selbst entworfen und gebaut — jedes löst ein anderes Besucherproblem.",
+    lead: "Ein Kundenprojekt und funktionierende Demokonzepte zeigen, wie wir Inhalte, Design und Entwicklung verbinden.",
     problemLabel: "Das Problem der Besucher",
     functionLabel: "Was Sie ausprobieren können",
-    all: "Alle Demo-Projekte",
+    all: "Alle Projekte",
     cardCta: "Projekt ansehen",
     openDemo: "Demo öffnen",
     shotAlt: "Bildschirmaufnahme der Startseite eines Demo-Konzepts",
     shotDesktop: "Ansicht auf dem Computer",
     shotMobile: "Ansicht auf dem Mobilgerät",
-    overviewTitle: "Demo-Projekte",
-    overviewLead: "Das sind unsere Demo-Konzepte. Es handelt sich nicht um bezahlte Kundenprojekte — wir haben sie gebaut, um Herangehensweise, Design und technische Umsetzung an konkreten Beispielen zu zeigen.",
+    overviewTitle: "Projekte",
+    overviewLead: "Sehen Sie das Kundenprojekt Massage und Wellness Mirjana und ergänzende Demokonzepte. Zu jeder Arbeit zeigen wir die Aufgabe, Designentscheidungen und das Ergebnis zum selbstständigen Ansehen.",
     forBusiness: "Für welche Art von Unternehmen",
     theChallenge: "Was das Konzept löst",
     decisions: "Zentrale Designentscheidungen",
@@ -60,8 +60,8 @@ export const de: Dictionary = {
     viewDesktop: "Ansicht auf dem Computer",
     viewMobile: "Ansicht auf dem Mobilgerät",
     tryDemo: "Demo ausprobieren",
-    backToProjects: "Zurück zu den Demo-Projekten",
-    nextProject: "Nächstes Demo-Konzept",
+    backToProjects: "Zurück zu den Projekten",
+    nextProject: "Nächstes Projekt",
     goalLabel: "Ziel des Konzepts",
     tryItLabel: "Selbst ausprobieren",
     easierLabel: "Was das Besuchern erleichtert",
@@ -201,8 +201,8 @@ export const de: Dictionary = {
     blurb: "Webdesign, Website-Entwicklung und Relaunch. Wir arbeiten mit Unternehmen in Bosnien-Herzegowina und Deutschland.",
     navTitle: "Seiten",
     contactTitle: "Kontakt",
-    demoTitle: "Demo-Konzepte",
-    disclaimer: "Die auf dieser Seite gezeigten Projekte sind Demo-Konzepte, die wir selbst entworfen und gebaut haben. Es sind keine bezahlten Kundenarbeiten und sie stellen keine realen Unternehmen dar.",
+    projectsTitle: "Projekte",
+    disclaimer: "Kundenprojekte sind entsprechend gekennzeichnet. Demokonzepte sind selbst entwickelte Beispiele; Unternehmen und Angaben darin sind erfunden.",
     rights: "© {year} MOST Studio",
     credits: "Fotos: Unsplash",
   },
@@ -221,17 +221,17 @@ export const de: Dictionary = {
     home: {
       title: "Webdesign, Websites und Onlineshops | MOST Studio",
       description:
-        "Webdesign, Unternehmenswebsites, Onlineshops und Relaunch. Sehen Sie Demos, Leistungen und Kosten. Online-Zusammenarbeit auf Deutsch und Bosnisch.",
+        "Webdesign, Unternehmenswebsites, Onlineshops und Relaunch. Sehen Sie Projekte, Leistungen und Kosten. Online-Zusammenarbeit auf Deutsch und Bosnisch.",
     },
     projects: {
-      title: "Demo-Projekte | MOST Studio",
+      title: "Projekte und Webdesign | MOST Studio",
       description:
-        "Testen Sie unsere Demoprojekte: einen Onlineshop mit 50 Artikeln, eine Zahnarztpraxis, eine Tischlerei und eine Unternehmensberatung. Design und Funktionen von MOST Studio.",
+        "Das Kundenprojekt Massage und Wellness Mirjana und funktionierende Demokonzepte von MOST Studio. Inhalte, Designentscheidungen und mobile Ansichten ansehen.",
     },
     services: {
       title: "Leistungen: Webdesign, Entwicklung und Relaunch | MOST Studio",
       description:
-        "Websites, Onlineshops und Relaunches von MOST Studio. Informieren Sie sich über Umfang, Ablauf, Demobeispiele und Kostenfaktoren Ihres Projekts.",
+        "Websites, Onlineshops und Relaunches von MOST Studio. Informieren Sie sich über Umfang, Ablauf, Projektbeispiele und Kostenfaktoren Ihres Projekts.",
     },
     contact: {
       title: "Kontakt und Projektanfrage | MOST Studio",
@@ -252,6 +252,6 @@ export const de: Dictionary = {
     title: "Diese Seite gibt es nicht.",
     lead: "Der Link ist vielleicht veraltet oder die Adresse wurde falsch eingegeben.",
     home: "Zurück zur Startseite",
-    projects: "Demo-Projekte ansehen",
+    projects: "Projekte ansehen",
   },
 };

@@ -46,11 +46,23 @@ jobs:
         run: npx playwright install --with-deps chromium
       - name: Verify responsive hero layout
         run: node scripts/qa-hero-layout.mjs
+      - name: Verify client portfolio and language navigation
+        env:
+          CLIENT_QA_EXPORT_BASE64: ${{ github.head_ref == 'codex/mirjana-client-portfolio-2026-09-30' && 'true' || 'false' }}
+        run: node scripts/qa-client-portfolio.mjs
       - name: Save hero screenshots
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: hero-layout
           path: qa/hero-layout/
+          if-no-files-found: ignore
+          retention-days: 14
+      - name: Save client portfolio screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: client-portfolio
+          path: qa/client-portfolio/
           if-no-files-found: ignore
           retention-days: 14

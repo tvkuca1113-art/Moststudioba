@@ -3,6 +3,7 @@ import { Container } from "@/components/ui/Container";
 import { Wordmark } from "@/components/ui/Wordmark";
 import { TrackedAnchor } from "@/components/ui/TrackedLink";
 import { SocialContact } from "@/components/contact/SocialContact";
+import { clientProjects } from "@/content/client-projects";
 import { demoProjects } from "@/content/projects";
 import { site } from "@/content/site";
 import { path, type Locale, type RouteRef } from "@/lib/i18n/config";
@@ -64,10 +65,10 @@ export function Footer({
             </ul>
           </nav>
 
-          <nav aria-label={dict.footer.demoTitle}>
-            <h2 className="text-[0.8125rem] font-semibold tracking-[0.16em] text-lime uppercase">{dict.footer.demoTitle}</h2>
+          <nav aria-label={dict.footer.projectsTitle}>
+            <h2 className="text-[0.8125rem] font-semibold tracking-[0.16em] text-lime uppercase">{dict.footer.projectsTitle}</h2>
             <ul className="mt-4 space-y-1">
-              {demoProjects.map((project) => (
+              {[...clientProjects, ...demoProjects].map((project) => (
                 <li key={project.slug}>
                   <a
                     href={path("project", locale, project.slug)}
