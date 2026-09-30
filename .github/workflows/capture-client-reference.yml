@@ -1,0 +1,72 @@
+name: Capture client reference
+
+on:
+  push:
+    branches:
+      - codex/mirjana-client-portfolio-2026-09-30
+    paths:
+      - .github/workflows/capture-client-reference.yml
+      - scripts/capture-client-reference.mjs
+
+permissions:
+  contents: read
+
+concurrency:
+  group: capture-client-reference-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      CI: 'true'
+      NEXT_TELEMETRY_DISABLED: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Read installed Next.js metadata and image guides
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          import path from 'node:path';
+          import { createRequire } from 'node:module';
+          const require = createRequire(import.meta.url);
+          const root = path.join(path.dirname(require.resolve('next/package.json')), 'dist/docs');
+          function walk(dir) {
+            return fs.readdirSync(dir, { withFileTypes: true }).flatMap(entry => {
+              const file = path.join(dir, entry.name);
+              return entry.isDirectory() ? walk(file) : [file];
+            });
+          }
+          const files = walk(root);
+          const guides = [
+            files.find(file => /metadata-and-og-images\.(?:md|mdx)$/.test(file)),
+            files.find(file => file.includes('api-reference') && file.includes('components') && /(?:^|[-/])image\.(?:md|mdx)$/.test(file)),
+          ];
+          if (guides.some(file => !file)) throw new Error('Required installed Next.js guides were not found');
+          for (const guide of guides) {
+            console.log('NEXT_GUIDE_BEGIN=' + guide);
+            console.log(fs.readFileSync(guide, 'utf8'));
+            console.log('NEXT_GUIDE_END=' + guide);
+          }
+          NODE
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Capture actual public client website
+        run: node scripts/capture-client-reference.mjs
+      - name: Save client reference screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mirjana-client-reference
+          path: qa/client-reference/
+          if-no-files-found: ignore
+          retention-days: 14
