@@ -32,6 +32,8 @@ export function ClientScreenshot({
     <figure data-client-screenshot={kind} className={cn("min-w-0", className)}>
       <div className="overflow-hidden rounded-xl border border-line-light bg-paper">
         <Image
+          // Captures are already bounded WebP assets; serve their verified bytes directly.
+          unoptimized
           src={shot.src}
           width={shot.width}
           height={shot.height}

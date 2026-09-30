@@ -29,6 +29,7 @@ const snapshotPlan = {
   'case-bs-1440': { key: 'case-bs-desktop', outputWidth: 1200 },
   'case-bs-390': { key: 'case-bs-mobile', outputWidth: 390 },
   'case-de-1440': { key: 'case-de-desktop', outputWidth: 1200 },
+  'case-de-390': { key: 'case-de-mobile', outputWidth: 390 },
 };
 const results = [];
 const snapshots = [];
@@ -127,12 +128,15 @@ try {
       const viewport = { width, height: width === 1440 ? 1000 : 844 };
       const page = await browser.newPage({ viewport, reducedMotion: 'reduce' });
       page.on('response', response => {
+        if (definition.kind === 'case' && width === 320 && response.url().includes('/images/projects/mirjana/')) {
+          console.log('CLIENT_ASSET_RESPONSE ' + JSON.stringify({ url: response.url(), status: response.status() }));
+        }
         if (response.url().includes('/_next/image') && response.status() >= 400) {
           console.log('CLIENT_IMAGE_HTTP_ERROR ' + JSON.stringify({ url: response.url(), status: response.status() }));
         }
       });
       try {
-        const response = await page.goto(origin + definition.route, { waitUntil: 'load' });
+        const response = await page.goto(origin + definition.route, { waitUntil: 'domcontentloaded' });
         assert.equal(response?.status(), 200, 'Published portfolio route returns HTTP 200');
         assert.equal(await page.locator('html').getAttribute('lang'), definition.locale);
         await page.evaluate(() => document.fonts.ready);
@@ -188,7 +192,7 @@ try {
           await scope.locator('a[href="' + contactHref + '"]').first().click();
           await page.waitForURL(origin + contactHref);
           assert(await page.locator('main').isVisible(), 'The contact action opens the local contact page');
-          await page.goto(origin + definition.route, { waitUntil: 'load' });
+          await page.goto(origin + definition.route, { waitUntil: 'domcontentloaded' });
           await page.locator('header a[hreflang="' + otherLocale + '"]').click();
           await page.waitForURL(origin + definition.counterpart);
           assert.equal(await page.locator('html').getAttribute('lang'), otherLocale);
@@ -209,8 +213,8 @@ try {
     }
   }
   assert.equal(results.length, 24, 'Every route and width passed');
-  assert.equal(snapshots.length, 5, 'All five visual review captures exist');
-  assert(snapshots.reduce((sum, asset) => sum + asset.buffer.length, 0) <= 800000, 'Review images fit within 800,000 bytes');
+  assert.equal(snapshots.length, 6, 'All six visual review captures exist');
+  assert(snapshots.reduce((sum, asset) => sum + asset.buffer.length, 0) <= 900000, 'Review images fit within 900,000 bytes');
   const manifest = snapshots.map(asset => asset.manifest);
   await writeFile(path.join(output, 'results.json'), JSON.stringify(results, null, 2) + '\n');
   await writeFile(path.join(output, 'manifest.json'), JSON.stringify(manifest, null, 2) + '\n');

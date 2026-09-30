@@ -66,3 +66,9 @@ regresije, početni HTML/SEO te Chromium provjere početne, portfolija i
 klijentske prezentacije na širinama 320, 390, 768 i 1440 px.
 Stvarni završni MOST snimci spremaju se u artefakt `client-portfolio`
 za vizuelni pregled prije spajanja i automatske Vercel objave.
+
+Verifikovane WebP datoteke isporučuju se direktno kroz Next Image
+\`unoptimized\`, uz rezervisane dimenzije i responzivni CSS. Time se izbjegava
+ponovna serverska obrada već kompresovanih snimaka. Dva detaljna snimka na
+prezentaciji učitavaju se odmah; kartica na početnoj zadržava lazy loading.
+CI izričito provjerava dekodirane piksele svake slike.
