@@ -1,0 +1,56 @@
+name: Validate website
+
+on:
+  push:
+    branches:
+      - claude/most-studio-website-svturd
+  pull_request:
+    branches:
+      - claude/most-studio-website-svturd
+
+permissions:
+  contents: read
+
+concurrency:
+  group: validate-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      CI: 'true'
+      NEXT_TELEMETRY_DISABLED: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Lint
+        run: npm run lint
+      - name: Production build
+        run: npm run build
+      - name: TypeScript
+        run: npm run typecheck
+      - name: Interaction and webshop regressions
+        run: npm run test:interactions
+      - name: Generated HTML SEO checks
+        run: npm run test:seo
+      - name: Install Chromium for layout verification
+        run: npx playwright install --with-deps chromium
+      - name: Verify responsive hero layout
+        run: node scripts/qa-hero-layout.mjs
+      - name: Save hero screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: hero-layout
+          path: qa/hero-layout/
+          if-no-files-found: ignore
+          retention-days: 14

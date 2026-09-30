@@ -48,8 +48,18 @@ Vercel aplikacija `moststudioba`. Produkcija koristi https://moststudioba.com.
 Objava se radi kroz postojeću granu `claude/most-studio-website-svturd` i
 GitHub/Vercel integraciju. Ne kreirati novi projekat ni mijenjati domene.
 
-Prije pusha pokrenuti lint, typecheck, build, test:interactions i test:seo.
-Poslije pusha provjeriti Vercel commit status i javni sadržaj. Admin pristup
+Prije spajanja u produkcijsku granu moraju proći lint, typecheck, build,
+test:interactions i test:seo. GitHub Actions workflow
+`.github/workflows/validate.yml` automatski izvršava te provjere na pull
+requestovima i produkcijskim commitima koristeći Node 22. Build se izvršava
+prije zasebnog typechecka radi generisanih Next tipova. Dodatna Chromium
+provjera početnog naslova provjerava oba jezika na širinama 320, 390, 768 i
+1440 px, bez odsijecanja teksta i horizontalnog prelijevanja; snimci se
+čuvaju 14 dana kao `hero-layout` Actions artefakt.
+
+GitHub/Vercel integracija automatski objavljuje produkcijsku granu; ovaj
+workflow ne kreira novi Vercel projekat i ne traži deployment tajne.
+Poslije spajanja provjeriti Vercel commit status i javni sadržaj. Admin pristup
 postavkama Vercela treba zasebno potvrditi: sam GitHub status nije potpun
 pregled konfiguracije. Kod dodaje trajno preusmjeravanje stare Vercel adrese
 i www adrese, uz očuvanje putanje i query parametara.
