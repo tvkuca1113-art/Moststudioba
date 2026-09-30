@@ -1,0 +1,63 @@
+{
+  "source": "https://mirjanamassage.vercel.app/",
+  "captureRun": "https://github.com/tvkuca1113-art/Moststudioba/actions/runs/36783717567",
+  "assets": [
+    {
+      "key": "desktop",
+      "file": "mirjana-desktop-b181af1e4b.webp",
+      "sourceUrl": "https://mirjanamassage.vercel.app/",
+      "renderedUrl": "https://mirjanamassage.vercel.app/",
+      "h1": "Massage und WellnessMirjana",
+      "capturedAt": "2026-09-30T22:08:30.688Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "selector": "viewport",
+      "width": 1200,
+      "height": 833,
+      "bytes": 38200,
+      "sha256": "b181af1e4b3002c585a686bdc57624f3a42f13a0a2835d051b2a52bb8754d93e",
+      "quality": 80,
+      "mimeType": "image/webp"
+    },
+    {
+      "key": "mobile",
+      "file": "mirjana-mobile-ada0d50a49.webp",
+      "sourceUrl": "https://mirjanamassage.vercel.app/",
+      "renderedUrl": "https://mirjanamassage.vercel.app/",
+      "h1": "Massage und WellnessMirjana",
+      "capturedAt": "2026-09-30T22:08:32.150Z",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "selector": "viewport",
+      "width": 390,
+      "height": 844,
+      "bytes": 26216,
+      "sha256": "ada0d50a49acd647300c60734b620b9fc277c06739e4f8186e0155586d30db9e",
+      "quality": 80,
+      "mimeType": "image/webp"
+    },
+    {
+      "key": "services",
+      "file": "mirjana-services-5222135482.webp",
+      "sourceUrl": "https://mirjanamassage.vercel.app/",
+      "renderedUrl": "https://mirjanamassage.vercel.app/",
+      "h1": "Massage und WellnessMirjana",
+      "capturedAt": "2026-09-30T22:08:33.811Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "selector": "#massagen",
+      "width": 1200,
+      "height": 1029,
+      "bytes": 31556,
+      "sha256": "5222135482e5392b5879c6a4c540a8735cca727cd942e62eaa94400ef8d099cf",
+      "quality": 80,
+      "mimeType": "image/webp"
+    }
+  ]
+}

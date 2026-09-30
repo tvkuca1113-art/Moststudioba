@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ClientProjectCard } from "@/components/projects/ClientProjectCard";
 import { ProjectSelector } from "@/components/home/ProjectSelector";
 import { Shot } from "@/components/media/Shot";
 import { demoCapability } from "@/content/demo-capabilities";
@@ -14,22 +15,23 @@ import type { Dictionary } from "@/lib/i18n/dictionary";
 import { translator } from "@/lib/i18n/localized";
 import { sectionIds } from "@/lib/nav";
 
-/**
- * The portfolio, hung like a small exhibition: the opening work takes the
- * wall, the other two share a frame beside each other.
- *
- * Each card is a capture of the implemented demo page, so what you see is
- * what opens.
- */
+/** Real client work followed by clearly labelled, interactive demo concepts. */
 export function ProjectsSection({ locale, dict }: { locale: Locale; dict: Dictionary }) {
   const c = positioning[locale];
   return (
     <Section id={sectionIds.projects} tone="paper" size="tight" labelledBy="projects-title">
       <Container>
         <SectionHeading id="projects-title" eyebrow={dict.projects.eyebrow} title={c.workTitle} lead={c.workLead} />
-        <ProjectSelector labels={demoProjects.map(p => p.shortName)} locale={locale}>
-          {demoProjects.map(project => <ProjectCard key={project.slug} project={project} locale={locale} dict={dict} />)}
-        </ProjectSelector>
+        <div className="mt-10">
+          <ClientProjectCard locale={locale} featured />
+        </div>
+        <div className="mt-12 border-t border-line-light pt-8 lg:mt-16">
+          <h3 className="text-xl font-semibold text-forest">{locale === "bs" ? "Demo koncepti za različite poslove" : "Demokonzepte für unterschiedliche Branchen"}</h3>
+          <p className="mt-2 mb-7 max-w-2xl text-base leading-relaxed text-slate">{locale === "bs" ? "Isprobajte dodatne primjere dizajna i funkcionalnosti." : "Weitere Beispiele für Design und Funktionen zum Ausprobieren."}</p>
+          <ProjectSelector labels={demoProjects.map(p => p.shortName)} locale={locale}>
+            {demoProjects.map(project => <ProjectCard key={project.slug} project={project} locale={locale} dict={dict} />)}
+          </ProjectSelector>
+        </div>
         <p className="mt-7 max-w-4xl border-t border-line-light pt-4 text-sm leading-relaxed text-slate">{c.disclosure}</p>
       </Container>
     </Section>

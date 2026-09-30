@@ -147,14 +147,12 @@ export const faqItems: FaqItem[] = [
     },
     answer: {
       bs: [
-        "Ne. Trenutno prikazujemo demo koncepte koje smo sami osmislili i izradili. Firme, imena i podaci u njima su izmišljeni.",
-        "Odlučili smo ih prikazati jer najbolje pokazuju kako radimo: možete ih otvoriti, kliknuti i provjeriti na mobitelu, umjesto da čitate obećanja.",
-        "Kada budemo imali objavljene klijentske projekte, biće jasno označeni kao takvi.",
+        "Massage und Wellness Mirjana je klijentski projekt. MOST Studio je uradio sadržaj, dizajn i izradu; u prezentaciji možete vidjeti stvarne snimke i otvoriti objavljenu stranicu.",
+        "Ostali radovi označeni kao demo koncepti su samostalno osmišljeni primjeri. Firme i podaci u njima su izmišljeni, a funkcije možete sami isprobati.",
       ],
       de: [
-        "Nein. Derzeit zeigen wir Demo-Konzepte, die wir selbst entworfen und gebaut haben. Unternehmen, Namen und Angaben darin sind erfunden.",
-        "Wir zeigen sie, weil sie am besten belegen, wie wir arbeiten: Sie können sie öffnen, anklicken und auf dem Handy prüfen, statt Versprechen zu lesen.",
-        "Sobald wir veröffentlichte Kundenprojekte haben, werden diese eindeutig als solche gekennzeichnet.",
+        "Massage und Wellness Mirjana ist ein Kundenprojekt. MOST Studio hat Inhalte, Design und Entwicklung umgesetzt; die Projektseite zeigt echte Screenshots und verlinkt die veröffentlichte Website.",
+        "Die als Demokonzepte gekennzeichneten Arbeiten sind selbst entwickelte Beispiele. Unternehmen und Angaben darin sind erfunden; die Funktionen können Sie selbst ausprobieren.",
       ],
     },
   },

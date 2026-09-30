@@ -42,19 +42,19 @@ export const bs = {
   },
 
   projects: {
-    eyebrow: "DEMO RADOVI",
+    eyebrow: "PROJEKTI",
     title: "Različiti poslovi. Promišljena rješenja.",
-    lead: "Koncepte smo osmislili i izradili sami — svaki rješava drugi problem posjetioca.",
+    lead: "Klijentski projekt i funkcionalni demo koncepti pokazuju kako povezujemo sadržaj, dizajn i izradu.",
     problemLabel: "Problem posjetioca",
     functionLabel: "Šta možete isprobati",
-    all: "Svi demo projekti",
+    all: "Svi projekti",
     cardCta: "Pogledajte projekt",
     openDemo: "Otvorite demo",
     shotAlt: "Snimak naslovne stranice demo koncepta",
     shotDesktop: "Prikaz na računaru",
     shotMobile: "Prikaz na mobitelu",
-    overviewTitle: "Demo projekti",
-    overviewLead: "Ovo su naši demo koncepti. Nisu plaćeni klijentski projekti — osmislili smo ih da pokažemo pristup, dizajn i tehničku izradu na konkretnim primjerima.",
+    overviewTitle: "Projekti",
+    overviewLead: "Pogledajte klijentski projekt Massage und Wellness Mirjana i dodatne demo koncepte. Uz svaki rad prikazujemo zadatak, dizajnerske odluke i ono što možete sami pregledati.",
     forBusiness: "Za koju vrstu poslovanja",
     theChallenge: "Šta koncept rješava",
     decisions: "Ključne dizajnerske odluke",
@@ -62,8 +62,8 @@ export const bs = {
     viewDesktop: "Prikaz na računaru",
     viewMobile: "Prikaz na mobitelu",
     tryDemo: "Isprobajte demo",
-    backToProjects: "Nazad na demo projekte",
-    nextProject: "Sljedeći demo koncept",
+    backToProjects: "Nazad na projekte",
+    nextProject: "Sljedeći projekt",
     goalLabel: "Cilj koncepta",
     tryItLabel: "Isprobajte sami",
     easierLabel: "Šta ovo olakšava posjetiocu",
@@ -203,8 +203,8 @@ export const bs = {
     blurb: "Web dizajn, izrada i redizajn web stranica. Radimo s firmama u Bosni i Hercegovini i Njemačkoj.",
     navTitle: "Stranice",
     contactTitle: "Kontakt",
-    demoTitle: "Demo koncepti",
-    disclaimer: "Projekti prikazani na ovoj stranici su demo koncepti koje smo osmislili i izradili sami. Nisu plaćeni klijentski radovi i ne predstavljaju stvarne firme.",
+    projectsTitle: "Projekti",
+    disclaimer: "Klijentski projekti označeni su kao takvi. Demo koncepti su samostalno osmišljeni primjeri; firme i podaci u njima su izmišljeni.",
     rights: "© {year} MOST Studio",
     credits: "Fotografije: Unsplash",
   },
@@ -223,17 +223,17 @@ export const bs = {
     home: {
       title: "Izrada web stranica i webshopova | MOST Studio",
       description:
-        "Web dizajn, izrada poslovnih web stranica i webshopova. Pogledajte demo radove, obim i cijene. Online saradnja na bosanskom i njemačkom.",
+        "Web dizajn, izrada poslovnih web stranica i webshopova. Pogledajte projekte, obim i cijene. Online saradnja na bosanskom i njemačkom.",
     },
     projects: {
-      title: "Demo projekti | MOST Studio",
+      title: "Projekti i web dizajn | MOST Studio",
       description:
-        "Isprobajte naše demo projekte: webshop s 50 artikala, stomatološku ordinaciju, stolariju i poslovno savjetovanje. Primjeri dizajna i funkcionalnosti MOST Studija.",
+        "Klijentski projekt Massage und Wellness Mirjana i funkcionalni demo koncepti MOST Studija. Pogledajte sadržaj, dizajnerske odluke i prikaz na mobitelu.",
     },
     services: {
       title: "Usluge: web dizajn, izrada i redizajn | MOST Studio",
       description:
-        "Usluge MOST Studija: izrada poslovnih web stranica, webshopova i redizajn. Pogledajte obim, proces, demo primjere i vodič o cijeni za vaš projekt.",
+        "Usluge MOST Studija: izrada poslovnih web stranica, webshopova i redizajn. Pogledajte obim, proces, primjere rada i vodič o cijeni za vaš projekt.",
     },
     contact: {
       title: "Kontakt i projektni upit | MOST Studio",
@@ -254,7 +254,7 @@ export const bs = {
     title: "Ova stranica ne postoji.",
     lead: "Link je možda zastario ili je adresa pogrešno upisana.",
     home: "Nazad na početnu",
-    projects: "Pogledajte demo projekte",
+    projects: "Pogledajte projekte",
   },
 };
 
