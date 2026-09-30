@@ -29,8 +29,8 @@ export const bs = {
 
   hero: {
     eyebrow: "IZRADA WEB STRANICA · MOSTAR I BiH",
-    titleLine1: "Vaš kvalitet.",
-    titleLine2: "Vidljiv na webu.",
+    titleLine1: "Izrada web stranica.",
+    titleLine2: "Za firme u Mostaru.",
     lead: "Web stranice i webshopovi koji jasno predstavljaju vašu ponudu i olakšavaju prvi upit. Za firme iz Mostara, cijele BiH i Njemačke. Od dogovora do objave — online.",
     ctaPrimary: "Razgovarajmo o projektu",
     ctaSecondary: "Istražite radove",
