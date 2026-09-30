@@ -16,6 +16,7 @@ export function ClientScreenshot({
   kind,
   sizes,
   preload = false,
+  loading = "lazy",
   className,
 }: {
   shot: ClientScreenshotAsset;
@@ -24,6 +25,7 @@ export function ClientScreenshot({
   kind: "desktop" | "services" | "mobile";
   sizes: string;
   preload?: boolean;
+  loading?: "lazy" | "eager";
   className?: string;
 }) {
   return (
@@ -36,6 +38,7 @@ export function ClientScreenshot({
           alt={alt}
           sizes={sizes}
           preload={preload}
+          loading={preload ? undefined : loading}
           className="block h-auto w-full"
         />
       </div>

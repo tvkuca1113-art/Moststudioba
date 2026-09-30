@@ -172,6 +172,7 @@ export function ClientProjectView({ locale, slug }: { locale: Locale; slug: stri
               alt={c.servicesAlt}
               caption={c.servicesCaption}
               kind="services"
+              loading="eager"
               sizes="(max-width: 1023px) calc(100vw - 40px), 55vw"
             />
           </div>
@@ -193,6 +194,7 @@ export function ClientProjectView({ locale, slug }: { locale: Locale; slug: stri
               alt={c.mobileAlt}
               caption={c.mobileCaption}
               kind="mobile"
+              loading="eager"
               sizes="(max-width: 391px) calc(100vw - 40px), 352px"
               className="mx-auto w-full max-w-[22rem]"
             />
