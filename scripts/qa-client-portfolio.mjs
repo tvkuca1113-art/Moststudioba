@@ -37,16 +37,31 @@ const server = spawn(process.execPath, [
 ], { stdio: 'inherit' });
 let browser;
 
-async function decodeClientImages(scope) {
+async function decodeClientImages(scope, page) {
   const images = await scope.locator('img').all();
   assert(images.length, 'Client screenshots must be rendered');
   const decoded = [];
   for (const image of images) {
-    await image.scrollIntoViewIfNeeded();
-    await image.evaluate(element => Promise.race([
-      element.decode(),
-      new Promise((_, reject) => setTimeout(() => reject(new Error('Client image did not decode')), 10000)),
-    ]));
+    // Native lazy loading and responsive source selection happen after scrolling.
+    // Wait for actual pixels before asking decode() to resolve the current source.
+    await image.evaluate(element => element.scrollIntoView({ block: 'center', behavior: 'instant' }));
+    try {
+      const handle = await image.elementHandle();
+      assert(handle, 'Client image remains mounted');
+      await page.waitForFunction(element => element.complete && element.naturalWidth > 0, handle, { timeout: 15000 });
+      await image.evaluate(element => element.decode());
+      await handle.dispose();
+    } catch (error) {
+      const state = await image.evaluate(element => ({
+        kind: element.closest('figure')?.getAttribute('data-client-screenshot'),
+        src: element.getAttribute('src'), srcset: element.getAttribute('srcset'),
+        currentSrc: element.currentSrc, loading: element.loading,
+        complete: element.complete, naturalWidth: element.naturalWidth,
+        rect: element.getBoundingClientRect().toJSON(), scrollY,
+      }));
+      console.log('CLIENT_IMAGE_FAILURE ' + JSON.stringify(state));
+      throw error;
+    }
     const data = await image.evaluate(element => ({
       src: element.currentSrc,
       width: element.naturalWidth,
@@ -111,6 +126,11 @@ try {
     for (const width of [320, 390, 768, 1440]) {
       const viewport = { width, height: width === 1440 ? 1000 : 844 };
       const page = await browser.newPage({ viewport, reducedMotion: 'reduce' });
+      page.on('response', response => {
+        if (response.url().includes('/_next/image') && response.status() >= 400) {
+          console.log('CLIENT_IMAGE_HTTP_ERROR ' + JSON.stringify({ url: response.url(), status: response.status() }));
+        }
+      });
       try {
         const response = await page.goto(origin + definition.route, { waitUntil: 'load' });
         assert.equal(response?.status(), 200, 'Published portfolio route returns HTTP 200');
@@ -138,7 +158,7 @@ try {
         if (definition.kind !== 'case') {
           assert(await scope.locator('a[href="' + cases[definition.locale] + '"]').count(), 'Card links to the published case study');
         }
-        const images = await decodeClientImages(scope);
+        const images = await decodeClientImages(scope, page);
         const metrics = await page.evaluate(() => ({
           viewport: document.documentElement.clientWidth,
           documentWidth: Math.max(document.documentElement.scrollWidth, document.body.scrollWidth),
