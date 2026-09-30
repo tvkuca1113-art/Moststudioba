@@ -48,7 +48,7 @@ export function Hero({ locale, dict }: { locale: Locale; dict: Dictionary }) {
             </p>
 
             <h1 className="mt-6 text-hero leading-[0.88] font-extrabold tracking-[-0.035em] text-balance">
-              <span className="block">{dict.hero.titleLine1}</span>
+              <span className="block">{dict.hero.titleLine1}</span>{" "}
               <span className="block text-mist">{dict.hero.titleLine2}</span>
             </h1>
           </div>
@@ -60,7 +60,7 @@ export function Hero({ locale, dict }: { locale: Locale; dict: Dictionary }) {
               <ButtonLink href={`#${sectionIds.contact}`} tone="dark">
                 {dict.hero.ctaPrimary}
               </ButtonLink>
-              <ButtonLink href={`#${sectionIds.projects}`} variant="secondary" tone="dark" withArrow={false}>
+              <ButtonLink href={`#${sectionIds.services}`} variant="secondary" tone="dark" withArrow={false}>
                 {dict.hero.ctaSecondary}
               </ButtonLink>
             </div>

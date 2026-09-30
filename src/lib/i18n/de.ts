@@ -26,12 +26,12 @@ export const de: Dictionary = {
   },
 
   hero: {
-    eyebrow: "WEBDESIGN · BIH + DEUTSCHLAND",
-    titleLine1: "Ihre Qualität.",
-    titleLine2: "Online sichtbar.",
-    lead: "Websites und Onlineshops, die Ihr Angebot verständlich machen und die erste Anfrage erleichtern. Für Unternehmen in Bosnien-Herzegowina und Deutschland. Von der Planung bis zur Veröffentlichung — online.",
-    ctaPrimary: "Projekt besprechen",
-    ctaSecondary: "Arbeiten entdecken",
+    eyebrow: "WEBDESIGN · ENTWICKLUNG · RELAUNCH",
+    titleLine1: "Websites",
+    titleLine2: "und Onlineshops.",
+    lead: "Wir gestalten und entwickeln Unternehmenswebsites und Onlineshops und überarbeiten bestehende Webauftritte. Klare Inhalte, mobile Layouts und ein verständlicher Weg zur Anfrage oder Bestellung. Die Zusammenarbeit findet online auf Deutsch oder Bosnisch statt.",
+    ctaPrimary: "Angebot anfragen",
+    ctaSecondary: "Leistung auswählen",
     support: "Webdesign · Entwicklung · Relaunch",
     markets: "BiH + Deutschland",
     galleryLabel: "Demo-Konzept auswählen",
@@ -73,12 +73,12 @@ export const de: Dictionary = {
 
   services: {
     eyebrow: "LEISTUNGEN",
-    title: "Von der ersten Idee bis zur Veröffentlichung.",
+    title: "Website, Onlineshop oder Relaunch?",
     lead: "Unternehmenswebsite, Onlineshop oder Relaunch. Wählen Sie, was zu Ihrem nächsten Schritt passt.",
     includes: "Was dazugehört",
     outcome: "Was Sie bekommen",
     cta: "Über Ihr Projekt sprechen",
-    pageLead: "Webdesign, Unternehmenswebsites, Onlineshops und Relaunches für Unternehmen in BiH und Deutschland. Finden Sie die passende Leistung mit Umfang, Beispielen und Ablauf der Online-Zusammenarbeit.",
+    pageLead: "Unternehmenswebsite, Onlineshop oder Relaunch: Vergleichen Sie Leistungen, Beispiele und Ablauf und wählen Sie, was zu Ihrem Projekt passt. Wir arbeiten online auf Deutsch oder Bosnisch zusammen.",
     scopeNote: "Das Einstiegsangebot gilt für eine One-Page-Website mit klar beschriebenem Umfang. Weitere Seiten, Sprachen, Onlineshops und Schnittstellen erhalten eine eigene Kalkulation. Gesamtpreis und Termin bestätigen wir vor dem Start.",
     notOffered: "Was wir nicht machen",
     notOfferedLead: "Das sollten Sie gleich wissen. Wir konzentrieren uns auf Design und Entwicklung von Websites und übernehmen keine Aufgaben, die wir nicht regelmäßig machen:",
@@ -219,9 +219,9 @@ export const de: Dictionary = {
 
   meta: {
     home: {
-      title: "Webdesign für BiH und Deutschland | MOST Studio",
+      title: "Webdesign, Websites und Onlineshops | MOST Studio",
       description:
-        "Webdesign, Websites und Onlineshops für Unternehmen in Bosnien-Herzegowina und Deutschland. Online-Zusammenarbeit, funktionierende Demos und klare Projektangebote.",
+        "Webdesign, Unternehmenswebsites, Onlineshops und Relaunch. Sehen Sie Demos, Leistungen und Kosten. Online-Zusammenarbeit auf Deutsch und Bosnisch.",
     },
     projects: {
       title: "Demo-Projekte | MOST Studio",
