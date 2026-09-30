@@ -9,6 +9,23 @@ export type FaqItem = {
 
 export const faqItems: FaqItem[] = [
   {
+    id: "online-collaboration",
+    question: {
+      bs: "Kako izgleda saradnja na daljinu?",
+      de: "Wie funktioniert die Zusammenarbeit online?",
+    },
+    answer: {
+      bs: [
+        "Sarađujemo online s firmama iz Mostara, cijele Bosne i Hercegovine i Njemačke, na bosanskom i njemačkom. Pošaljite opis posla, cilj stranice i materijale koje već imate.",
+        "Prije početka dogovaramo obim, cijenu i rok. Strukturu, dizajn i funkcije pregledate preko linka i šaljete komentare; nakon odobrenja i provjere slijedi objava i dogovorena predaja.",
+      ],
+      de: [
+        "Wir arbeiten online mit Unternehmen in Bosnien-Herzegowina und Deutschland zusammen, auf Deutsch oder Bosnisch. Senden Sie eine kurze Beschreibung Ihres Geschäfts, das Ziel der Website und vorhandene Materialien.",
+        "Vor dem Start vereinbaren wir Umfang, Preis und Termin. Sie prüfen Struktur, Design und Funktionen über einen Link und senden Rückmeldungen; nach Freigabe und Prüfung folgen Veröffentlichung und vereinbarte Übergabe.",
+      ],
+    },
+  },
+  {
     id: "redesign",
     question: {
       bs: "Možete li redizajnirati postojeću stranicu?",

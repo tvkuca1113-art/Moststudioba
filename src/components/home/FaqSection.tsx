@@ -23,11 +23,11 @@ export function FaqSection({
 }: {
   locale: Locale;
   dict: Dictionary;
-  /** Show only the first N, with a link to the full list. */
+  /** Show the first N prioritised questions, with a link to the full list. */
   limit?: number;
 }) {
   const t = translator(locale);
-  const priority = ["price", "prepare", "timeline", "after-launch"];
+  const priority = ["price", "online-collaboration", "prepare", "after-launch"];
   const ordered = [...faqItems].sort((a, b) => (priority.includes(a.id) ? priority.indexOf(a.id) : priority.length) - (priority.includes(b.id) ? priority.indexOf(b.id) : priority.length));
   const items = limit ? ordered.slice(0, limit) : ordered;
   const truncated = items.length < faqItems.length;
