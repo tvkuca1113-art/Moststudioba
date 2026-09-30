@@ -1,0 +1,65 @@
+name: Validate website
+
+on:
+  push:
+    branches:
+      - codex/seo-audit-2026-09-30
+      - claude/most-studio-website-svturd
+  pull_request:
+    branches:
+      - claude/most-studio-website-svturd
+
+permissions:
+  contents: read
+
+concurrency:
+  group: validate-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      CI: 'true'
+      NEXT_TELEMETRY_DISABLED: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Read installed Next.js metadata guide
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          import path from 'node:path';
+          import { createRequire } from 'node:module';
+          const require = createRequire(import.meta.url);
+          const root = path.join(path.dirname(require.resolve('next/package.json')), 'dist/docs');
+          function files(dir) {
+            return fs.readdirSync(dir, { withFileTypes: true }).flatMap(entry => {
+              const file = path.join(dir, entry.name);
+              return entry.isDirectory() ? files(file) : [file];
+            });
+          }
+          const candidates = files(root).filter(file => /(?:metadata-and-og-images|generate-metadata)\.(?:md|mdx)$/.test(file));
+          const guide = candidates.find(file => file.includes('metadata-and-og-images')) ?? candidates[0];
+          if (!guide) throw new Error('Installed Next.js metadata guide not found');
+          console.log('NEXT_GUIDE_PATH=' + guide);
+          console.log(fs.readFileSync(guide, 'utf8'));
+          NODE
+      - name: Lint
+        run: npm run lint
+      - name: Production build
+        run: npm run build
+      - name: TypeScript
+        run: npm run typecheck
+      - name: Interaction and webshop regressions
+        run: npm run test:interactions
+      - name: Generated HTML SEO checks
+        run: npm run test:seo
