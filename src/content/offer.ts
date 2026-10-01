@@ -1,11 +1,14 @@
 /** One source for the public starting price and its deliberately limited scope. */
+const amount = 800;
+
 export const starterOffer = {
-  amount: 400,
+  amount,
   currency: "BAM",
   bs: {
     eyebrow: "JASAN POČETAK",
     title: "Prvi web. Jasno dogovoren obim.",
-    price: "400 KM",
+    price: `${amount} KM`,
+    equivalent: null,
     from: "od",
     billing: "Jednokratna izrada · jednostranična prezentacija",
     intro: "Za firmu kojoj treba pregled usluga, nekoliko fotografija i jednostavan put do kontakta.",
@@ -18,18 +21,18 @@ export const starterOffer = {
       "Jedan objedinjeni krug korekcija, provjera linkova i objava na vašoj domeni.",
     ],
     separateTitle: "Šta se posebno dogovara",
-    separate: "Domena, hosting i plaćene licence nisu uključeni u 400 KM. Pisanje tekstova, izrada fotografija, dodatne stranice i jezici, obrasci, CMS, rezervacije i webshop zahtijevaju zasebnu ponudu. Održavanje i kontinuirani SEO nisu uključeni.",
+    separate: `Domena, hosting i plaćene licence nisu uključeni u ${amount} KM. Pisanje tekstova, izrada fotografija, dodatne stranice i jezici, obrasci, CMS, rezervacije i webshop zahtijevaju zasebnu ponudu. Održavanje i kontinuirani SEO nisu uključeni.`,
     reassurance: "Prije početka dobijate pisanu ponudu s ukupnom cijenom, vanjskim troškovima, rokom i isporukom. Dodatni rad dogovaramo prije nego što ga započnemo.",
     cta: "Provjerimo šta vam treba",
     details: "Kako se formira cijena",
     larger: "Trebate više od prezentacije?",
     largerBody: "Za poslovnu stranicu s više sadržaja, webshop ili integracije prvo definišemo korisnički tok i funkcije, pa pripremimo procjenu.",
-    hero: "Jednostranična prezentacija od 400 KM. Pogledajte šta uključuje.",
   },
   de: {
     eyebrow: "EIN KLARER EINSTIEG",
     title: "Die erste Website. Ein klarer Umfang.",
-    price: "400 KM (BAM)",
+    price: `${amount} KM (BAM)`,
+    equivalent: `Entspricht ca. ${Math.round(amount / 1.95583)} €.`,
     from: "ab",
     billing: "Einmalige Erstellung · One-Page-Website",
     intro: "Für Unternehmen, die ihre Leistungen, einige Bilder und einen einfachen Kontaktweg präsentieren möchten.",
@@ -42,13 +45,12 @@ export const starterOffer = {
       "Eine gebündelte Korrekturrunde, Linkprüfung und Veröffentlichung auf Ihrer Domain.",
     ],
     separateTitle: "Was separat vereinbart wird",
-    separate: "Domain, Hosting und kostenpflichtige Lizenzen sind in den 400 KM nicht enthalten. Texterstellung, neue Bilder, weitere Seiten und Sprachen, Formulare, CMS, Buchungen und Onlineshops werden separat angeboten. Wartung und laufende SEO sind nicht enthalten.",
+    separate: `Domain, Hosting und kostenpflichtige Lizenzen sind in den ${amount} KM nicht enthalten. Texterstellung, neue Bilder, weitere Seiten und Sprachen, Formulare, CMS, Buchungen und Onlineshops werden separat angeboten. Wartung und laufende SEO sind nicht enthalten.`,
     reassurance: "Vor dem Start erhalten Sie ein schriftliches Angebot mit Gesamtpreis, externen Kosten, Termin und Leistungen. Zusätzliche Arbeiten stimmen wir vorab mit Ihnen ab.",
     cta: "Bedarf gemeinsam klären",
     details: "Wie der Preis entsteht",
     larger: "Mehr als eine Präsentation?",
     largerBody: "Für umfangreichere Unternehmenswebsites, Onlineshops oder Schnittstellen klären wir zuerst Nutzerwege und Funktionen. Darauf basiert das Angebot.",
-    hero: "One-Page-Website ab 400 KM (BAM). Leistungen ansehen.",
   },
 } as const;
 

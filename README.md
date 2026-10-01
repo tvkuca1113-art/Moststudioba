@@ -166,6 +166,14 @@ CI provjerava BS/DE početnu, portfolio i Mirjaninu prezentaciju na četiri
 širine ekrana skriptom `scripts/qa-client-portfolio.mjs`. Artefakt
 `client-portfolio` sadrži snimke za vizuelni pregled.
 
+## Početna ponuda
+
+Početna cijena je 800 KM za jasno ograničenu jednostraničnu prezentaciju.
+Broj i obim su u `src/content/offer.ts`; BS/DE tekstovi usluga, FAQ i vodič
+izvode cijenu iz istog izvora. Hero i usluge na početnoj vode na detalje
+bez velikog cjenovnog bloka. Njemačka ponuda sadrži i približnu EUR vrijednost.
+Detalji i izvori: [prikaz cijene](./docs/PRICING-800-2026-10-01.md).
+
 ## Kontaktni tok
 
 Instagram je glavni potvrđeni kontakt, email sporedni. Facebook se prikazuje

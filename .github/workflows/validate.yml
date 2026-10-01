@@ -50,6 +50,9 @@ jobs:
         env:
           CLIENT_QA_EXPORT_BASE64: ${{ github.head_ref == 'codex/mirjana-client-portfolio-2026-09-30' && 'true' || 'false' }}
         run: node scripts/qa-client-portfolio.mjs
+      - name: Capture the offer presentation for review
+        if: github.head_ref == 'codex/starter-offer-800-2026-10-01'
+        run: node scripts/capture-offer-review.mjs
       - name: Save hero screenshots
         if: always()
         uses: actions/upload-artifact@v4
@@ -64,5 +67,13 @@ jobs:
         with:
           name: client-portfolio
           path: qa/client-portfolio/
+          if-no-files-found: ignore
+          retention-days: 14
+      - name: Save offer review screenshots
+        if: always() && github.head_ref == 'codex/starter-offer-800-2026-10-01'
+        uses: actions/upload-artifact@v4
+        with:
+          name: offer-review
+          path: qa/offer-review/
           if-no-files-found: ignore
           retention-days: 14
