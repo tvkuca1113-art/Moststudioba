@@ -68,7 +68,7 @@ dokumentuju stvarne izvedene narudžbe. Detalji SEO rada i izvori su u
 
 ## Objavljena početna ponuda
 
-Vlasnik je 1. 10. 2026. odobrio početnu cijenu **800 KM (BAM)**.
+Vlasnik je 1. 10. 2026. potvrdio početnu cijenu **600 KM (BAM)**.
 Ponuda je ograničena na jednu stranicu, do pet sekcija, jedan jezik, gotove
 materijale klijenta i jedan objedinjeni krug korekcija. Uključuje mobilni
 raspored, kontakt linkove, osnovnu SEO pripremu i objavu. Domena, hosting,
@@ -84,4 +84,4 @@ Početna naglašava usluge i stvarni klijentski rad. Cjenovna ponuda je na
 stranicama usluga i vodiču, uz diskretan link s početne i odgovor u FAQ-u.
 Pri budućoj promjeni provjeriti sve javne BS/DE prikaze cijene i obima;
 ne mijenjati nepovezane brojeve u kodu ili historijske zapise.
-Detalji: `docs/PRICING-800-2026-10-01.md`.
+Detalji: `docs/PRICING-600-2026-10-01.md`.

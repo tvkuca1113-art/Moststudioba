@@ -168,11 +168,11 @@ CI provjerava BS/DE početnu, portfolio i Mirjaninu prezentaciju na četiri
 
 ## Početna ponuda
 
-Početna cijena je 800 KM za jasno ograničenu jednostraničnu prezentaciju.
+Početna cijena je 600 KM za jasno ograničenu jednostraničnu prezentaciju.
 Broj i obim su u `src/content/offer.ts`; BS/DE tekstovi usluga, FAQ i vodič
 izvode cijenu iz istog izvora. Hero i usluge na početnoj vode na detalje
 bez velikog cjenovnog bloka. Njemačka ponuda sadrži i približnu EUR vrijednost.
-Detalji i izvori: [prikaz cijene](./docs/PRICING-800-2026-10-01.md).
+Detalji i izvori: [prikaz cijene](./docs/PRICING-600-2026-10-01.md).
 
 ## Kontaktni tok
 
