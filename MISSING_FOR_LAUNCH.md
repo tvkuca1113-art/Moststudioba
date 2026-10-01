@@ -1,6 +1,6 @@
 # Potvrđeni podaci i preostali zadaci
 
-Ažurirano 30. 9. 2026. Stranica je objavljena. Ovaj dokument prati stvarne
+Ažurirano 1. 10. 2026. Stranica je objavljena. Ovaj dokument prati stvarne
 poslovne podatke i nedovršene integracije.
 
 ## Potvrđeno
@@ -68,7 +68,7 @@ dokumentuju stvarne izvedene narudžbe. Detalji SEO rada i izvori su u
 
 ## Objavljena početna ponuda
 
-Početna cijena ranije spomenuta u razgovoru s vlasnikom je **400 KM (BAM)**.
+Vlasnik je 1. 10. 2026. odobrio početnu cijenu **800 KM (BAM)**.
 Ponuda je ograničena na jednu stranicu, do pet sekcija, jedan jezik, gotove
 materijale klijenta i jedan objedinjeni krug korekcija. Uključuje mobilni
 raspored, kontakt linkove, osnovnu SEO pripremu i objavu. Domena, hosting,
@@ -76,5 +76,12 @@ licence, CMS, dodatni jezici, obrasci, webshop i održavanje dogovaraju se
 posebno. Ukupan iznos i vanjski troškovi potvrđuju se pisanom ponudom.
 
 Cijena nije univerzalna cijena poslovne stranice ili webshopa. Glavna ponuda
-je u `src/content/offer.ts`; usklađene su BS/DE stranice usluga, FAQ i vodič o
-cijeni. Pri budućoj promjeni cijene provjeriti sva spominjanja `400` u sadržaju.
+je u `src/content/offer.ts`; iz nje se izvode BS/DE cijene, stranice usluga,
+FAQ i vodič o cijeni. Njemačka ponuda prikazuje i približan iznos u eurima
+prema fiksnom kursu 1 EUR = 1,95583 KM.
+
+Početna naglašava usluge i stvarni klijentski rad. Cjenovna ponuda je na
+stranicama usluga i vodiču, uz diskretan link s početne i odgovor u FAQ-u.
+Pri budućoj promjeni provjeriti sve javne BS/DE prikaze cijene i obima;
+ne mijenjati nepovezane brojeve u kodu ili historijske zapise.
+Detalji: `docs/PRICING-800-2026-10-01.md`.

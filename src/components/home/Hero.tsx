@@ -2,10 +2,9 @@ import Image from "next/image";
 import { ArchMark } from "@/components/ui/ArchMark";
 import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
-import { type Locale } from "@/lib/i18n/config";
+import { path, type Locale } from "@/lib/i18n/config";
 import type { Dictionary } from "@/lib/i18n/dictionary";
 import { sectionIds } from "@/lib/nav";
-import { starterOffer } from "@/content/offer";
 
 /**
  * The first screen: a short editorial statement, then the work.
@@ -65,7 +64,9 @@ export function Hero({ locale, dict }: { locale: Locale; dict: Dictionary }) {
               </ButtonLink>
             </div>
 
-            <a href="#budzet" className="mt-5 inline-block max-w-md text-sm leading-relaxed text-mist underline decoration-mist/40 underline-offset-4 hover:text-lime">{starterOffer[locale].hero}</a>
+            <a href={path("pricing", locale)} className="mt-5 inline-block max-w-md text-sm leading-relaxed text-mist underline decoration-mist/40 underline-offset-4 hover:text-lime">
+              {locale === "bs" ? "Obim, cijenu i rok dogovaramo prije početka." : "Umfang, Preis und Termin klären wir vor dem Start."}
+            </a>
           </div>
         </div>
 
