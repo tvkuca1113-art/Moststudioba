@@ -1,5 +1,5 @@
 /** One source for the public starting price and its deliberately limited scope. */
-const amount = 800;
+const amount = 600;
 
 export const starterOffer = {
   amount,
