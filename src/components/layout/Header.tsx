@@ -9,7 +9,7 @@ import { Wordmark } from "@/components/ui/Wordmark";
 import { SocialContact } from "@/components/contact/SocialContact";
 import { site } from "@/content/site";
 import { cn } from "@/lib/cn";
-import { path, type Locale, type RouteRef } from "@/lib/i18n/config";
+import { path, type SiteLocale, type RouteRef } from "@/lib/i18n/config";
 import type { Dictionary } from "@/lib/i18n/dictionary";
 import { mainNav } from "@/lib/nav";
 import { LanguageSwitcher } from "./LanguageSwitcher";
@@ -22,9 +22,9 @@ export function Header({
   dict,
   tone = "solid",
 }: {
-  locale: Locale;
+  locale: SiteLocale;
   route: RouteRef;
-  dict: Dictionary;
+  dict: Pick<Dictionary, "common" | "nav">;
   tone?: HeaderTone;
 }) {
   const [scrolled, setScrolled] = useState(false);
@@ -153,7 +153,7 @@ export function Header({
             {/* Wrapped: a `hidden` utility on the button itself would compete
                 with the button's own `inline-flex` and lose. */}
             <span className="hidden sm:block">
-              <ButtonAnchor href={`${contactHref}#top`} tone={dark ? "dark" : "light"} className="px-5 py-2.5 text-sm">
+              <ButtonAnchor href={locale === "en" ? contactHref : `${contactHref}#top`} tone={dark ? "dark" : "light"} className="px-5 py-2.5 text-sm">
                 {dict.nav.cta}
               </ButtonAnchor>
             </span>

@@ -1,12 +1,14 @@
 
+import { usStarterOffer } from "@/content/offer";
 import { Container } from "@/components/ui/Container";
 import { Wordmark } from "@/components/ui/Wordmark";
 import { TrackedAnchor } from "@/components/ui/TrackedLink";
 import { SocialContact } from "@/components/contact/SocialContact";
+import { englishProjects } from "@/content/english-projects";
 import { clientProjects } from "@/content/client-projects";
 import { demoProjects } from "@/content/projects";
 import { site } from "@/content/site";
-import { path, type Locale, type RouteRef } from "@/lib/i18n/config";
+import { path, type SiteLocale, type RouteRef } from "@/lib/i18n/config";
 import type { Dictionary } from "@/lib/i18n/dictionary";
 import { format } from "@/lib/i18n/format";
 import { translator } from "@/lib/i18n/localized";
@@ -18,13 +20,16 @@ export function Footer({
   route,
   dict,
 }: {
-  locale: Locale;
+  locale: SiteLocale;
   route: RouteRef;
-  dict: Dictionary;
+  dict: Pick<Dictionary, "common" | "nav" | "footer">;
 }) {
-  const t = translator(locale);
+  const t = translator(locale === "en" ? "bs" : locale);
+  const projects = locale === "en"
+    ? englishProjects.map(p => ({ slug: p.slug, brand: p.brand, sector: p.category }))
+    : [...clientProjects, ...demoProjects].map(p => ({ slug: p.slug, brand: p.brand, sector: t(p.sector) }));
   const home = path("home", locale);
-  const homeAnchor = (id: string) => `${home}#${id}`;
+  const homeAnchor = (id: string) => `${home}#${locale === "en" ? (id === "proces" ? "process" : id) : id}`;
 
   const pages = [
     { label: dict.nav.projects, href: path("projects", locale) },
@@ -32,10 +37,12 @@ export function Footer({
     { label: dict.nav.process, href: homeAnchor(sectionIds.process) },
     { label: dict.nav.studio, href: homeAnchor(sectionIds.studio) },
     { label: dict.nav.contact, href: path("contact", locale) },
-    { label: locale === "bs" ? "Online saradnja u BiH" : "Online-Zusammenarbeit in BiH", href: path("coverage", locale) },
-    { label: locale === "bs" ? "Web stranica ili Instagram?" : "Website oder Instagram?", href: path("socialWebsite", locale) },
-    { label: locale === "bs" ? "Zašto web nije na Googleu?" : "Website nicht bei Google?", href: path("googleVisibility", locale) },
-    { label: locale === "bs" ? "Vodič o cijeni" : "Kostenratgeber", href: path("pricing", locale) },
+    ...(locale === "en" ? [{ label: `Projects from ${usStarterOffer.price} USD`, href: path("pricing", locale) }] : [
+      { label: locale === "bs" ? "Online saradnja u BiH" : "Online-Zusammenarbeit in BiH", href: path("coverage", locale) },
+      { label: locale === "bs" ? "Web stranica ili Instagram?" : "Website oder Instagram?", href: path("socialWebsite", locale) },
+      { label: locale === "bs" ? "Zašto web nije na Googleu?" : "Website nicht bei Google?", href: path("googleVisibility", locale) },
+      { label: locale === "bs" ? "Vodič o cijeni" : "Kostenratgeber", href: path("pricing", locale) },
+    ]),
   ];
 
   return (
@@ -68,14 +75,14 @@ export function Footer({
           <nav aria-label={dict.footer.projectsTitle}>
             <h2 className="text-[0.8125rem] font-semibold tracking-[0.16em] text-lime uppercase">{dict.footer.projectsTitle}</h2>
             <ul className="mt-4 space-y-1">
-              {[...clientProjects, ...demoProjects].map((project) => (
+              {projects.map((project) => (
                 <li key={project.slug}>
                   <a
                     href={path("project", locale, project.slug)}
                     className="inline-flex min-h-11 items-center text-[0.9375rem] text-mist hover:text-paper"
                   >
                     {project.brand}
-                    <span className="sr-only"> — {t(project.sector)}</span>
+                    <span className="sr-only"> — {project.sector}</span>
                   </a>
                 </li>
               ))}
@@ -98,7 +105,7 @@ export function Footer({
 
         <div className="mt-6 flex flex-wrap items-center justify-between gap-4 text-[0.8125rem] text-mist">
           <p>{format(dict.footer.rights, { year: new Date().getFullYear() })}</p>
-          <p>{site.markets.join(" + ")}</p>
+          <p>{locale === "en" ? "Online collaboration · English / Bosnian / German" : site.markets.join(" + ")}</p>
         </div>
       </Container>
     </footer>

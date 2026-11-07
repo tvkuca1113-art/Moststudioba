@@ -3,7 +3,7 @@
 import { track } from "@vercel/analytics";
 
 import { site } from "@/content/site";
-import type { Locale } from "@/lib/i18n/config";
+import type { SiteLocale } from "@/lib/i18n/config";
 
 /**
  * The only events this site sends.
@@ -21,8 +21,8 @@ import type { Locale } from "@/lib/i18n/config";
  *    the day one exists it is not mistakenly conflated with a copy.
  */
 type Events = {
-  outbound_email: { locale: Locale; from: "contact" | "footer" | "brief" };
-  outbound_facebook: { locale: Locale; from: "hero" | "header" | "contact" | "footer" | "brief" };
+  outbound_email: { locale: SiteLocale; from: "contact" | "footer" | "brief" };
+  outbound_facebook: { locale: SiteLocale; from: "hero" | "header" | "contact" | "footer" | "brief" };
   /** A client project or concept presentation was opened. */
   view_project: { project: string; locale: string };
   /** A running demo was opened, and from where. */

@@ -1,5 +1,8 @@
-import { Arrow } from "./Arrow";
 import Link from "next/link";
+import { ButtonLink, buttonClass } from "@/components/ui/Button";
+import { Container } from "@/components/ui/Container";
+import { Section, SectionHeading } from "@/components/ui/Section";
+import { ArrowRight, ArrowUpRight } from "@/components/ui/icons";
 import type { EnglishProject } from "@/content/english-projects";
 import { englishProjects } from "@/content/english-projects";
 import { absoluteUrl } from "@/lib/seo";
@@ -7,14 +10,38 @@ import { EnglishFrame } from "./EnglishFrame";
 import { ProjectArtwork } from "./ProjectArtwork";
 
 export function EnglishProjectView({ project }: { project: EnglishProject }) {
-  const next = englishProjects[(englishProjects.findIndex(p=>p.slug===project.slug)+1)%englishProjects.length];
+  const next = englishProjects[(englishProjects.findIndex(p => p.slug === project.slug) + 1) % englishProjects.length];
   const url = absoluteUrl(`/en/projects/${project.slug}`);
-  const schema = {"@context":"https://schema.org","@type":"WebPage",url,name:`${project.brand} — ${project.kind === "client" ? "Client Website" : "Design Concept"} | MOST Studio`,description:project.summary,inLanguage:"en",isPartOf:{"@id":`${absoluteUrl("/")}/#website`}};
-  return <EnglishFrame route={{key:"project",slug:project.slug}}>
-    <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(schema).replace(/</g,"\\u003c")}} />
-    <section className="en-case-intro en-wrap"><Link href="/en#work" className="en-text-link"><Arrow direction="left" /> Back to selected work</Link><div className="en-case-heading"><div><p className="en-kicker">{project.kind === "client" ? "Client project" : "Independent demo concept"} / {project.brand}</p><h1>{project.title}</h1></div><div><p>{project.summary}</p><p className="en-case-sector">{project.category}</p></div></div>{project.kind === "concept" && <p className="en-concept-note">Independent design exploration for an invented business. Not a client commission. No real orders, appointments or business results are represented.</p>}<ProjectArtwork project={project} priority /><p className="en-capture-note">Actual desktop and mobile website captures. The original website content is in {project.kind==="client" ? "German" : "Bosnian"}.</p></section>
-    <section className="en-case-brief en-section en-wrap"><div><p className="en-kicker">The brief</p><h2 className="en-section-title">{project.kind === "client" ? "A clear job for the website." : "An idea worth exploring."}</h2><p>{project.brief}</p></div><div><h3>{project.kind === "client" ? "Project scope" : "What the concept explores"}</h3><ul>{project.scope.map(item=><li key={item}>{item}</li>)}</ul>{project.liveUrl && <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="en-button">Visit live website <Arrow direction="up-right" /></a>}{project.demoUrl && <a href={project.demoUrl} className="en-button">Try the interactive demo <Arrow direction="up-right" /></a>}<p className="en-capture-note">{project.liveUrl ? "Opens the original German website in a new tab." : "The interactive demo is in Bosnian. It does not create a real booking or order."}</p></div></section>
-    <section className="en-case-decisions en-section on-dark"><div className="en-wrap"><p className="en-kicker">Behind the design</p><h2 className="en-section-title">Every choice<br />has a purpose.</h2><div className="en-decision-list">{project.decisions.map((decision,i)=><article key={decision.title}><span>0{i+1}</span><h3>{decision.title}</h3><p>{decision.body}</p></article>)}</div></div></section>
-    <section className="en-case-close en-section en-wrap"><div><p className="en-kicker">Have a project in mind?</p><h2 className="en-section-title">Your business.<br />Your own direction.</h2><p>Let’s talk about what your website should do for you.</p><a href="/en#contact" className="en-button">Start a conversation <Arrow direction="up-right" /></a></div><Link className="en-next-project" href={`/en/projects/${next.slug}`}><span>Next / {next.kind === "client" ? "Client project" : "Demo concept"}</span><h3>{next.brand}</h3><Arrow direction="up-right" /></Link></section>
-  </EnglishFrame>;
+  const schema = { "@context": "https://schema.org", "@type": "WebPage", url, name: `${project.brand} — ${project.kind === "client" ? "Client Website" : "Design Concept"} | MOST Studio`, description: project.summary, inLanguage: "en", isPartOf: { "@id": `${absoluteUrl("/")}/#website` } };
+
+  return (
+    <EnglishFrame route={{ key: "project", slug: project.slug }}>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, "\\u003c") }} />
+      <Section tone="paper" size="tight" labelledBy="case-title">
+        <Container>
+          <Link href="/en#work" className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-slate hover:text-forest"><ArrowRight className="size-4 rotate-180" /> Back to selected work</Link>
+          <div className="mt-6 grid gap-7 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-12">
+            <div><div className="flex flex-wrap items-center gap-x-3 gap-y-2"><span className="rounded-full border border-forest/20 bg-forest/5 px-3 py-1 text-[0.8125rem] font-semibold text-forest">{project.kind === "client" ? "Client project" : "Independent demo concept"}</span><span className="text-sm text-slate">{project.category}</span></div><h1 id="case-title" className="mt-5 max-w-[20ch] text-display leading-[1.04] tracking-[-0.035em]">{project.brand}</h1><p className="mt-5 max-w-[60ch] text-lead leading-relaxed text-slate">{project.summary}</p></div>
+            {project.liveUrl && <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className={buttonClass("secondary", "light", "justify-self-start")}>Visit live website <ArrowUpRight className="size-4 shrink-0" /></a>}
+          </div>
+          {project.kind === "concept" && <p className="mt-6 max-w-3xl rounded-xl border border-line-light bg-paper-dim p-4 text-sm leading-relaxed text-slate">Independent design exploration for an invented business. Not a client commission. No real orders, appointments or business results are represented.</p>}
+          <div className="mt-8 lg:mt-10"><ProjectArtwork project={project} priority /></div>
+        </Container>
+      </Section>
+      <Section tone="paperDim" labelledBy="brief-title"><Container><div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
+        <div><SectionHeading id="brief-title" eyebrow="THE BRIEF" title={project.title} lead={project.brief} /></div>
+        <div><h3 className="text-xl">{project.kind === "client" ? "Project scope" : "What the concept explores"}</h3><ul className="mt-5 divide-y divide-line-light border-y border-line-light">{project.scope.map(item => <li key={item} className="py-3 text-base leading-relaxed text-slate">{item}</li>)}</ul>
+          {project.demoUrl && <a href={project.demoUrl} className={buttonClass("primary", "light", "mt-6")}>Try the interactive demo <ArrowUpRight className="size-4 shrink-0" /></a>}
+          <p className="mt-4 text-sm leading-relaxed text-slate">{project.liveUrl ? "The original client website is in German and opens in a new tab." : "The interactive demo is in Bosnian. It does not create a real booking or order."}</p>
+        </div>
+      </div></Container></Section>
+      <Section tone="forest" labelledBy="decisions-title"><Container><SectionHeading id="decisions-title" tone="dark" eyebrow="BEHIND THE DESIGN" title="Every choice has a purpose." />
+        <div className="mt-10">{project.decisions.map((decision, i) => <article key={decision.title} className="grid gap-5 border-t border-line-dark py-7 lg:grid-cols-[4rem_1fr_1.2fr] lg:gap-10"><span className="font-display text-xl font-bold text-lime">0{i + 1}</span><h3 className="text-title leading-tight">{decision.title}</h3><p className="text-body leading-relaxed text-mist">{decision.body}</p></article>)}</div>
+      </Container></Section>
+      <Section tone="paper" labelledBy="case-contact-title"><Container><div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
+        <div><SectionHeading id="case-contact-title" eyebrow="YOUR PROJECT" title="A similar challenge for your business?" lead="Tell us what you offer, who you want to reach and how you want people to get in touch." /><ButtonLink href="/en#contact" className="mt-6">Start a conversation</ButtonLink></div>
+        <Link href={`/en/projects/${next.slug}`} className="group flex flex-col justify-center rounded-2xl border border-line-light bg-paper-dim p-6 sm:p-8"><span className="text-sm font-semibold text-slate">Next / {next.kind === "client" ? "Client project" : "Demo concept"}</span><h3 className="mt-4 text-title">{next.brand}</h3><ArrowUpRight className="mt-6 size-6 text-forest" /></Link>
+      </div></Container></Section>
+    </EnglishFrame>
+  );
 }

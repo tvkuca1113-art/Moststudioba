@@ -156,7 +156,7 @@ for (const [url, dom] of docs) {
  }
  if(doc.documentElement.lang==='en') {
   assert(doc.querySelector('meta[property="og:locale"]').content==='en_US');
-  assert(doc.querySelector('nav[aria-label="Website language"] a[aria-current="true"]')?.textContent==='EN');
+  assert(doc.querySelector('[role="group"][aria-label="Website language"] a[aria-current="true"]')?.textContent==='EN');
   assert(doc.querySelector('img[src="/images/projects/mirjana/mirjana-desktop-b181af1e4b.webp"]') || url.includes('/en/projects/'));
  }
 }
@@ -165,7 +165,19 @@ for(const link of ['https://dalworkshop.com/','https://innosaclean.de/']) assert
 assert(englishHome.body.textContent.includes('$400 USD'));
 assert.equal(englishHome.querySelectorAll('.en-concepts article').length,3);
 assert.equal(englishHome.querySelectorAll('.en-examples article').length,2);
-for (const image of englishHome.querySelectorAll('img')) assert(fs.existsSync('public'+image.getAttribute('src')),`English image exists: ${image.src}`);
+for (const image of englishHome.querySelectorAll('img')) {
+ const src=image.getAttribute('src');
+ const original=src.startsWith('/_next/image?') ? new URL(src,origin).searchParams.get('url') : src;
+ assert(fs.existsSync('public'+original),`English image exists: ${image.src}`);
+}
+// The language changes the content, not the studio’s visual system.
+assert.equal(englishHome.querySelector('header').className,home.querySelector('header').className,'One shared header');
+assert.equal(englishHome.querySelector('h1').className,home.querySelector('h1').className,'One shared hero type scale');
+assert.equal(englishHome.querySelector('.hero-intro').className,home.querySelector('.hero-intro').className,'One shared hero layout');
+for(const doc of [home,englishHome]) assert(doc.querySelector('img[src*="most-arch-7b440d0a"]'),'Shared bridge hero image');
+assert(!englishHome.querySelector('.en-mobile-cta'),'No separate mobile pricing strip');
+assert(!englishHome.querySelector('.en-header'),'No separate English header');
+assert(englishHome.querySelector('a[href="/en#contact"]'),'Shared header has a valid English contact anchor');
 assert.equal(home.querySelector('link[hreflang="en"]').href,origin+'/en');
 
 const shop = new JSDOM(fs.readFileSync('public/webshop-assets/index.html', 'utf8'));

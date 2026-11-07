@@ -75,7 +75,8 @@ export type RouteRef = {
 };
 
 /** Resolve a route key (+ optional slug) to a concrete path in one language. */
-export function path(key: RouteKey, locale: Locale, slug?: string): string {
+export function path(key: RouteKey, locale: SiteLocale, slug?: string): string {
+  if (locale === "en") return englishNavigationPath({ key, slug });
   const template = routeMap[key][locale];
   if (!template.includes(":slug")) return template;
   if (!slug) {
