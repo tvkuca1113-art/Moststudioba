@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import { cn } from "@/lib/cn";
-import { allPaths, englishNavigationPath, localeLabel, localeName, locales, type Locale, type RouteRef } from "@/lib/i18n/config";
+import { allPaths, englishNavigationPath, localeLabel, localeName, locales, type SiteLocale, type RouteRef } from "@/lib/i18n/config";
 import type { Dictionary } from "@/lib/i18n/dictionary";
 
 /**
@@ -15,9 +15,9 @@ export function LanguageSwitcher({
   tone = "light",
   className,
 }: {
-  locale: Locale;
+  locale: SiteLocale;
   route: RouteRef;
-  dict: Dictionary;
+  dict: Pick<Dictionary, "common">;
   tone?: "light" | "dark";
   className?: string;
 }) {

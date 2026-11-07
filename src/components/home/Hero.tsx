@@ -1,8 +1,9 @@
 import Image from "next/image";
+import { usStarterOffer } from "@/content/offer";
 import { ArchMark } from "@/components/ui/ArchMark";
 import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
-import { path, type Locale } from "@/lib/i18n/config";
+import { path, type SiteLocale } from "@/lib/i18n/config";
 import type { Dictionary } from "@/lib/i18n/dictionary";
 import { sectionIds } from "@/lib/nav";
 
@@ -17,7 +18,7 @@ import { sectionIds } from "@/lib/nav";
  * The arch is the studio's mark, drawn once on load and then still: the site
  * gets one animated moment, and this is it.
  */
-export function Hero({ locale, dict }: { locale: Locale; dict: Dictionary }) {
+export function Hero({ locale, dict }: { locale: SiteLocale; dict: Pick<Dictionary, "hero"> }) {
   return (
     <section className="relative overflow-hidden bg-ink pt-26 pb-12 text-paper on-dark sm:pt-28 lg:pt-28 lg:pb-14">
       <div
@@ -56,16 +57,16 @@ export function Hero({ locale, dict }: { locale: Locale; dict: Dictionary }) {
             <p className="max-w-[62ch] text-lead leading-[1.55] text-mist">{dict.hero.lead}</p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
-              <ButtonLink href={`#${sectionIds.contact}`} tone="dark">
+              <ButtonLink href={`#${locale === "en" ? "contact" : sectionIds.contact}`} tone="dark">
                 {dict.hero.ctaPrimary}
               </ButtonLink>
-              <ButtonLink href={`#${sectionIds.services}`} variant="secondary" tone="dark" withArrow={false}>
+              <ButtonLink href={`#${locale === "en" ? "services" : sectionIds.services}`} variant="secondary" tone="dark" withArrow={false}>
                 {dict.hero.ctaSecondary}
               </ButtonLink>
             </div>
 
             <a href={path("pricing", locale)} className="mt-5 inline-block max-w-md text-sm leading-relaxed text-mist underline decoration-mist/40 underline-offset-4 hover:text-lime">
-              {locale === "bs" ? "Obim, cijenu i rok dogovaramo prije početka." : "Umfang, Preis und Termin klären wir vor dem Start."}
+              {locale === "bs" ? "Obim, cijenu i rok dogovaramo prije početka." : locale === "en" ? `Projects from ${usStarterOffer.price} USD. Scope and timeline agreed before we start.` : "Umfang, Preis und Termin klären wir vor dem Start."}
             </a>
           </div>
         </div>

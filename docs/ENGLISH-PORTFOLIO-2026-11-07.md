@@ -79,3 +79,25 @@ production domain until the owner approves the reviewed result.
   committed in `docs/evidence/english/` and `public/images/projects/examples/`.
 - The production domain has not been modified. Remote preview and review PR
   remain pending branch-upload authorization.
+
+
+## Design consistency correction — 7 November 2026
+
+The owner reported that the separate light English landing page looked
+unrelated to the established BS homepage. English now renders through the
+same `SiteFrame`, `Header`, `Hero`, `Footer`, language switcher, container,
+section, heading, button, screenshot and pricing components used by BS/DE.
+The original dark bridge hero image, type scale, gutters, rounded buttons,
+mobile menu and section surfaces are shared directly. The independent
+English stylesheet, header and fixed mobile pricing strip were removed.
+
+The English homepage preserves its published anchors, all four project
+presentation URLs, the scoped $400 USD offer, live DAL/InnoSa examples and
+locally prepared message flow. The English social preview now uses the
+existing BS/DE graphic layout as well. BS/DE content and prices are unchanged.
+
+The SEO verification now checks that BS and EN use the same header, hero
+layout, type scale and bridge image. Browser checks cover the shared mobile
+menu, Escape, quote anchor, message review and BS/EN switching at narrow
+widths. This uses browser zoom for responsive viewport verification, not a
+physical phone test.

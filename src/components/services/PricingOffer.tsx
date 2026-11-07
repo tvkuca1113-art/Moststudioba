@@ -1,12 +1,21 @@
 import { ButtonAnchor, ButtonLink } from "@/components/ui/Button";
-import { starterOffer } from "@/content/offer";
-import { path, type Locale } from "@/lib/i18n/config";
+import { starterOffer, usStarterOffer } from "@/content/offer";
+import { path, type SiteLocale } from "@/lib/i18n/config";
 
 /** Scope and exclusions stay visible: the starting price must stand on its own. */
-export function PricingOffer({ locale, contactHref, showGuide = true }: { locale: Locale; contactHref?: string; showGuide?: boolean }) {
-  const c = starterOffer[locale];
+export function PricingOffer({ locale, contactHref, showGuide = true }: { locale: SiteLocale; contactHref?: string; showGuide?: boolean }) {
+  const c = locale === "en" ? {
+    ...usStarterOffer,
+    eyebrow: "A CLEAR STARTING POINT",
+    title: "Your first website. A clear scope.",
+    intro: "For a business that needs a focused introduction, a clear offer and a simple way to get in touch.",
+    from: "from", price: `${usStarterOffer.price} USD`, equivalent: null,
+    billing: "One-time build · One-page website",
+    cta: "Let’s define your project", includedTitle: "What the starting scope includes",
+    separateTitle: "What is quoted separately", details: "How pricing works",
+  } : starterOffer[locale];
   return (
-    <section id="budzet" data-starter-offer={starterOffer.amount} aria-labelledby="offer-title" className="scroll-mt-28 overflow-hidden rounded-2xl border border-line-light bg-paper">
+    <section id="budzet" data-starter-offer={locale === "en" ? usStarterOffer.amount : starterOffer.amount} aria-labelledby="offer-title" className="scroll-mt-28 overflow-hidden rounded-2xl border border-line-light bg-paper">
       <div className="grid lg:grid-cols-[0.85fr_1.15fr]">
         <div className="bg-forest p-6 text-paper on-dark sm:p-8">
           <p className="text-xs font-semibold tracking-[.18em] text-lime">{c.eyebrow}</p>
@@ -28,7 +37,7 @@ export function PricingOffer({ locale, contactHref, showGuide = true }: { locale
             <p className="mt-2 text-sm leading-relaxed text-slate">{c.separate}</p>
           </div>
           <p className="mt-5 text-sm leading-relaxed font-medium">{c.reassurance}</p>
-          {showGuide && <ButtonLink href={path("pricing", locale)} variant="quiet" className="mt-3 px-0 text-sm">{c.details}</ButtonLink>}
+          {showGuide && locale !== "en" && <ButtonLink href={path("pricing", locale)} variant="quiet" className="mt-3 px-0 text-sm">{c.details}</ButtonLink>}
         </div>
       </div>
     </section>

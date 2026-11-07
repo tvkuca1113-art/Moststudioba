@@ -1,51 +1,154 @@
-import { Arrow } from "./Arrow";
 import Image from "next/image";
 import Link from "next/link";
+import { Hero } from "@/components/home/Hero";
+import { ProjectSelector } from "@/components/home/ProjectSelector";
+import { SocialContact } from "@/components/contact/SocialContact";
+import { PricingOffer } from "@/components/services/PricingOffer";
+import { ButtonLink, buttonClass } from "@/components/ui/Button";
+import { Container } from "@/components/ui/Container";
+import { Section, SectionHeading } from "@/components/ui/Section";
+import { ArrowUpRight, PlusIcon } from "@/components/ui/icons";
 import { englishProjects, websiteExamples } from "@/content/english-projects";
 import { usStarterOffer } from "@/content/offer";
-import { site } from "@/content/site";
 import { englishJsonLd } from "@/lib/english-seo";
+import { enShell } from "@/lib/i18n/en-shell";
 import { EnglishFrame } from "./EnglishFrame";
 import { ProjectArtwork } from "./ProjectArtwork";
 import { EnglishInquiry } from "./EnglishInquiry";
 
 const services = [
-  { number: "01", title: "Web design", body: "A visual identity that feels like your business. Clear structure, considered typography and a design built around what your customers need to see.", detail: "Art direction / User experience / Responsive design" },
-  { number: "02", title: "Website redesign", body: "Keep what makes your business recognizable. Rethink what gets in the way: a dated layout, buried services or a mobile experience that asks too much.", detail: "Website review / Content structure / A fresh direction" },
-  { number: "03", title: "Development", body: "From approved design to a working website. Responsive pages, purposeful interactions and a clear path from exploring your work to getting in touch.", detail: "Responsive development / Technical SEO setup / Launch" },
+  { title: "Web design", body: "Make your offer easy to understand and your business easy to contact. Structure, content, visual design and a layout that works on mobile.", detail: "Design around your business" },
+  { title: "Website redesign", body: "Bring your existing website in line with your business. Review the structure, clarify the offer and plan how to preserve important URLs.", detail: "Keep the character. Improve the experience." },
+  { title: "Development & online stores", body: "Turn an approved design into a working website or online store, with the pages, product options and integrations your project needs.", detail: "From approved design to launch" },
+];
+const reasons = [
+  ["Design and development together", "One considered direction, from your first brief to the finished website. Content, layout and functionality are planned as a whole."],
+  ["A clear scope before work starts", "You know what is included, what needs a separate estimate and which decisions are yours to review."],
+  ["Direct, remote collaboration", "We work online, communicate in English and agree on feedback, calls and timing around your project."],
+];
+const process = [
+  ["Understand", "We clarify your offer, audience, content and the main job your website needs to do."],
+  ["Design", "You review the structure and visual direction before we move into development."],
+  ["Build", "We develop the approved design for desktop and mobile, including the agreed functionality."],
+  ["Check & launch", "We check layouts, links and the contact flow, then prepare your website for launch."],
 ];
 const faqs = [
-  { q: "Can we work together if my business is in the US?", a: "Yes. We collaborate remotely and communicate in English. We agree on the scope, feedback process, timeline and any calls before starting. The work shown here includes a German client project, website examples from Bosnia and Germany, and independent design concepts." },
+  { q: "Can we work together if my business is in the US?", a: "Yes. We collaborate remotely and communicate in English. We agree on the scope, feedback process, timeline and any calls before starting. The portfolio includes a German client project, live website examples from Bosnia and Germany, and independent demo concepts." },
   { q: `What does the ${usStarterOffer.price} starting price cover?`, a: `A one-page website with up to five sections, one language, your supplied content and one consolidated revision round. ${usStarterOffer.separate} ${usStarterOffer.reassurance}` },
   { q: "Can you improve my existing website?", a: "Yes. Send your current link and tell us what feels wrong or what has changed in your business. We can discuss a focused refresh or a wider redesign, then agree on the work and price before development begins." },
-  { q: "Are the concepts real client projects?", a: "No. Hrast, Lipa and Meridijan are independent demo concepts created to explore different industries and interactions. They are labeled as concepts throughout. Massage und Wellness Mirjana is a confirmed client project. DAL Workshop and InnoSa Clean are shown separately as website examples." },
-  { q: "What do you need from me to begin?", a: "Your business name, current website if you have one, and a short explanation of what you want to improve are enough to start a conversation. We will then clarify the pages, content, features and launch requirements together." },
+  { q: "Are the concepts real client projects?", a: "No. Hrast, Lipa and Meridijan are independent concepts for invented businesses. They are labeled as demos throughout. Massage und Wellness Mirjana is a confirmed client project. DAL Workshop and InnoSa Clean are shown separately as live website examples." },
 ];
 
 export function EnglishHome() {
   const featured = englishProjects[0];
-  return <EnglishFrame route={{key:"home"}}>
-    <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(englishJsonLd()).replace(/</g,"\\u003c")}} />
-    <section className="en-hero en-wrap" aria-labelledby="en-heading">
-      <div className="en-hero-meta"><p className="en-kicker"><span className="en-status-dot" /> Independent web design & development</p><p className="en-kicker en-hero-location">A considered approach. Wherever you are.</p></div>
-      <div className="en-hero-grid">
-        <div><h1 id="en-heading">Your work.<br />Better <span className="en-heading-accent">represented.</span></h1><div className="en-hero-bottom"><p>You put care into your business.<br className="en-wide-break" /> We bring that same care to your website.</p><p>Custom web design, website redesign and development for small businesses ready for their next chapter.</p><div className="en-hero-actions"><a href="#contact" className="en-button">Let’s talk about your website <Arrow direction="up-right" /></a><a href="#work" className="en-text-link">Explore the work <Arrow direction="down" /></a></div><p className="en-price-note">Projects from <strong>{usStarterOffer.price} USD</strong> <span>· Scope agreed before we start</span></p></div></div>
-        <div className="en-hero-aside"><div className="en-bridge" aria-hidden="true"><svg viewBox="0 0 440 460" fill="none"><path d="M30 460V240C30 124 111 35 220 35s190 89 190 205v220" stroke="currentColor" strokeWidth="1"/><path d="M63 460V240c0-97 65-171 157-171s157 74 157 171v220M97 460V240c0-77 50-137 123-137s123 60 123 137v220M131 460V240c0-58 35-103 89-103s89 45 89 103v220M165 460V240c0-39 20-69 55-69s55 30 55 69v220" stroke="currentColor" strokeWidth="1"/></svg></div><span className="en-hero-word">M<span>O</span>ST</span><div className="en-hero-signature"><span>A bridge between<br />your business & its next chapter.</span><Arrow direction="up-right" /></div></div>
-      </div>
-      <div className="en-hero-index"><span>WEB DESIGN / REDESIGN / DEVELOPMENT</span><a href="#work" aria-label="Scroll to selected work">SCROLL TO EXPLORE <Arrow direction="down" /></a></div>
-    </section>
-    <section id="work" className="en-work en-section en-wrap" aria-labelledby="en-work-heading">
-      <div className="en-section-heading"><div><p className="en-kicker">01 / Selected work</p><h2 id="en-work-heading" className="en-section-title">The work says<br />more than a pitch.</h2></div><p>A real client website, two live website examples and a few ideas taken further. Each with its own character.</p></div>
-      <article className="en-featured"><Link href={`/en/projects/${featured.slug}`} className="en-artwork-link" aria-label="Explore the Massage und Wellness Mirjana client project"><ProjectArtwork project={featured} priority /></Link><div className="en-project-caption"><div><span className="en-tag">Client project</span><h3><Link href={`/en/projects/${featured.slug}`}>{featured.brand}</Link></h3><p>{featured.category}</p></div><div><p>{featured.summary}</p><Link href={`/en/projects/${featured.slug}`} className="en-text-link">Explore the project <Arrow direction="up-right" /></Link></div></div></article>
-      <div className="en-example-intro" id="website-examples"><h3>More websites to explore.</h3><p>Live website examples. Open them to see the full experience.</p></div>
-      <div className="en-examples">{websiteExamples.map(project => <article key={project.brand}><a href={project.url} target="_blank" rel="noopener noreferrer" className={`en-example-art en-example-${project.color}`} aria-label={`Visit ${project.brand} website (${project.language}, opens in a new tab)`}><div className="en-example-top"><span>{project.domain}</span><Arrow direction="up-right" /></div><Image src={project.image} width={1200} height={824} alt={`${project.brand} — actual screenshot of the live website`} unoptimized loading="lazy" sizes="(max-width: 800px) 90vw, 45vw" /></a><span className="en-tag en-tag-spaced">Website example</span><h3>{project.brand}</h3><p>{project.description}</p><a className="en-text-link" href={project.url} target="_blank" rel="noopener noreferrer">Visit website <span className="en-link-language">({project.language})</span> <Arrow direction="up-right" /></a></article>)}</div>
-      <div className="en-concepts-heading"><div><p className="en-kicker">Independent explorations</p><h3>Different businesses.<br />Different ways in.</h3></div><p>The following are demo concepts, created to explore design and functionality. They are not client commissions.</p></div>
-      <div className="en-concepts">{englishProjects.filter(project=>project.kind==="concept").map((project,index)=><article key={project.slug}><Link href={`/en/projects/${project.slug}`} className="en-artwork-link" aria-label={`Explore ${project.brand} independent design concept`}><ProjectArtwork project={project} mobile={false} /></Link><div className="en-concept-meta"><span className="en-tag">Demo concept</span><span>0{index+1}</span></div><h3><Link href={`/en/projects/${project.slug}`}>{project.category}</Link></h3><p>{project.summary}</p><Link href={`/en/projects/${project.slug}`} className="en-text-link">See the concept <Arrow direction="up-right" /></Link></article>)}</div>
-    </section>
-    <section id="services" className="en-services en-section on-dark"><div className="en-wrap"><div className="en-section-heading"><div><p className="en-kicker">02 / What we do</p><h2 className="en-section-title">Make the right<br />first impression.<br /><span>Then make it easy.</span></h2></div><p>A website should show what makes your business worth choosing — and make the next step obvious.</p></div><div className="en-service-list">{services.map(service=><article key={service.number}><span className="en-service-number">{service.number}</span><h3>{service.title}</h3><div><p>{service.body}</p><p className="en-service-detail">{service.detail}</p></div><span className="en-service-arrow"><Arrow /></span></article>)}</div></div></section>
-    <section id="process" className="en-process en-section en-wrap"><div className="en-section-heading"><div><p className="en-kicker">03 / How we work</p><h2 className="en-section-title">A clear process.<br />Room for good ideas.</h2></div><p>Remote collaboration, direct communication and clear decisions at each stage.</p></div><ol className="en-process-list"><li><span>01 / Understand</span><h3>Start with your business.</h3><p>We look at your offer, your customers and your current website. Together, we define what the new site needs to do.</p></li><li><span>02 / Design</span><h3>Find your direction.</h3><p>Structure, copy and visual design come together around your brand. You review the direction before we build.</p></li><li><span>03 / Build & launch</span><h3>Make it work beautifully.</h3><p>We develop the agreed design, check layouts and links, and prepare the site for launch. You know what is being delivered.</p></li></ol></section>
-    <section id="pricing" className="en-pricing en-wrap"><div className="en-pricing-card"><div><p className="en-kicker">04 / A clear starting point</p><h2 className="en-section-title">A strong start.<br />A sensible scope.</h2><p className="en-pricing-intro">For a small business that needs a focused introduction, a clear offer and a simple way to get in touch.</p><div className="en-price"><span>Starting at</span><strong>{usStarterOffer.price}<small> USD</small></strong><span>One-time website project</span></div><a href="#contact" className="en-button">Let’s define your project <Arrow direction="up-right" /></a></div><div className="en-pricing-details"><h3>{usStarterOffer.scope}</h3><ul>{usStarterOffer.included.map(item=><li key={item}><Arrow direction="up-right" />{item}</li>)}</ul><div className="en-scope-note"><h4>Need a wider redesign?</h4><p>{usStarterOffer.reassurance}</p><p>{usStarterOffer.separate}</p></div></div></div></section>
-    <section className="en-faq en-section en-wrap" aria-labelledby="en-faq-heading"><div><p className="en-kicker">A few things you might be wondering</p><h2 id="en-faq-heading" className="en-section-title">Good questions.</h2></div><div>{faqs.map(faq=><details key={faq.q}><summary>{faq.q}<span aria-hidden="true">+</span></summary><p>{faq.a}</p></details>)}</div></section>
-    <section id="contact" className="en-contact en-section on-dark"><div className="en-wrap en-contact-grid"><div><p className="en-kicker">05 / Your next chapter</p><h2 className="en-section-title">Let’s make<br />your website<br /><span>feel like you.</span></h2><p>Have a website that no longer fits?<br />Or a business ready for its first one?<br />Tell us a little about it.</p><a href={site.instagramUrl} target="_blank" rel="noopener noreferrer" className="en-text-link en-contact-direct">Message {site.instagramHandle} <Arrow direction="up-right" /></a><p className="en-contact-small">Prefer email? <a href={`mailto:${site.email}`}>{site.email}</a></p></div><EnglishInquiry /></div></section>
-  </EnglishFrame>;
+  const concepts = englishProjects.filter(project => project.kind === "concept");
+
+  return (
+    <EnglishFrame route={{ key: "home" }} tone="overlay">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(englishJsonLd()).replace(/</g, "\\u003c") }} />
+      <Hero locale="en" dict={enShell} />
+
+      <Section id="services" tone="paperDim" labelledBy="services-title">
+        <Container>
+          <SectionHeading id="services-title" eyebrow="SERVICES" title="A website, online store or redesign?" lead="Choose the service that fits your next step. We connect content, design and development around your business." />
+          <nav aria-label="Services in detail" className="mt-8 grid gap-3 md:grid-cols-3">
+            {services.map(service => (
+              <a key={service.title} href="#contact" className="group flex flex-col rounded-xl border border-line-light bg-paper p-5 transition-colors hover:border-forest">
+                <span className="flex items-start justify-between gap-4 text-lg font-semibold">{service.title}<ArrowUpRight className="mt-1 size-5 shrink-0" /></span>
+                <span className="mt-3 text-sm leading-relaxed text-slate">{service.body}</span>
+                <span className="mt-5 text-sm font-semibold text-forest">{service.detail}</span>
+              </a>
+            ))}
+          </nav>
+          <details className="mt-6 rounded-xl border border-line-light p-5 open:bg-paper">
+            <summary className="cursor-pointer text-lg font-semibold">What goes into a carefully built website?</summary>
+            <dl className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {[["A clear structure", "The offer, useful details and the next step belong where your visitor expects to find them."], ["A considered mobile layout", "Readable type, useful spacing and controls that are comfortable to use on a small screen."], ["A careful handover", "The agreed scope includes layout and link checks, technical SEO setup and launch preparation."]].map(([title, body]) => <div key={title}><dt className="font-semibold">{title}</dt><dd className="mt-2 text-sm leading-relaxed text-slate">{body}</dd></div>)}
+            </dl>
+          </details>
+          <div className="mt-6 flex flex-col justify-between gap-5 border-t border-line-light pt-6 sm:flex-row sm:items-center">
+            <p className="max-w-xl text-base leading-relaxed text-slate">We work online. Scope, content, price and timeline are agreed before we start.</p>
+            <ButtonLink href="#pricing" variant="quiet" className="shrink-0 px-0 text-sm">Projects from {usStarterOffer.price} USD</ButtonLink>
+          </div>
+        </Container>
+      </Section>
+
+      <Section id="work" tone="paper" size="tight" labelledBy="projects-title">
+        <Container>
+          <SectionHeading id="projects-title" eyebrow="PROJECTS" title="Different businesses. Considered solutions." lead="A confirmed client project, live website examples and independent concepts show how we connect content, design and development." />
+          <article data-project-kind="client" className="mt-10 grid gap-6 border-t border-line-light pt-8 lg:grid-cols-[minmax(0,1.45fr)_minmax(0,0.9fr)] lg:items-center lg:gap-12">
+            <ProjectArtwork project={featured} mobile={false} />
+            <div className="min-w-0">
+              <div className="flex flex-wrap items-center gap-x-3 gap-y-2"><span className="rounded-full border border-forest/20 bg-forest/5 px-3 py-1 text-[0.8125rem] font-semibold text-forest">Client project</span><span className="text-sm text-slate">{featured.category}</span></div>
+              <h3 className="mt-4 text-title leading-tight tracking-[-0.025em]">{featured.brand}</h3>
+              <p className="mt-4 max-w-[52ch] text-body leading-relaxed text-slate">{featured.summary}</p>
+              <p className="mt-5 text-sm font-semibold text-forest">Design · Content · Development</p>
+              <div className="mt-6 flex flex-wrap items-center gap-3"><ButtonLink href={`/en/projects/${featured.slug}`}>Explore the project</ButtonLink><a href={featured.liveUrl} target="_blank" rel="noopener noreferrer" className={buttonClass("secondary")}>Visit website <ArrowUpRight className="size-4 shrink-0" /></a></div>
+            </div>
+          </article>
+
+          <div id="website-examples" className="mt-12 scroll-mt-28 border-t border-line-light pt-8 lg:mt-16">
+            <h3 className="text-xl font-semibold text-forest">More websites to explore</h3>
+            <p className="mt-2 max-w-2xl text-base leading-relaxed text-slate">Live website examples. Open them to see the full experience.</p>
+            <div className="en-examples mt-7 grid gap-8 md:grid-cols-2">
+              {websiteExamples.map(project => (
+                <article key={project.brand} className="min-w-0">
+                  <a href={project.url} target="_blank" rel="noopener noreferrer" aria-label={`Visit ${project.brand} website (${project.language}, opens in a new tab)`} className="block overflow-hidden rounded-xl border border-line-light bg-paper-dim">
+                    <Image src={project.image} width={1200} height={824} alt={`${project.brand} — actual screenshot of the live website`} unoptimized loading="lazy" sizes="(max-width: 767px) calc(100vw - 40px), 45vw" className="h-auto w-full" />
+                  </a>
+                  <span className="mt-5 inline-flex rounded-full border border-forest/20 bg-forest/5 px-3 py-1 text-[0.8125rem] font-semibold text-forest">Website example</span>
+                  <h3 className="mt-3 text-2xl">{project.brand}</h3><p className="mt-3 text-base leading-relaxed text-slate">{project.description}</p>
+                  <a href={project.url} target="_blank" rel="noopener noreferrer" className={buttonClass("quiet", "light", "mt-3 px-0")}>Visit website ({project.language}) <ArrowUpRight className="size-4 shrink-0" /></a>
+                </article>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-12 border-t border-line-light pt-8 lg:mt-16">
+            <h3 className="text-xl font-semibold text-forest">Demo concepts for different businesses</h3>
+            <p className="mt-2 mb-7 max-w-2xl text-base leading-relaxed text-slate">Independent design and functionality examples. These are not client commissions.</p>
+            <div className="en-concepts">
+              <ProjectSelector labels={concepts.map(project => project.brand)} locale="en">
+                {concepts.map(project => (
+                  <article key={project.slug} className="h-full rounded-2xl border border-line-light bg-paper p-4 sm:p-5">
+                    <Link href={`/en/projects/${project.slug}`} aria-label={`Explore ${project.brand} independent design concept`}><ProjectArtwork project={project} mobile={false} /></Link>
+                    <span className="mt-5 inline-flex rounded-full border border-forest/20 px-3 py-1 text-xs font-semibold text-forest">Demo concept</span>
+                    <h3 className="mt-4 text-2xl leading-tight">{project.category}</h3><p className="mt-3 text-base leading-relaxed text-slate">{project.summary}</p>
+                    <ButtonLink href={`/en/projects/${project.slug}`} variant="quiet" className="mt-4 px-0">See the concept</ButtonLink>
+                  </article>
+                ))}
+              </ProjectSelector>
+            </div>
+          </div>
+          <p className="mt-7 max-w-4xl border-t border-line-light pt-4 text-sm leading-relaxed text-slate">Mirjana is a confirmed client project. DAL Workshop and InnoSa Clean are live website examples. The three demo businesses are invented for design exploration.</p>
+        </Container>
+      </Section>
+
+      <Section id="studio" tone="forest" size="tight" labelledBy="studio-title">
+        <Container><div className="grid gap-8 lg:grid-cols-2 lg:gap-16">
+          <SectionHeading id="studio-title" tone="dark" eyebrow="STUDIO" title="Design and development in one place." lead="We start with your business: what you offer, who you want to reach and what a visitor should do next." />
+          <ol className="divide-y divide-line-dark">{reasons.map(([title, body], i) => <li key={title} className="grid grid-cols-[2rem_1fr] gap-3 py-4 first:pt-0 last:pb-0"><span className="pt-1 text-sm text-lime">0{i + 1}</span><div><h3 className="text-xl">{title}</h3><p className="mt-2 text-base leading-relaxed text-mist">{body}</p></div></li>)}</ol>
+        </div></Container>
+      </Section>
+
+      <Section id="pricing" tone="paper" size="tight"><Container><PricingOffer locale="en" contactHref="#contact" showGuide={false} /></Container></Section>
+
+      <Section id="process" tone="forest" size="tight" labelledBy="process-title">
+        <Container><SectionHeading id="process-title" tone="dark" eyebrow="PROCESS" title="You know what comes next." lead="Four clear stages, with room for feedback before the next decision." />
+          <ol className="mt-8 grid gap-px overflow-hidden rounded-2xl bg-line-dark sm:grid-cols-2 lg:mt-10 lg:grid-cols-4">{process.map(([title, body], i) => <li key={title} className="grid grid-cols-[1.75rem_1fr] gap-x-3 bg-forest p-4 sm:block sm:p-6"><span className="font-display text-sm font-bold tracking-[0.2em] text-lime">0{i + 1}</span><h3 className="text-xl leading-tight font-extrabold sm:mt-3 sm:text-2xl">{title}</h3><p className="col-start-2 mt-2.5 text-base leading-relaxed text-mist">{body}</p></li>)}</ol>
+          <p className="mt-8 max-w-[64ch] border-t border-line-dark pt-6 text-body leading-relaxed text-mist">Your written scope, total price and timeline are agreed before work starts.</p>
+        </Container>
+      </Section>
+
+      <Section id="faq" tone="paperDim" size="tight" labelledBy="faq-title"><Container><div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
+        <SectionHeading id="faq-title" eyebrow="COMMON QUESTIONS" title="A few things you might be wondering." lead="Have another question? Message us on Instagram or Facebook." />
+        <div className="border-t border-line-light">{faqs.map(faq => <details key={faq.q} className="group border-b border-line-light"><summary className="flex cursor-pointer list-none items-start justify-between gap-6 py-5 text-left text-lg leading-snug font-semibold [&::-webkit-details-marker]:hidden">{faq.q}<PlusIcon className="mt-1 size-5 shrink-0 text-forest transition-transform group-open:rotate-45" /></summary><p className="pb-6 text-body leading-relaxed text-slate">{faq.a}</p></details>)}</div>
+      </div></Container></Section>
+
+      <Section id="contact" tone="ink" labelledBy="contact-title"><Container><div className="grid items-start gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+        <div><p className="text-xs font-semibold tracking-[.2em] text-lime uppercase">CONTACT</p><h2 id="contact-title" className="mt-5 text-display leading-[1.05]">What should your website do better?</h2><p className="mt-5 text-lg leading-relaxed text-mist">A new website, an online store or a better version of your current site? Tell us about your business and what you have in mind.</p><div className="mt-7"><SocialContact locale="en" dark cards /></div><p className="mt-4 text-sm leading-relaxed text-mist">Start a conversation directly, or prepare a short message here. We communicate in English.</p></div>
+        <EnglishInquiry />
+      </div></Container></Section>
+    </EnglishFrame>
+  );
 }

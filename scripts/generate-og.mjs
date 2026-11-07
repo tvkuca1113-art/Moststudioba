@@ -10,6 +10,15 @@ import sharp from "sharp";
 
 const variants = [
   {
+    file: "og-en.png",
+    eyebrow: "WEB DESIGN AND DEVELOPMENT · WORKING REMOTELY",
+    line1: "Websites",
+    line2: "with your",
+    accent: "signature.",
+    foot: "@moststudioba · Projects from $400 USD",
+    services: "Design · Development · Redesign",
+  },
+  {
     file: "og-bs.png",
     eyebrow: "WEB DIZAJN I IZRADA · BiH + NJEMAČKA",
     line1: "Web stranice",
@@ -30,7 +39,7 @@ const variants = [
 const esc = (value) =>
   value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
-function svg({ eyebrow, line1, line2, accent, foot }) {
+function svg({ eyebrow, line1, line2, accent, foot, services = "Dizajn · Izrada · Redizajn" }) {
   return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
   <defs>
     <pattern id="grid" width="96" height="96" patternUnits="userSpaceOnUse">
@@ -52,7 +61,7 @@ function svg({ eyebrow, line1, line2, accent, foot }) {
 
     <rect x="72" y="486" width="1056" height="1" fill="#24463F"/>
     <text x="72" y="546" fill="#A9BDB4" font-size="24" font-weight="500">${esc(foot)}</text>
-    <text x="1128" y="546" fill="#A9BDB4" font-size="24" font-weight="500" text-anchor="end">Dizajn · Izrada · Redizajn</text>
+    <text x="1128" y="546" fill="#A9BDB4" font-size="24" font-weight="500" text-anchor="end">${esc(services)}</text>
   </g>
 </svg>`;
 }
@@ -60,7 +69,7 @@ function svg({ eyebrow, line1, line2, accent, foot }) {
 const outDir = path.join(process.cwd(), "public", "og");
 await mkdir(outDir, { recursive: true });
 
-for (const variant of variants) {
+for (const variant of variants.filter(v => !process.argv[2] || v.file === `og-${process.argv[2]}.png`)) {
   // Flat colour and type: a 32-colour palette is visually identical here and
   // roughly halves the file.
   const png = await sharp(Buffer.from(svg(variant)))

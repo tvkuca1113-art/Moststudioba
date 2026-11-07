@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 
-import type { Locale, RouteRef } from "@/lib/i18n/config";
+import type { SiteLocale, RouteRef } from "@/lib/i18n/config";
+import { enShell } from "@/lib/i18n/en-shell";
 import { getDictionary } from "@/lib/i18n/dictionary";
 import { Footer } from "./Footer";
 import { Header, type HeaderTone } from "./Header";
@@ -12,12 +13,12 @@ export function SiteFrame({
   tone = "solid",
   children,
 }: {
-  locale: Locale;
+  locale: SiteLocale;
   route: RouteRef;
   tone?: HeaderTone;
   children: ReactNode;
 }) {
-  const dict = getDictionary(locale);
+  const dict = locale === "en" ? enShell : getDictionary(locale);
 
   return (
     <>
