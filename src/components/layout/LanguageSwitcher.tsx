@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import { cn } from "@/lib/cn";
-import { allPaths, localeLabel, localeName, locales, type Locale, type RouteRef } from "@/lib/i18n/config";
+import { allPaths, englishNavigationPath, localeLabel, localeName, locales, type Locale, type RouteRef } from "@/lib/i18n/config";
 import type { Dictionary } from "@/lib/i18n/dictionary";
 
 /**
@@ -38,7 +38,7 @@ export function LanguageSwitcher({
         return (
           <Link
             key={candidate}
-            href={hrefs[candidate]}
+            href={candidate === "en" ? englishNavigationPath(route) : hrefs[candidate]}
             hrefLang={candidate}
             lang={candidate}
             aria-current={isCurrent ? "true" : undefined}

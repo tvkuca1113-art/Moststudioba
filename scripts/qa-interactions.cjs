@@ -187,6 +187,35 @@ async function run(){
    cleanup();
   }
  }
+ const {EnglishInquiry}=require(base+'/src/components/english/EnglishInquiry.tsx');
+ render(React.createElement(EnglishInquiry));
+ await user.click(screen.getByRole('radio',{name:'New website'}));
+ await user.type(screen.getByLabelText('Business name (optional)'), 'Test & Co.');
+ await user.type(screen.getByLabelText('Current website (optional)'), 'example.com');
+ await user.type(screen.getByLabelText('What would you like to improve? (optional)'), 'A clearer service offer.');
+ await user.click(screen.getByRole('button',{name:'Prepare my message'}));
+ const englishMessage=screen.getByRole('textbox',{name:'Your message'});
+ assert.match(englishMessage.value,/New website/);
+ assert.match(englishMessage.value,/Test & Co./);
+ assert.match(englishMessage.value,/example.com/);
+ assert.match(englishMessage.value,/A clearer service offer/);
+ assert.equal(document.activeElement,screen.getByRole('region',{name:'Your prepared project message'}));
+ await user.type(englishMessage,' One more detail.');
+ assert.match(englishMessage.value,/One more detail/,'Editable message retains focus while typing');
+ const emailDraft=screen.getByRole('link',{name:'Open email draft'}).getAttribute('href');
+ assert.equal(new URL(emailDraft).searchParams.get('body'),englishMessage.value,'Email draft preserves edited content and ampersands');
+ assert.equal(screen.getByRole('link',{name:'Open Instagram'}).getAttribute('href'),'https://www.instagram.com/moststudioba/');
+ await user.click(screen.getByRole('button',{name:'Copy message'}));
+ assert.equal(await navigator.clipboard.readText(),englishMessage.value);
+ assert.match(screen.getByRole('status').textContent,/Copied/);
+ navigator.clipboard.writeText=async()=>{throw new Error('clipboard blocked');};
+ await user.click(screen.getByRole('button',{name:'Copy message'}));
+ assert.equal(document.activeElement,englishMessage,'Clipboard failure focuses selectable fallback');
+ assert.match(screen.getByRole('status').textContent,/Select and copy/);
+ navigator.clipboard.writeText=originalWrite;
+ assert.match(document.body.textContent,/Nothing is submitted automatically/);
+ cleanup();
+ console.log('PASS: English inquiry review, editable content, encoded email draft, clipboard success/fallback and explicit unsent state.');
  console.log('PASS: inquiry validation, preparation, retained form values, editable message, clipboard success/failure, Instagram and confirmed Facebook handoff, explicit unsent state and German fields.');
  console.log('PASS: repeated menu opening after scroll, viewport overlay ownership, focus and background cleanup; 9 furniture images; furniture selections/clamping/export; full booking, blocked slots, back/edit, service invalidation, confirmation, focus and reset; advisory step validation, majority plan, export, retained edits and reset; German controls.');
 }

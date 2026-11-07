@@ -3,7 +3,7 @@ import { Analytics } from "@vercel/analytics/next";
 
 import { site } from "@/content/site";
 import { fontClassName } from "@/lib/fonts";
-import { htmlLang, type Locale } from "@/lib/i18n/config";
+import { htmlLang, type SiteLocale } from "@/lib/i18n/config";
 
 /**
  * Shared document shell for both root layouts (`/` is Bosnian, `/de` is
@@ -14,7 +14,7 @@ export function RootDocument({
   locale,
   children,
 }: {
-  locale: Locale;
+  locale: SiteLocale;
   children: ReactNode;
 }) {
   return (

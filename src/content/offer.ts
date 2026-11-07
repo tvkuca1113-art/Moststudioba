@@ -1,6 +1,22 @@
 /** One source for the public starting price and its deliberately limited scope. */
 const amount = 600;
 
+/** Owner-authorized USD offer for English outreach; BS/DE terms stay intact. */
+export const usStarterOffer = {
+  amount: 400,
+  currency: "USD",
+  price: "$400",
+  scope: "One page. Up to five sections. One language.",
+  included: [
+    "A custom layout for desktop and mobile",
+    "Your supplied copy, photographs and logo, arranged into clear sections",
+    "Contact links, page titles, meta description and sitemap",
+    "One consolidated revision round, link checks and launch setup",
+  ],
+  separate: "Domain, hosting and paid licenses are separate. Copywriting, new photography, additional pages or languages, forms, CMS, bookings, ecommerce, maintenance and ongoing SEO are quoted separately.",
+  reassurance: "Before work starts, you receive a written scope, total price, external costs and timeline. A larger redesign or custom build gets its own estimate.",
+} as const;
+
 export const starterOffer = {
   amount,
   currency: "BAM",
