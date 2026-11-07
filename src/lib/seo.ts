@@ -40,6 +40,7 @@ export function buildMetadata({
       languages: {
         [htmlLang.bs]: paths.bs,
         [htmlLang.de]: paths.de,
+        ...(paths.en ? { en: paths.en } : {}),
         "x-default": paths.bs,
       },
     },
@@ -79,9 +80,9 @@ export function organizationJsonLd(locale: Locale, description: string) {
         email: site.email,
         description,
         sameAs: [site.instagramUrl, ...(site.facebookUrl ? [site.facebookUrl] : [])],
-        knowsLanguage: ["bs", "de"],
+        knowsLanguage: ["bs", "de", "en"],
         areaServed: [{ "@type": "Country", name: "Bosnia and Herzegovina" }, { "@type": "Country", name: "Germany" }],
-        contactPoint: { "@type": "ContactPoint", url: absoluteUrl(path("contact", locale)), email: site.email, contactType: "customer service", availableLanguage: ["bs", "de"] },
+        contactPoint: { "@type": "ContactPoint", url: absoluteUrl(path("contact", locale)), email: site.email, contactType: "customer service", availableLanguage: ["bs", "de", "en"] },
       },
       {
         "@type": "WebSite",
@@ -91,7 +92,7 @@ export function organizationJsonLd(locale: Locale, description: string) {
         // Existing public handle and domain distinguish this studio from namesakes.
         // This is a site-name preference, not a ranking or indexing guarantee.
         alternateName: [site.instagramHandle.replace(/^@/, ""), new URL(siteUrl).hostname],
-        inLanguage: ["bs", "de"],
+        inLanguage: ["bs", "de", "en"],
         publisher: { "@id": `${siteUrl}/#organization` },
       },
       {

@@ -1,30 +1,36 @@
 /**
  * Central language + route map.
  *
- * Bosnian lives on the bare routes, German under /de/. Every page knows its
- * own `RouteKey`, so the language switcher can always resolve the matching
- * page in the other language instead of dumping the visitor on the homepage.
+ * Bosnian lives on the bare routes, German under /de/, and the English
+ * outreach portfolio under /en/. Equivalent pages retain their context;
+ * untranslated page types link to the relevant English landing section.
  */
-export const locales = ["bs", "de"] as const;
+export const locales = ["bs", "de", "en"] as const;
+/** Existing fully translated page trees. English has its own scoped portfolio. */
+export const contentLocales = ["bs", "de"] as const;
 
-export type Locale = (typeof locales)[number];
+export type Locale = (typeof contentLocales)[number];
+export type SiteLocale = (typeof locales)[number];
 
 export const defaultLocale: Locale = "bs";
 
-export const localeLabel: Record<Locale, string> = {
+export const localeLabel: Record<SiteLocale, string> = {
   bs: "BS",
   de: "DE",
+  en: "EN",
 };
 
-export const localeName: Record<Locale, string> = {
+export const localeName: Record<SiteLocale, string> = {
   bs: "Bosanski",
   de: "Deutsch",
+  en: "English",
 };
 
-/** `lang`/`hreflang` values. Bosnian is `bs`, German is `de`. */
-export const htmlLang: Record<Locale, string> = {
+/** HTML language and hreflang codes for the public page trees. */
+export const htmlLang: Record<SiteLocale, string> = {
   bs: "bs",
   de: "de",
+  en: "en",
 };
 
 export type RouteKey =
@@ -84,11 +90,34 @@ export function alternatePath(ref: RouteRef, locale: Locale): string {
 }
 
 /** All language variants of one page — used for hreflang + the switcher. */
-export function allPaths(ref: RouteRef): Record<Locale, string> {
+export function allPaths(ref: RouteRef): Record<Locale, string> & { en?: string } {
   return {
     bs: path(ref.key, "bs", ref.slug),
     de: path(ref.key, "de", ref.slug),
+    ...(englishEquivalent(ref) ? { en: englishEquivalent(ref) } : {}),
   };
+}
+
+/** Only actual translated equivalents belong in hreflang; never invent URLs. */
+export function englishEquivalent(ref: RouteRef): string | undefined {
+  if (ref.key === "home") return "/en";
+  if (ref.key === "project" && ref.slug && englishProjectSlugs.includes(ref.slug)) {
+    return `/en/projects/${ref.slug}`;
+  }
+}
+
+export const englishProjectSlugs: readonly string[] = [
+  "mirjana-massage", "stolarija-hrast", "ordinacija-lipa", "meridijan-savjetovanje",
+];
+
+/** Navigation may lead to an English section when a full translation is absent. */
+export function englishNavigationPath(ref: RouteRef): string {
+  const equivalent = englishEquivalent(ref);
+  if (equivalent) return equivalent;
+  if (ref.key === "contact") return "/en#contact";
+  if (ref.key === "projects" || ref.key === "demo") return "/en#work";
+  if (ref.key === "pricing") return "/en#pricing";
+  return "/en#services";
 }
 
 export function otherLocale(locale: Locale): Locale {

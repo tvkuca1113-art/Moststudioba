@@ -38,7 +38,7 @@ for (const url of urls) {
   assert.equal(normalize(doc.querySelector('head meta[property="og:url"]').content), url, `OG URL: ${url}`);
   assert(!doc.querySelector('head meta[name="robots"]').content.includes('noindex'), `Sitemap must contain indexable URLs: ${url}`);
   assert(doc.querySelector('head meta[property="og:image"]').content.startsWith(origin + '/'));
-  assert.equal(doc.documentElement.lang, pathname.startsWith('/de') ? 'de' : 'bs');
+  assert.equal(doc.documentElement.lang, pathname.startsWith('/de') ? 'de' : pathname.startsWith('/en') ? 'en' : 'bs');
   for (const lang of ['bs', 'de', 'x-default']) {
     const alternate = doc.querySelector(`head link[rel="alternate"][hreflang="${lang}"]`);
     assert(alternate && urls.includes(normalize(alternate.href)), `Missing valid ${lang} alternate: ${url}`);
@@ -144,9 +144,33 @@ for (const [locale, prefix, caseRoute, projectsRoute] of [
   assert(!urls.includes(`${origin}${prefix}/demo/mirjana-massage`));
 }
 
+// English scope: real counterparts only, truthful work labels and owner-supplied examples.
+for (const [url, dom] of docs) {
+ const doc=dom.window.document;
+ const en=doc.querySelector('link[hreflang="en"]');
+ if(en) {
+  const target=normalize(en.href);assert(docs.has(target),`English alternate exists: ${url}`);
+  const enDoc=docs.get(target).window.document;
+  const back=enDoc.querySelector(`link[hreflang="${doc.documentElement.lang}"]`);
+  assert.equal(normalize(back.href),url,`Reciprocal English alternate: ${url}`);
+ }
+ if(doc.documentElement.lang==='en') {
+  assert(doc.querySelector('meta[property="og:locale"]').content==='en_US');
+  assert(doc.querySelector('nav[aria-label="Website language"] a[aria-current="true"]')?.textContent==='EN');
+  assert(doc.querySelector('img[src="/images/projects/mirjana/mirjana-desktop-b181af1e4b.webp"]') || url.includes('/en/projects/'));
+ }
+}
+const englishHome=docs.get(origin+'/en').window.document;
+for(const link of ['https://dalworkshop.com/','https://innosaclean.de/']) assert(englishHome.querySelector(`a[href="${link}"]`),'Requested live website example');
+assert(englishHome.body.textContent.includes('$400 USD'));
+assert.equal(englishHome.querySelectorAll('.en-concepts article').length,3);
+assert.equal(englishHome.querySelectorAll('.en-examples article').length,2);
+for (const image of englishHome.querySelectorAll('img')) assert(fs.existsSync('public'+image.getAttribute('src')),`English image exists: ${image.src}`);
+assert.equal(home.querySelector('link[hreflang="en"]').href,origin+'/en');
+
 const shop = new JSDOM(fs.readFileSync('public/webshop-assets/index.html', 'utf8'));
 assert(shop.window.document.querySelector('meta[name="robots"]').content.includes('noindex'));
 shop.window.close();
 for (const dom of docs.values()) dom.window.close();
 sitemap.window.close();
-console.log(`PASS: ${urls.length} initial HTML pages; canonical, OG, reciprocal BS/DE/x-default, schema and breadcrumbs, one H1, crawlable internal links, verification token and noindex demo boundaries.`);
+console.log(`PASS: ${urls.length} initial HTML pages; canonical, OG, reciprocal language alternates, schema and breadcrumbs, one H1, crawlable internal links, verification token and noindex demo boundaries.`);
